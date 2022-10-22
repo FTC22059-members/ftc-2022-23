@@ -73,4 +73,4 @@ public class Teleop2023 extends LinearOpMode {
             idle();
         }
     }
-} 
+}
