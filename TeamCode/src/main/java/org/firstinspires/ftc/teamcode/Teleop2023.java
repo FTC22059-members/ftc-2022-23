@@ -37,7 +37,7 @@ public class Teleop2023 extends LinearOpMode {
         frontRight = hardwareMap.get(DcMotor.class, "frontRight");
 
         // Wait for the start button
-        telemetry.addData(">", "the clock is ticking");
+        telemetry.addData(">", "Press start, the clock is ticking");
         telemetry.update();
 
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
