@@ -50,13 +50,17 @@ public class mecanumTest extends LinearOpMode {
         waitForStart();
 
         // run until the end of the match (driver presses STOP)
+        double speedMultiplier = 1; //Default speed
         while (opModeIsActive()) {
-            double speedMultiplier = 1; //Multiplier for precision mode.
-            if (gamepad1.right_trigger > 0.5) {
+            if (gamepad1.right_trigger > 0.05 && gamepad1.right_trigger < 0.75) {
+                speedMultiplier = 1-gamepad1.right_trigger;
+                telemetry.addData("Precise Mode", "On");
+            } else if (gamepad1.right_trigger >= 0.75) {
                 speedMultiplier = 0.25;
                 telemetry.addData("Precise Mode", "On");
             } else {
                 telemetry.addData("Precise Mode", "Off");
+                speedMultiplier = 1; //Return to default
             }
 
             double leftX = gamepad1.left_stick_x;
