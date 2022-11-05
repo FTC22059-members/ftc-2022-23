@@ -60,7 +60,7 @@ public class mecanumTest extends LinearOpMode {
             } else if (gamepad1.right_trigger >= 0.75) {
                 speedMultiplier = 0.25;
                 telemetry.addData("Precise Mode", "On");
-            } else {
+            } else { // if precise mode is off
                 telemetry.addData("Precise Mode", "Off");
                 speedMultiplier = 1; //Return to default
                 /*
@@ -69,11 +69,11 @@ public class mecanumTest extends LinearOpMode {
                 until the speed is at its maximum. When the joystick is not pushed,
                 the speed will reset to 0.
                 */
-                if (gamepad1.left_stick_x != 0 || gamepad1.left_stick_y != 0) {
-                    if (accelerationMultiplier < 1) {
+                if (gamepad1.left_stick_x != 0 || gamepad1.left_stick_y != 0) { // if the joystick is moved
+                    if (accelerationMultiplier < 1) { // accelerate!
                         accelerationMultiplier = accelerationMultiplier + 0.05;
                     }
-                } else {
+                } else { // if the joystick isn't moved, reset the multiplier
                     accelerationMultiplier = 0;
                 }
             }
