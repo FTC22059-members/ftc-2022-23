@@ -51,6 +51,8 @@ public class mecanumTest extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         double speedMultiplier = 1; //Default speed
+        double accelerationTime = 0;
+        double accelerationMultiplier = 0;
         while (opModeIsActive()) {
             if (gamepad1.right_trigger > 0.05 && gamepad1.right_trigger < 0.75) {
                 speedMultiplier = 1-gamepad1.right_trigger;
@@ -61,11 +63,24 @@ public class mecanumTest extends LinearOpMode {
             } else {
                 telemetry.addData("Precise Mode", "Off");
                 speedMultiplier = 1; //Return to default
+                /*
+                While precise mode is off, if the left stick is moved, then
+                it will incrementally increase the speed for about 2/3 of a second,
+                until the speed is at its maximum. When the joystick is not pushed,
+                the speed will reset to 0.
+                */
+                if (gamepad1.left_stick_x != 0 || gamepad1.left_stick_y != 0) {
+                    if (accelerationMultiplier < 1) {
+                        accelerationMultiplier = accelerationMultiplier + 0.05;
+                    }
+                } else {
+                    accelerationMultiplier = 0;
+                }
             }
 
             double leftX = gamepad1.left_stick_x;
             double lefty = -gamepad1.left_stick_y;
-            double rightX = gamepad1.right_stick_x / 2;
+            double rightX = gamepad1.right_stick_x / 1.3;
 
             double denominator = Math.max(Math.abs(lefty) + Math.abs(leftX) + Math.abs(rightX), 1);
             double frontLeftPower = (lefty + leftX + rightX) / denominator;
