@@ -38,8 +38,9 @@ public class armTest extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            armMotor.setPower(gamepad1.right_trigger);
-            telemetry.addData("Arm Power", gamepad1.right_trigger);
+            armMotor.setPower(-gamepad1.left_stick_y);
+            telemetry.addData("Arm Power", gamepad1.left_stick_y);
+
             telemetry.update();
 
             idle();
