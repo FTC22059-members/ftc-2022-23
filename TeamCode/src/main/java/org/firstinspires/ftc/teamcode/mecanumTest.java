@@ -64,10 +64,9 @@ public class mecanumTest extends LinearOpMode {
                 telemetry.addData("Precise Mode", "Off");
                 speedMultiplier = 1; //Return to default
                 /*
-                While precise mode is off, if the left stick is moved, then
-                it will incrementally increase the speed for about 2/3 of a second,
-                until the speed is at its maximum. When the joystick is not pushed,
-                the speed will reset to 0.
+                While precise mode is off, if the left stick is moved, incrementally
+                increase the speed for about 2/3 of a second, until the speed is at
+                its maximum. When the joystick is not pushed, reset speed to 0.
                 */
                 if (gamepad1.left_stick_x != 0 || gamepad1.left_stick_y != 0) { // if the joystick is moved
                     if (accelerationMultiplier < 1) { // accelerate!
