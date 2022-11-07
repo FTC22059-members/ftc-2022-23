@@ -77,6 +77,11 @@ public class mecanumTest extends LinearOpMode {
                 }
             }
 
+            telemetry.addData("acceleration multiplier: ", accelerationMultiplier);
+            telemetry.addData("speed multiplier: ", speedMultiplier);
+            telemetry.addData("real speed multiplier: ", accelerationMultiplier * speedMultiplier);
+            telemetry.update();
+
             double leftX = gamepad1.left_stick_x;
             double lefty = -gamepad1.left_stick_y;
             double rightX = gamepad1.right_stick_x / 1.3;
