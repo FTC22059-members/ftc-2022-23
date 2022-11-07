@@ -70,7 +70,7 @@ public class mecanumTest extends LinearOpMode {
                 */
                 if (gamepad1.left_stick_x != 0 || gamepad1.left_stick_y != 0) { // if the joystick is moved
                     if (accelerationMultiplier < 1) { // accelerate!
-                        accelerationMultiplier = accelerationMultiplier + 0.05;
+                        accelerationMultiplier = accelerationMultiplier + 0.005;
                     }
                 } else { // if the joystick isn't moved, reset the multiplier
                     accelerationMultiplier = 0;
