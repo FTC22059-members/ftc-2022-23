@@ -87,10 +87,10 @@ public class mecanumTest extends LinearOpMode {
             double frontRightPower = (lefty - leftX - rightX) / denominator;
             double backRightPower = (lefty + leftX - rightX) / denominator;
 
-            backLeft.setPower(backLeftPower * speedMultiplier);
-            backRight.setPower(backRightPower * speedMultiplier);
-            frontLeft.setPower(frontLeftPower * speedMultiplier);
-            frontRight.setPower(frontRightPower * speedMultiplier);
+            backLeft.setPower(backLeftPower * speedMultiplier * accelerationMultiplier);
+            backRight.setPower(backRightPower * speedMultiplier * accelerationMultiplier);
+            frontLeft.setPower(frontLeftPower * speedMultiplier * accelerationMultiplier);
+            frontRight.setPower(frontRightPower * speedMultiplier * accelerationMultiplier);
 
             idle();
         }
