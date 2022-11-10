@@ -19,7 +19,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp(name = "Tele-op 2023 (mechanumTest)")
 public class mecanumTest extends LinearOpMode {
@@ -35,6 +34,8 @@ public class mecanumTest extends LinearOpMode {
         frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
         frontRight = hardwareMap.get(DcMotor.class, "frontRight");
 
+        AprilTags aprilTags = new AprilTags(hardwareMap, telemetry);
+
         // Wait for the start button
         telemetry.addData(">", "Press Start to energize the robot with electrons that make it MOVE!");
         telemetry.update();
@@ -42,8 +43,10 @@ public class mecanumTest extends LinearOpMode {
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
-
+        aprilTags.init();
         waitForStart();
+        
+        aprilTags.preLoop();
 
         // run until the end of the match (driver presses STOP)
         double speedMultiplier = 1; //Default speed
@@ -92,6 +95,7 @@ public class mecanumTest extends LinearOpMode {
             frontLeft.setPower(frontLeftPower * speedMultiplier * accelerationMultiplier);
             frontRight.setPower(frontRightPower * speedMultiplier * accelerationMultiplier);
 
+            aprilTags.inLoop();
             idle();
         }
     }
