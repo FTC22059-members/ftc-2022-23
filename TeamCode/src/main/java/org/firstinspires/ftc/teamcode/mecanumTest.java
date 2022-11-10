@@ -18,19 +18,15 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@TeleOp(name = "Tele-op 2022")
+@TeleOp(name = "Tele-op 2023 (mechanumTest)")
 public class mecanumTest extends LinearOpMode {
     private DcMotor backLeft;
     private DcMotor backRight;
     private DcMotor frontLeft;
     private DcMotor frontRight;
-    private DcMotor carousel;
-    private DcMotor arm;
-    private Servo spatula;
 
     @Override
     public void runOpMode() {
@@ -51,7 +47,6 @@ public class mecanumTest extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         double speedMultiplier = 1; //Default speed
-        double accelerationTime = 0;
         double accelerationMultiplier = 0;
         while (opModeIsActive()) {
             if (gamepad1.right_trigger > 0.05 && gamepad1.right_trigger < 0.75) {
