@@ -72,11 +72,9 @@ public class AprilTags {
         this.telemetry.setMsTransmissionInterval(50);
     }
 
-    public void inLoop(){
-        this.detectTag();
-    }
+    public String detectTag(){
 
-    public void detectTag(){
+        String zoneString = "Not found";
 
         // Calling getDetectionsUpdate() will only return an object if there was a new frame
         // processed since the last time we called it. Otherwise, it will return null. This
@@ -125,11 +123,21 @@ public class AprilTags {
                     this.telemetry.addLine(String.format("Rotation Yaw: %.2f degrees", Math.toDegrees(detection.pose.yaw)));
                     this.telemetry.addLine(String.format("Rotation Pitch: %.2f degrees", Math.toDegrees(detection.pose.pitch)));
                     this.telemetry.addLine(String.format("Rotation Roll: %.2f degrees", Math.toDegrees(detection.pose.roll)));
+
+                    if (detection.id==13){
+                        zoneString="A";
+                    }else if (detection.id==14){
+                        zoneString="B";
+                    }else if (detection.id==15){
+                        zoneString="C";
+                    }else{
+                        this.telemetry.addLine(String.format("\nINVALID TAG DETECTED=%d", detection.id));
+                    }
                 }
             }
             this.telemetry.update();
         }
-
+        return zoneString;
         //sleep(20);
     }
 }
