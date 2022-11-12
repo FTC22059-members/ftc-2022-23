@@ -40,7 +40,7 @@ public class mecanumTest extends LinearOpMode {
         frontRight = hardwareMap.get(DcMotor.class, "frontRight");
 
         // Wait for the start button
-        telemetry.addData(">", "Press Start to energize the robot with electrons that make it MOVE!");
+        telemetry.addData(">", "Roses are red, violets are blue, if you press start on the robot, then it will move");
         telemetry.update();
 
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
