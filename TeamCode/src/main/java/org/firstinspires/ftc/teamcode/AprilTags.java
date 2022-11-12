@@ -64,13 +64,19 @@ public class AprilTags {
 
             }
         });
+        this.detectTag();
     }
+
 
     public void preLoop(){
         this.telemetry.setMsTransmissionInterval(50);
     }
 
     public void inLoop(){
+        this.detectTag();
+    }
+
+    public void detectTag(){
 
         // Calling getDetectionsUpdate() will only return an object if there was a new frame
         // processed since the last time we called it. Otherwise, it will return null. This
