@@ -52,7 +52,7 @@ public class Autonomous2023 extends LinearOpMode {
 
         String zone = "A";
 
-        if (opModeIsActive()) {
+        while (opModeIsActive()) {
             zone = aprilTags.detectTag();
             if (zone.equals("A")){
                 autonomousZones.doZoneA();
