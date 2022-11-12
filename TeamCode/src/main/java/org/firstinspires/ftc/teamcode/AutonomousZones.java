@@ -21,12 +21,15 @@ public class AutonomousZones {
     }
 
     public void doZoneA(){
-
+        telemetry.addLine("Zone = A");
+        telemetry.update();
     }
     public void doZoneB(){
-
+        telemetry.addLine("Zone = B");
+        telemetry.update();
     }
     public void doZoneC(){
-
+        telemetry.addLine("Zone = C");
+        telemetry.update();
     }
 }
