@@ -90,3 +90,4 @@ lint/tmp/
 TeamCode/src/main/java/org/firstinspires/ftc/teamcode/.DS_Store
 
 .idea/*
+.DS_Store

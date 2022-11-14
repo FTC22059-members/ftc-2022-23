@@ -18,19 +18,14 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
 
-@TeleOp(name = "Tele-op 2022")
+@TeleOp(name = "Tele-op 2023 (mechanumTest)")
 public class mecanumTest extends LinearOpMode {
     private DcMotor backLeft;
     private DcMotor backRight;
     private DcMotor frontLeft;
     private DcMotor frontRight;
-    private DcMotor carousel;
-    private DcMotor arm;
-    private Servo spatula;
 
     @Override
     public void runOpMode() {
@@ -40,18 +35,16 @@ public class mecanumTest extends LinearOpMode {
         frontRight = hardwareMap.get(DcMotor.class, "frontRight");
 
         // Wait for the start button
-        telemetry.addData(">", "Press Start to energize the robot with electrons that make it MOVE!");
+        telemetry.addData(">", "Roses are red, violets are blue, if you press start on the robot, then it will move");
         telemetry.update();
 
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
-
         waitForStart();
-
+        
         // run until the end of the match (driver presses STOP)
         double speedMultiplier = 1; //Default speed
-        double accelerationTime = 0;
         double accelerationMultiplier = 0;
         boolean precisionMode = false;
         while (opModeIsActive()) {
