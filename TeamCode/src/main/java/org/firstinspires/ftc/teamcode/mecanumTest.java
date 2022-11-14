@@ -53,14 +53,18 @@ public class mecanumTest extends LinearOpMode {
         double speedMultiplier = 1; //Default speed
         double accelerationTime = 0;
         double accelerationMultiplier = 0;
+        boolean precisionMode = false;
         while (opModeIsActive()) {
             if (gamepad1.right_trigger > 0.05 && gamepad1.right_trigger < 0.75) {
+                precisionMode = true;
                 speedMultiplier = 1-gamepad1.right_trigger;
                 telemetry.addData("Precise Mode", "On");
             } else if (gamepad1.right_trigger >= 0.75) {
+                precisionMode = true;
                 speedMultiplier = 0.25;
                 telemetry.addData("Precise Mode", "On");
             } else { // if precise mode is off
+                precisionMode = false;
                 telemetry.addData("Precise Mode", "Off");
                 speedMultiplier = 1; //Return to default
                 /*
@@ -92,10 +96,17 @@ public class mecanumTest extends LinearOpMode {
             double frontRightPower = (lefty - leftX - rightX) / denominator;
             double backRightPower = (lefty + leftX - rightX) / denominator;
 
-            backLeft.setPower(backLeftPower * speedMultiplier * accelerationMultiplier);
-            backRight.setPower(backRightPower * speedMultiplier * accelerationMultiplier);
-            frontLeft.setPower(frontLeftPower * speedMultiplier * accelerationMultiplier);
-            frontRight.setPower(frontRightPower * speedMultiplier * accelerationMultiplier);
+            if (precisionMode) {
+                backLeft.setPower(backLeftPower * speedMultiplier);
+                backRight.setPower(backRightPower * speedMultiplier);
+                frontLeft.setPower(frontLeftPower * speedMultiplier);
+                frontRight.setPower(frontRightPower * speedMultiplier);
+            } else {
+                backLeft.setPower(backLeftPower * speedMultiplier * accelerationMultiplier);
+                backRight.setPower(backRightPower * speedMultiplier * accelerationMultiplier);
+                frontLeft.setPower(frontLeftPower * speedMultiplier * accelerationMultiplier);
+                frontRight.setPower(frontRightPower * speedMultiplier * accelerationMultiplier);
+            }
 
             idle();
         }
