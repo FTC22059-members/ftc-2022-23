@@ -37,7 +37,7 @@ public class Teleop2023 extends LinearOpMode {
         frontRight = hardwareMap.get(DcMotor.class, "frontRight");
         
         // Wait for the start button
-        telemetry.addData(">", "Roses are red, violets are blue, if you press start on the robot, then it will move");
+        telemetry.addData(">", "start the robot - Sun Tzu, The Art of War");
         telemetry.update();
         
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
