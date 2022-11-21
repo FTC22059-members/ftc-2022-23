@@ -7,7 +7,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class arm {
-    public float armPosition = 0;
     private DcMotor armMotor;
 
     private Gamepad gamepad1;
@@ -15,7 +14,7 @@ public class arm {
     private HardwareMap hardwareMap;
     private Telemetry telemetry;
 
-    private static float UPPERLIMIT = 10;
+    private static float UPPERLIMIT = 440;
     private static float LOWERLIMIT = 0;
 
 
@@ -25,7 +24,7 @@ public class arm {
     }
 
     public void moveUp(float amount) {
-        if (armPosition < UPPERLIMIT) {
+        if (armMotor.getCurrentPosition() < UPPERLIMIT) {
             armMotor.setPower(amount);
         } else {
             armMotor.setPower(0);
@@ -33,7 +32,7 @@ public class arm {
     }
 
     public void moveDown(float amount) {
-        if (armPosition > LOWERLIMIT) {
+        if (armMotor.getCurrentPosition() > LOWERLIMIT) {
             armMotor.setPower(amount);
         } else {
             armMotor.setPower(0);
@@ -58,5 +57,6 @@ public class arm {
         } else {
             armMotor.setPower(0);
         }
+        telemetry.addData(">", "getCurrentPosition");
     }
 }
