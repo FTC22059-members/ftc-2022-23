@@ -24,14 +24,15 @@ public class Teleop2023 extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        //Find motors in hardware map.
+        //Find motors in hardware map (in the driver station).
         backLeft = hardwareMap.get(DcMotorEx.class, "backLeft");
         backRight = hardwareMap.get(DcMotorEx.class, "backRight");
         frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
         frontRight = hardwareMap.get(DcMotorEx.class, "frontRight");
 
         //Hey, it's PID time
-
+        
+        // Set the pid values to their corresponding wheels
         PIDFCoefficients PIDF = new PIDFCoefficients(10,3,0,0);
 
         backLeft.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, PIDF);
@@ -39,27 +40,28 @@ public class Teleop2023 extends LinearOpMode {
         frontLeft.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, PIDF);
         frontRight.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, PIDF);
 
-        // Wait for the start button
+        // tell people to press the start button
         telemetry.addData(">", "Roses are red, violets are blue, if you press start on the robot, then it will move");
         telemetry.update();
         
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         
+        // Wait till we press the start button
         waitForStart();
         
         // run until the end of the match (driver presses STOP)
         double speedMultiplier = 1; //Default speed
-        double accelerationMultiplier = 0;
+        double accelerationMultiplier = 0; // Currently, it's not accelerating at all
         while (opModeIsActive()) {
-            if (gamepad1.right_trigger > 0.05 && gamepad1.right_trigger < 0.75) {
+            if (gamepad1.right_trigger > 0.05 && gamepad1.right_trigger < 0.75) { // if precision mode is on (the right trigger is pulled down to some degree)
                 speedMultiplier = 1-gamepad1.right_trigger;
                 telemetry.addData("Precise Mode", "On");
-            } else if (gamepad1.right_trigger >= 0.75) {
+            } else if (gamepad1.right_trigger >= 0.75) { // also if precision mode is on, but it's fully or almost fully pu
                 speedMultiplier = 0.25;
                 telemetry.addData("Precise Mode", "On");
             } else { // if precise mode is off
-                telemetry.addData("Precise Mode", "Off");
+                telemetry.addData("Precise Mode", "Off"); // if precision mode is off, and the robot will slowly accelerate
                 speedMultiplier = 1; //Return to default
             }
             /*
@@ -77,27 +79,32 @@ public class Teleop2023 extends LinearOpMode {
             }
             Overrode value while we test out PID, PID should replace accelerationMultiplier*/
             accelerationMultiplier=1;
-
+            
+            // log current data
             telemetry.addData("acceleration multiplier: ", accelerationMultiplier);
             telemetry.addData("speed multiplier: ", speedMultiplier);
             telemetry.addData("real speed multiplier: ", accelerationMultiplier * speedMultiplier);
             telemetry.update();
             
+            // get the controls
             double leftX = gamepad1.left_stick_x;
             double lefty = -gamepad1.left_stick_y;
             double rightX = gamepad1.right_stick_x / 1.3;
             
+            // figure out the power for each wheel
             double denominator = Math.max(Math.abs(lefty) + Math.abs(leftX) + Math.abs(rightX), 1);
             double frontLeftPower = (lefty + leftX + rightX) / denominator;
             double backLeftPower = (lefty - leftX + rightX) / denominator;
             double frontRightPower = (lefty - leftX - rightX) / denominator;
             double backRightPower = (lefty + leftX - rightX) / denominator;
             
+            // actually tell the wheels to move! (finally)
             backLeft.setPower(backLeftPower * speedMultiplier * accelerationMultiplier);
             backRight.setPower(backRightPower * speedMultiplier * accelerationMultiplier);
             frontLeft.setPower(frontLeftPower * speedMultiplier * accelerationMultiplier);
             frontRight.setPower(frontRightPower * speedMultiplier * accelerationMultiplier);
             
+            // puts this code to sleep, so other code can run
             idle();
         }
     }
