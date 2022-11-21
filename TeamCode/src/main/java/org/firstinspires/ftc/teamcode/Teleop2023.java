@@ -61,6 +61,7 @@ public class Teleop2023 extends LinearOpMode {
             } else { // if precise mode is off
                 telemetry.addData("Precise Mode", "Off");
                 speedMultiplier = 1; //Return to default
+            }
             /*
             While precise mode is off, if the left stick is moved, incrementally
             increase the speed for about 2/3 of a second, until the speed is at
