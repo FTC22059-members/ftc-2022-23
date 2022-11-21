@@ -65,7 +65,7 @@ public class Teleop2023 extends LinearOpMode {
             While precise mode is off, if the left stick is moved, incrementally
             increase the speed for about 2/3 of a second, until the speed is at
             its maximum. When the joystick is not pushed, reset speed to 0.
-            */
+
                 if (gamepad1.left_stick_x != 0 || gamepad1.left_stick_y != 0) { // if the joystick is moved
                     if (accelerationMultiplier < 1) { // accelerate!
                         accelerationMultiplier = accelerationMultiplier + 0.005;
@@ -74,7 +74,9 @@ public class Teleop2023 extends LinearOpMode {
                     accelerationMultiplier = 0;
                 }
             }
-            
+            Overrode value while we test out PID, PID should replace accelerationMultiplier*/
+            accelerationMultiplier=1;
+
             telemetry.addData("acceleration multiplier: ", accelerationMultiplier);
             telemetry.addData("speed multiplier: ", speedMultiplier);
             telemetry.addData("real speed multiplier: ", accelerationMultiplier * speedMultiplier);
