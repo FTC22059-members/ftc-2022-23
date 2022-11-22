@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name = "Tele-op 2023")
 public class Teleop2023 extends LinearOpMode {
@@ -21,6 +22,8 @@ public class Teleop2023 extends LinearOpMode {
     private DcMotorEx backRight;
     private DcMotorEx frontLeft;
     private DcMotorEx frontRight;
+    private ElapsedTime timer = new ElapsedTime();
+    private float timeTotal = 0;
 
     @Override
     public void runOpMode() {
@@ -29,6 +32,7 @@ public class Teleop2023 extends LinearOpMode {
         backRight = hardwareMap.get(DcMotorEx.class, "backRight");
         frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
         frontRight = hardwareMap.get(DcMotorEx.class, "frontRight");
+
 
         //Hey, it's PID time
         
@@ -103,8 +107,16 @@ public class Teleop2023 extends LinearOpMode {
             backRight.setPower(backRightPower * speedMultiplier * accelerationMultiplier);
             frontLeft.setPower(frontLeftPower * speedMultiplier * accelerationMultiplier);
             frontRight.setPower(frontRightPower * speedMultiplier * accelerationMultiplier);
-            
             // puts this code to sleep, so other code can run
+
+
+             if (backLeft.getPower()+backRight.getPower()+frontLeft.getPower()+frontRight.getPower()!=0) {
+                 timer.reset();
+             }
+             if (backLeft.getPower()+backRight.getPower()+frontLeft.getPower()+frontRight.getPower()==4) {
+                 time = timer.milliseconds();
+             }
+            telemetry.addData("Timer time =", time);
             idle();
         }
     }
