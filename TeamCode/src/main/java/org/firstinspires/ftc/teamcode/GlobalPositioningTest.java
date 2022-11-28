@@ -112,7 +112,7 @@ public class GlobalPositioningTest extends LinearOpMode {
             double rightX = gamepad1.right_stick_x / 1.3;
             
             robotImu.imuLoop();
-            double newAngle = robotImu.getAngle();
+            double newAngle = robotImu.getAngleRadians();
             double newX = leftX * cos(newAngle) - leftY * sin(newAngle);
             double newY = leftX * sin(newAngle) + leftY * cos(newAngle);
             leftX = newX;
