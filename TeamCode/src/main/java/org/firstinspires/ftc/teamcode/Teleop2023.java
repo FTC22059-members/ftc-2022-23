@@ -80,10 +80,9 @@ public class Teleop2023 extends LinearOpMode {
                 } else { // if the joystick isn't moved, reset the multiplier
                     accelerationMultiplier = 0;
                 }
-            }
-            Overrode value while we test out PID, PID should replace accelerationMultiplier*/
-            accelerationMultiplier=1;
-            
+            }*/
+
+
             // log current data
             telemetry.addData("acceleration multiplier: ", accelerationMultiplier);
             telemetry.addData("speed multiplier: ", speedMultiplier);
@@ -101,7 +100,9 @@ public class Teleop2023 extends LinearOpMode {
             double backLeftPower = (lefty - leftX + rightX) / denominator;
             double frontRightPower = (lefty - leftX - rightX) / denominator;
             double backRightPower = (lefty + leftX - rightX) / denominator;
-            
+
+            accelerationMultiplier=Math.pow(frontLeftPower, 2.5-gamepad1.left_trigger*1.5);
+
             // actually tell the wheels to move! (finally)
             backLeft.setPower(backLeftPower * speedMultiplier * accelerationMultiplier);
             backRight.setPower(backRightPower * speedMultiplier * accelerationMultiplier);
