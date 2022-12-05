@@ -104,7 +104,7 @@ public class Teleop2023 extends LinearOpMode {
             double frontRightPower = (lefty - leftX - rightX) / denominator;
             double backRightPower = (lefty + leftX - rightX) / denominator;
 
-            accelerationMultiplier=Math.pow(frontLeftPower, 2.5-gamepad1.left_trigger*1.5);
+            accelerationMultiplier=Math.pow(Math.abs(frontLeftPower), 2.5-gamepad1.left_trigger*1.5);
 
             // actually tell the wheels to move! (finally)
             backLeft.setPower(backLeftPower * speedMultiplier * accelerationMultiplier);
