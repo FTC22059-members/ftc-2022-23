@@ -150,6 +150,10 @@ public class GlobalPositioningTest extends LinearOpMode {
             }
             telemetry.addData("Timer time =", time);
             telemetry.update();
+
+            armMotorTest.armLoop();
+            telemetry.addData("Arm Power", gamepad1.left_stick_y);
+
             idle();
         }
     }

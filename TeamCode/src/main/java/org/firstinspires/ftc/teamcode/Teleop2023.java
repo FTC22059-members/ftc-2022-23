@@ -121,6 +121,10 @@ public class Teleop2023 extends LinearOpMode {
                  time = timer.milliseconds();
              }
             telemetry.addData("Timer time =", time);
+
+            armMotorTest.armLoop();
+            telemetry.addData("Arm Power", gamepad1.left_stick_y);
+
             idle();
         }
     }
