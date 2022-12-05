@@ -33,8 +33,11 @@ public class Teleop2023 extends LinearOpMode {
         frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
         frontRight = hardwareMap.get(DcMotorEx.class, "frontRight");
 
+        arm armMotorTest = new arm(hardwareMap, telemetry);
+        armMotorTest.init(gamepad1, gamepad2);
 
         //Hey, it's PID time
+        //Hey, it's still PID time
         
         // Set the pid values to their corresponding wheels
         PIDFCoefficients PIDF = new PIDFCoefficients(10,3,0,0);

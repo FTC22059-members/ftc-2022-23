@@ -57,6 +57,6 @@ public class arm {
         } else {
             armMotor.setPower(0);
         }
-        telemetry.addData(">", "getCurrentPosition");
+        telemetry.addData("Arm current position:", armMotor.getCurrentPosition());
     }
 }

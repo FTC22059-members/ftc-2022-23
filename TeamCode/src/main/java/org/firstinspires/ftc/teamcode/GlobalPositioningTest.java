@@ -113,11 +113,19 @@ public class GlobalPositioningTest extends LinearOpMode {
             
             robotImu.imuLoop();
             double newAngle = robotImu.getAngleRadians();
-            double newX = leftX * cos(newAngle) - leftY * sin(newAngle);
+            double newX = leftX * cos(newAngle) + leftY * sin(newAngle);
             double newY = leftX * sin(newAngle) + leftY * cos(newAngle);
+
+            telemetry.addData("Old X: ",leftX);
+            telemetry.addData("Old Y: ",leftY);
+
             leftX = newX;
             leftY = newY;
-    
+
+            telemetry.addData("New Angle Radians: ",newAngle);
+            telemetry.addData("New X: ",newX);
+            telemetry.addData("New Y: ",newY);
+
             // figure out the power for each wheel
             double denominator = Math.max(Math.abs(leftY) + Math.abs(leftX) + Math.abs(rightX), 1);
             double frontLeftPower = (leftY + leftX + rightX) / denominator;
@@ -140,6 +148,7 @@ public class GlobalPositioningTest extends LinearOpMode {
                 time = timer.milliseconds();
             }
             telemetry.addData("Timer time =", time);
+            telemetry.update();
             idle();
         }
     }
