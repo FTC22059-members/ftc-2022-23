@@ -5,6 +5,9 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import static java.lang.Math.sin;
+import static java.lang.Math.cos;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -38,7 +41,7 @@ public class Teleop2023 extends LinearOpMode {
 
         //Hey, it's PID time
         //Hey, it's still PID time
-        
+
         // Set the pid values to their corresponding wheels
         PIDFCoefficients PIDF = new PIDFCoefficients(10,3,0,0);
 
@@ -47,10 +50,19 @@ public class Teleop2023 extends LinearOpMode {
         frontLeft.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, PIDF);
         frontRight.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, PIDF);
 
+        imu robotImu = new imu(hardwareMap, telemetry);
+        robotImu.init();
+
+        if (!isStopRequested() && !robotImu.isImuCalibrated()) {
+            sleep(50);
+            idle();
+        }
+
         // tell people to press the start button
-        telemetry.addData(">", "Roses are red, violets are blue, if you press start on the robot, then it will move");
+
+        telemetry.addData("Imu calibrated!", "\n Roses are red, violets are blue, if you press start on the robot, then it will move");
         telemetry.update();
-        
+
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         
@@ -94,15 +106,36 @@ public class Teleop2023 extends LinearOpMode {
             
             // get the controls
             double leftX = gamepad1.left_stick_x;
-            double lefty = -gamepad1.left_stick_y;
+            double leftY = -gamepad1.left_stick_y;
             double rightX = gamepad1.right_stick_x / 1.3;
-            
+
+            telemetry.addData("leftx", leftX);
+            telemetry.addData("lefty", leftY);
+
+            //robotImu.imuLoop();
+            double gyroAngle = robotImu.getAngleRadians();
+            //double newX = leftX * cos(newAngle) - leftY * sin(newAngle);
+            //double newY = leftX * sin(newAngle) + leftY * cos(newAngle);
+
+            double joystickAngle = Math.atan2(leftX,leftY);
+            double newAngle = joystickAngle + gyroAngle;
+            double joystickMagnitude = Math.sqrt(Math.pow(leftX,2)+Math.pow(leftY,2));
+
+            double newX = joystickMagnitude * sin(newAngle);
+            double newY = joystickMagnitude * cos(newAngle);
+
+            leftX = newX;
+            leftY = newY;
+            telemetry.addData("newx", leftX);
+            telemetry.addData("newy", leftY);
+            telemetry.addData("Angle (Radians)", newAngle);
+
             // figure out the power for each wheel
-            double denominator = Math.max(Math.abs(lefty) + Math.abs(leftX) + Math.abs(rightX), 1);
-            double frontLeftPower = (lefty + leftX + rightX) / denominator;
-            double backLeftPower = (lefty - leftX + rightX) / denominator;
-            double frontRightPower = (lefty - leftX - rightX) / denominator;
-            double backRightPower = (lefty + leftX - rightX) / denominator;
+            double denominator = Math.max(Math.abs(leftY) + Math.abs(leftX) + Math.abs(rightX), 1);
+            double frontLeftPower = (leftY + leftX + rightX) / denominator;
+            double backLeftPower = (leftY - leftX + rightX) / denominator;
+            double frontRightPower = (leftY - leftX - rightX) / denominator;
+            double backRightPower = (leftY + leftX - rightX) / denominator;
 
             accelerationMultiplier=Math.pow(Math.abs(frontLeftPower), 2.5-gamepad1.left_trigger*1.5);
 
@@ -111,9 +144,8 @@ public class Teleop2023 extends LinearOpMode {
             backRight.setPower(backRightPower * speedMultiplier * accelerationMultiplier);
             frontLeft.setPower(frontLeftPower * speedMultiplier * accelerationMultiplier);
             frontRight.setPower(frontRightPower * speedMultiplier * accelerationMultiplier);
+
             // puts this code to sleep, so other code can run
-
-
              if (backLeft.getPower()+backRight.getPower()+frontLeft.getPower()+frontRight.getPower()!=0) {
                  timer.reset();
              }
