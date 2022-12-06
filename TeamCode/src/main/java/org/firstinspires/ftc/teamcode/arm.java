@@ -24,7 +24,7 @@ public class arm {
     }
 
     public void moveDown(float amount) {
-        if (armMotor.getCurrentPosition() < UPPERLIMIT) {
+        if (armMotor.getCurrentPosition() > LOWERLIMIT) {
             armMotor.setPower(amount);
         } else {
             armMotor.setPower(0);
@@ -32,7 +32,7 @@ public class arm {
     }
 
     public void moveUp(float amount) {
-        if (armMotor.getCurrentPosition() > LOWERLIMIT) {
+        if (armMotor.getCurrentPosition() < UPPERLIMIT) {
             armMotor.setPower(amount);
         } else {
             armMotor.setPower(0);
