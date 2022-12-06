@@ -14,7 +14,7 @@ public class arm {
     private HardwareMap hardwareMap;
     private Telemetry telemetry;
 
-    private static float UPPERLIMIT = 440;
+    private static float UPPERLIMIT = 1760;
     private static float LOWERLIMIT = 0;
 
 
@@ -23,17 +23,17 @@ public class arm {
         this.telemetry = telemetryCon;
     }
 
-    public void moveUp(float amount) {
-        if (armMotor.getCurrentPosition() < UPPERLIMIT) {
-            armMotor.setPower(amount);
+    public void moveDown(float amount) {
+        if (armMotor.getCurrentPosition() > LOWERLIMIT) {
+            armMotor.setPower(0-amount);
         } else {
             armMotor.setPower(0);
         }
     }
 
-    public void moveDown(float amount) {
-        if (armMotor.getCurrentPosition() > LOWERLIMIT) {
-            armMotor.setPower(amount);
+    public void moveUp(float amount) {
+        if (armMotor.getCurrentPosition() < UPPERLIMIT) {
+            armMotor.setPower(0-amount);
         } else {
             armMotor.setPower(0);
         }
