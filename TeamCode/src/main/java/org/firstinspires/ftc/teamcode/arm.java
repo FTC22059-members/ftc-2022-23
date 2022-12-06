@@ -51,10 +51,10 @@ public class arm {
 
     public void armLoop() {
         telemetry.addData("Right stick Y:",gamepad1.right_stick_y);
-        if (gamepad1.right_stick_y > 0) {
+        if (gamepad1.right_stick_y < 0) {
             telemetry.addData("moving:","up");
             moveUp(gamepad1.right_stick_y);
-        } else if (gamepad1.right_stick_y < 0) {
+        } else if (gamepad1.right_stick_y > 0) {
             telemetry.addData("moving:","down");
             moveDown(gamepad1.right_stick_y);
         } else {
