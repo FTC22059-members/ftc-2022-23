@@ -121,7 +121,7 @@ public class imu {
     public void imuLoop() {
         telemetry.addData("1 imu heading", lastAngles.firstAngle);
         telemetry.addData("2 global heading", globalAngle);
-        telemetry.update();
+        //telemetry.update();
     }
     
 }

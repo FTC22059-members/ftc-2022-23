@@ -27,7 +27,8 @@ public class armTest extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        armMotor = hardwareMap.get(DcMotor.class, "arm");
+        arm armMotorTest = new arm(hardwareMap, telemetry);
+        armMotorTest.init(gamepad1, gamepad2);
 
         // Wait for the start button
         telemetry.addData(">", "Press Start to energize the robot with electrons that make it MOVE!");
@@ -38,7 +39,7 @@ public class armTest extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            armMotor.setPower(-gamepad1.left_stick_y);
+            armMotorTest.armLoop();
             telemetry.addData("Arm Power", gamepad1.left_stick_y);
 
             telemetry.update();
