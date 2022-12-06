@@ -110,13 +110,28 @@ public class GlobalPositioningTest extends LinearOpMode {
             double leftX = gamepad1.left_stick_x;
             double leftY = -gamepad1.left_stick_y;
             double rightX = gamepad1.right_stick_x / 1.3;
-            
-            robotImu.imuLoop();
-            double newAngle = robotImu.getAngleRadians();
-            double newX = leftX * cos(newAngle) - leftY * sin(newAngle);
-            double newY = leftX * sin(newAngle) + leftY * cos(newAngle);
+
+            telemetry.addData("leftx", leftX);
+            telemetry.addData("lefty", leftY);
+
+
+            //robotImu.imuLoop();
+            double gyroAngle = robotImu.getAngleRadians();
+            //double newX = leftX * cos(newAngle) - leftY * sin(newAngle);
+            //double newY = leftX * sin(newAngle) + leftY * cos(newAngle);
+
+            double joystickAngle = Math.atan2(leftX,leftY);
+            double newAngle = joystickAngle + gyroAngle;
+            double joystickMagnitude = Math.sqrt(Math.pow(leftX,2)+Math.pow(leftY,2));
+
+            double newX = joystickMagnitude * sin(newAngle);
+            double newY = joystickMagnitude * cos(newAngle);
+
             leftX = newX;
             leftY = newY;
+            telemetry.addData("newx", leftX);
+            telemetry.addData("newy", leftY);
+            telemetry.addData("Angle (Radians)", newAngle);
     
             // figure out the power for each wheel
             double denominator = Math.max(Math.abs(leftY) + Math.abs(leftX) + Math.abs(rightX), 1);
