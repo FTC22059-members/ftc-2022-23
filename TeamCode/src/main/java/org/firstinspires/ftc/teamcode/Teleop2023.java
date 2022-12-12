@@ -36,8 +36,15 @@ public class Teleop2023 extends LinearOpMode {
         frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
         frontRight = hardwareMap.get(DcMotorEx.class, "frontRight");
 
-        arm armMotorTest = new arm(hardwareMap, telemetry);
-        armMotorTest.init(gamepad1, gamepad2);
+        backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+
+
 
         //Hey, it's PID time
         //Hey, it's still PID time
@@ -58,13 +65,15 @@ public class Teleop2023 extends LinearOpMode {
             idle();
         }
 
+        arm armMotor = new arm(hardwareMap, telemetry);
+        armMotor.init(gamepad1, gamepad2);
+
         // tell people to press the start button
 
         telemetry.addData("Imu calibrated!", "\n Roses are red, violets are blue, if you press start on the robot, then it will move");
         telemetry.update();
 
-        frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+
         
         // Wait till we press the start button
         waitForStart();
@@ -102,8 +111,7 @@ public class Teleop2023 extends LinearOpMode {
             telemetry.addData("acceleration multiplier: ", accelerationMultiplier);
             telemetry.addData("speed multiplier: ", speedMultiplier);
             telemetry.addData("real speed multiplier: ", accelerationMultiplier * speedMultiplier);
-            telemetry.update();
-            
+
             // get the controls
             double leftX = gamepad1.left_stick_x;
             double leftY = -gamepad1.left_stick_y;
@@ -154,9 +162,10 @@ public class Teleop2023 extends LinearOpMode {
              }
             telemetry.addData("Timer time =", time);
 
-            armMotorTest.armLoop();
+            armMotor.armLoop();
             telemetry.addData("Arm Power", gamepad1.left_stick_y);
-
+            telemetry.update();
+            
             idle();
         }
     }
