@@ -14,7 +14,7 @@ public class arm {
     private HardwareMap hardwareMap;
     private Telemetry telemetry;
 
-    private static float UPPERLIMIT = -2000;
+    private static float UPPERLIMIT = -2250;
     private static float LOWERLIMIT = 0;
 
 
