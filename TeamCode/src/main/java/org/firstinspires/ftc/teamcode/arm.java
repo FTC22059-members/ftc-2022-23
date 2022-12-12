@@ -41,6 +41,9 @@ public class arm {
 
     public void init(Gamepad gamepad1, Gamepad gamepad2) {
         armMotor = hardwareMap.get(DcMotor.class, "armMotor");
+        armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         this.gamepad1 = gamepad1;
         this.gamepad2 = gamepad2;
     }
