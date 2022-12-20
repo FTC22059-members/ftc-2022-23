@@ -75,6 +75,7 @@ public class Teleop2023 extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         double speedMultiplier = 1; //Default speed
         double accelerationMultiplier = 0; // Currently, it's not accelerating at all
+        long accelerationModifier = (long) (1-gamepad1.left_trigger);
         while (opModeIsActive()) {
             if (gamepad1.right_trigger > 0.05 && gamepad1.right_trigger < 0.75) { // if precision mode is on (the right trigger is pulled down to some degree)
                 speedMultiplier = 1-gamepad1.right_trigger;
@@ -160,7 +161,7 @@ public class Teleop2023 extends LinearOpMode {
             telemetry.update();
 
             //Pauses so acceleration multiplier doesn't ramp up too quick
-            sleep(2);
+            sleep(accelerationModifier);
 
             idle();
         }
