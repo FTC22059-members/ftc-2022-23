@@ -72,9 +72,12 @@ public class Teleop2023 extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         double speedMultiplier = 1; //Default speed
         double accelerationMultiplier = 0; // Currently, it's not accelerating at all
+        boolean globalPositioning = true; // If global positioning is active
+        double gyroAngle = 0;
+
         while (opModeIsActive()) {
             if (gamepad1.right_trigger > 0.05 && gamepad1.right_trigger < 0.75) { // if precision mode is on (the right trigger is pulled down to some degree)
-                speedMultiplier = 1-gamepad1.right_trigger;
+                speedMultiplier = 1 - gamepad1.right_trigger;
                 telemetry.addData("Precise Mode", "On");
             } else if (gamepad1.right_trigger >= 0.75) { // also if precision mode is on, but it's fully or almost fully pu
                 speedMultiplier = 0.25;
@@ -103,7 +106,7 @@ public class Teleop2023 extends LinearOpMode {
             telemetry.addData("speed multiplier: ", speedMultiplier);
             telemetry.addData("real speed multiplier: ", accelerationMultiplier * speedMultiplier);
             telemetry.update();
-            
+
             // get the controls
             double leftX = gamepad1.left_stick_x;
             double leftY = -gamepad1.left_stick_y;
@@ -112,14 +115,18 @@ public class Teleop2023 extends LinearOpMode {
             telemetry.addData("leftx", leftX);
             telemetry.addData("lefty", leftY);
 
+
             //robotImu.imuLoop();
-            double gyroAngle = robotImu.getAngleRadians();
+            if (globalPositioning) { // If global positioning is active, adjust direction of movement
+                gyroAngle = robotImu.getAngleRadians();
+            }
+
             //double newX = leftX * cos(newAngle) - leftY * sin(newAngle);
             //double newY = leftX * sin(newAngle) + leftY * cos(newAngle);
 
-            double joystickAngle = Math.atan2(leftX,leftY);
+            double joystickAngle = Math.atan2(leftX, leftY);
             double newAngle = joystickAngle + gyroAngle;
-            double joystickMagnitude = Math.sqrt(Math.pow(leftX,2)+Math.pow(leftY,2));
+            double joystickMagnitude = Math.sqrt(Math.pow(leftX, 2) + Math.pow(leftY, 2));
 
             double newX = joystickMagnitude * sin(newAngle);
             double newY = joystickMagnitude * cos(newAngle);
