@@ -90,6 +90,11 @@ public class Teleop2023 extends LinearOpMode {
                 telemetry.addData("Precise Mode", "Off"); // if precision mode is off, and the robot will slowly accelerate
                 speedMultiplier = 1; //Return to default
             }
+
+            if (gamepad1.y) { // Toggles global positioning
+                globalPositioning = !globalPositioning;
+            }
+
             /*
             While precise mode is on, if the left stick is moved, incrementally
             increase the speed for about 2/3 of a second, until the speed is at
