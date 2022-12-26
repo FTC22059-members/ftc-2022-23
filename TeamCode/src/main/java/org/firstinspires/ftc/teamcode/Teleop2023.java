@@ -71,14 +71,14 @@ public class Teleop2023 extends LinearOpMode {
 
         // Wait till we press the start button
         waitForStart();
-        
-        // run until the end of the match (driver presses STOP)
+
         double speedMultiplier = 1; //Default speed
         double accelerationMultiplier = 0; // Currently, it's not accelerating at all
         boolean globalPositioning = true; // If global positioning is active
         double gyroAngle = 0;
         long accelerationModifier = (long) (1-gamepad1.left_trigger);
 
+        // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             if (gamepad1.right_trigger > 0.05 && gamepad1.right_trigger < 0.75) { // if precision mode is on (the right trigger is pulled down to some degree)
                 speedMultiplier = 1 - gamepad1.right_trigger;
