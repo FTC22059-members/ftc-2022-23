@@ -13,7 +13,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -36,12 +35,15 @@ public class Teleop2023 extends LinearOpMode {
         frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
         frontRight = hardwareMap.get(DcMotorEx.class, "frontRight");
 
-        arm armMotorTest = new arm(hardwareMap, telemetry);
-        armMotorTest.init(gamepad1, gamepad2);
+        backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
         //Hey, it's PID time
-        //Hey, it's still PID time
-
         // Set the pid values to their corresponding wheels
         PIDFCoefficients PIDF = new PIDFCoefficients(10,3,0,0);
 
@@ -57,15 +59,16 @@ public class Teleop2023 extends LinearOpMode {
             sleep(50);
             idle();
         }
+        telemetry.addLine("Imu calibrated!");
+
+        arm armMotor = new arm(hardwareMap, telemetry);
+        armMotor.init(gamepad1, gamepad2);
+        telemetry.addData("Arm Initialized", "!");
 
         // tell people to press the start button
-
-        telemetry.addData("Imu calibrated!", "\n Roses are red, violets are blue, if you press start on the robot, then it will move");
+        telemetry.addLine("Roses are red, violets are blue, if you press start on the robot, then it will move");
         telemetry.update();
 
-        frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        
         // Wait till we press the start button
         waitForStart();
         
@@ -74,6 +77,7 @@ public class Teleop2023 extends LinearOpMode {
         double accelerationMultiplier = 0; // Currently, it's not accelerating at all
         boolean globalPositioning = true; // If global positioning is active
         double gyroAngle = 0;
+        long accelerationModifier = (long) (1-gamepad1.left_trigger);
 
         while (opModeIsActive()) {
             if (gamepad1.right_trigger > 0.05 && gamepad1.right_trigger < 0.75) { // if precision mode is on (the right trigger is pulled down to some degree)
@@ -87,19 +91,18 @@ public class Teleop2023 extends LinearOpMode {
                 speedMultiplier = 1; //Return to default
             }
             /*
-            While precise mode is off, if the left stick is moved, incrementally
+            While precise mode is on, if the left stick is moved, incrementally
             increase the speed for about 2/3 of a second, until the speed is at
             its maximum. When the joystick is not pushed, reset speed to 0.
+            */
 
-                if (gamepad1.left_stick_x != 0 || gamepad1.left_stick_y != 0) { // if the joystick is moved
-                    if (accelerationMultiplier < 1) { // accelerate!
-                        accelerationMultiplier = accelerationMultiplier + 0.005;
-                    }
-                } else { // if the joystick isn't moved, reset the multiplier
-                    accelerationMultiplier = 0;
+            if (gamepad1.left_stick_x != 0 || gamepad1.left_stick_y != 0) { // if the joystick is moved
+                if (accelerationMultiplier < 1) { // accelerate!
+                    accelerationMultiplier = accelerationMultiplier + 0.01;
                 }
-            }*/
-
+            } else { // if the joystick isn't moved, reset the multiplier
+                accelerationMultiplier = 0;
+            }
 
             // log current data
             telemetry.addData("acceleration multiplier: ", accelerationMultiplier);
@@ -144,7 +147,7 @@ public class Teleop2023 extends LinearOpMode {
             double frontRightPower = (leftY - leftX - rightX) / denominator;
             double backRightPower = (leftY + leftX - rightX) / denominator;
 
-            accelerationMultiplier=Math.pow(Math.abs(frontLeftPower), 2.5-gamepad1.left_trigger*1.5);
+            //accelerationMultiplier=Math.pow(Math.abs(frontLeftPower), 2.5-gamepad1.left_trigger*1.5);
 
             // actually tell the wheels to move! (finally)
             backLeft.setPower(backLeftPower * speedMultiplier * accelerationMultiplier);
@@ -161,8 +164,12 @@ public class Teleop2023 extends LinearOpMode {
              }
             telemetry.addData("Timer time =", time);
 
-            armMotorTest.armLoop();
+            armMotor.armLoop();
             telemetry.addData("Arm Power", gamepad1.left_stick_y);
+            telemetry.update();
+
+            //Pauses so acceleration multiplier doesn't ramp up too quick
+            sleep(accelerationModifier);
 
             idle();
         }
