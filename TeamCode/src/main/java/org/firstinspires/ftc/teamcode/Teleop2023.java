@@ -23,11 +23,12 @@ public class Teleop2023 extends LinearOpMode {
 
         Drive driveTrain = new Drive(hardwareMap, telemetry);
         driveTrain.init();
-
+/*
         if (!isStopRequested() && !robotImu.isImuCalibrated()) {
             sleep(50);
             idle();
         }
+*/
         telemetry.addLine("Imu calibrated!");
 
         Arm armMotor = new Arm(hardwareMap, telemetry);
