@@ -23,10 +23,12 @@ public class imu {
         this.telemetry = telemetryCon;
     }
 
+    /**
+     * Resets the angle for the imu so that it's accurate to whatever position
+     */
     public void resetAngle() {
         //lastAngles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
-
         globalAngle = 0;
     }
 
