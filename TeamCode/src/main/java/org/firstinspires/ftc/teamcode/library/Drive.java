@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-public class drive {
+public class Drive {
 
     private HardwareMap hardwareMap;
     private Telemetry telemetry;
@@ -60,7 +60,7 @@ public class drive {
     static final double     P_TURN_GAIN            = 0.02;     // Larger is more responsive, but also less stable
     static final double     P_DRIVE_GAIN           = 0.03;     // Larger is more responsive, but also less stable
 
-    public drive(HardwareMap hardwareMapCon, Telemetry telemetryCon) {
+    public Drive(HardwareMap hardwareMapCon, Telemetry telemetryCon) {
         this.hardwareMap = hardwareMapCon;
         this.telemetry = telemetryCon;
     }

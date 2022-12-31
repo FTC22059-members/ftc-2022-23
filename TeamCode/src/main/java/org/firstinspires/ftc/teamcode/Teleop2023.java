@@ -8,8 +8,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.library.arm;
-import org.firstinspires.ftc.teamcode.library.drive;
+import org.firstinspires.ftc.teamcode.library.Arm;
+import org.firstinspires.ftc.teamcode.library.Drive;
 
 @TeleOp(name = "Tele-op 2023")
 public class Teleop2023 extends LinearOpMode {
@@ -20,7 +20,7 @@ public class Teleop2023 extends LinearOpMode {
         imu robotImu = new imu(hardwareMap, telemetry);
         robotImu.init();
 
-        drive driveTrain = new drive(hardwareMap, telemetry);
+        Drive driveTrain = new Drive(hardwareMap, telemetry);
         driveTrain.init();
 
         if (!isStopRequested() && !robotImu.isImuCalibrated()) {
@@ -29,7 +29,7 @@ public class Teleop2023 extends LinearOpMode {
         }
         telemetry.addLine("Imu calibrated!");
 
-        arm armMotor = new arm(hardwareMap, telemetry);
+        Arm armMotor = new Arm(hardwareMap, telemetry);
         armMotor.init(gamepad1, gamepad2);
         telemetry.addData("Arm Initialized", "!");
 

@@ -33,13 +33,13 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.library.drive;
+import org.firstinspires.ftc.teamcode.library.Drive;
 
 
 @Autonomous(name="RIBS: Robot Informatory Basis Script", group="Robot")
 public class AutonomousRibs extends LinearOpMode {
 
-    drive driveTrain;
+    Drive driveTrain;
 
     @Override
     public void runOpMode() {
@@ -53,7 +53,7 @@ public class AutonomousRibs extends LinearOpMode {
         imu robotImu = new imu(hardwareMap, telemetry);
         robotImu.init();
 
-        driveTrain = new drive(hardwareMap, telemetry);
+        driveTrain = new Drive(hardwareMap, telemetry);
         driveTrain.init();
 
         // Wait for the game to start (Display Gyro value while waiting)

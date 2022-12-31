@@ -1,13 +1,12 @@
 package org.firstinspires.ftc.teamcode.library;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-public class gripper {
+public class Gripper {
     private Servo gripperServo;
 
     private Gamepad gamepad1;
@@ -21,7 +20,7 @@ public class gripper {
 
 
 
-    public gripper(HardwareMap hardwareMapCon, Telemetry telemetryCon) {
+    public Gripper(HardwareMap hardwareMapCon, Telemetry telemetryCon) {
         this.hardwareMap = hardwareMapCon;
         this.telemetry = telemetryCon;
     }

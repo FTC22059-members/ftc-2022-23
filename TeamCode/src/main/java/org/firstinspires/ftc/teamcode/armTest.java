@@ -18,7 +18,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.library.arm;
+import org.firstinspires.ftc.teamcode.library.Arm;
 
 @TeleOp(name = "Test Arm")
 public class armTest extends LinearOpMode {
@@ -26,7 +26,7 @@ public class armTest extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        arm armMotorTest = new arm(hardwareMap, telemetry);
+        Arm armMotorTest = new Arm(hardwareMap, telemetry);
         armMotorTest.init(gamepad1, gamepad2);
 
         // Wait for the start button

@@ -16,7 +16,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.library.arm;
+import org.firstinspires.ftc.teamcode.library.Arm;
 
 @TeleOp(name = "GlobalPositioningTest")
 public class GlobalPositioningTest extends LinearOpMode {
@@ -37,7 +37,7 @@ public class GlobalPositioningTest extends LinearOpMode {
         frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
         frontRight = hardwareMap.get(DcMotorEx.class, "frontRight");
 
-        arm armMotorTest = new arm(hardwareMap, telemetry);
+        Arm armMotorTest = new Arm(hardwareMap, telemetry);
         armMotorTest.init(gamepad1, gamepad2);
 
         // Hey, it's PID time

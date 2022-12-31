@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-public class arm {
+public class Arm {
     private DcMotor armMotor;
 
     private Gamepad gamepad1;
@@ -18,7 +18,7 @@ public class arm {
     private static float LOWERLIMIT = 0;
 
 
-    public arm(HardwareMap hardwareMapCon, Telemetry telemetryCon) {
+    public Arm(HardwareMap hardwareMapCon, Telemetry telemetryCon) {
         this.hardwareMap = hardwareMapCon;
         this.telemetry = telemetryCon;
     }
