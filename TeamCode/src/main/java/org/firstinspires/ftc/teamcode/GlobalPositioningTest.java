@@ -17,6 +17,7 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.library.Arm;
+import org.firstinspires.ftc.teamcode.library.Imu;
 
 @TeleOp(name = "GlobalPositioningTest")
 public class GlobalPositioningTest extends LinearOpMode {
@@ -58,7 +59,7 @@ public class GlobalPositioningTest extends LinearOpMode {
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        imu robotImu = new imu(hardwareMap, telemetry);
+        Imu robotImu = new Imu(hardwareMap, telemetry);
         robotImu.init();
 
         if (!isStopRequested() && !robotImu.isImuCalibrated()) {

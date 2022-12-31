@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.library.Arm;
 import org.firstinspires.ftc.teamcode.library.Drive;
+import org.firstinspires.ftc.teamcode.library.Imu;
 
 @TeleOp(name = "Tele-op 2023")
 public class Teleop2023 extends LinearOpMode {
@@ -17,7 +18,7 @@ public class Teleop2023 extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        imu robotImu = new imu(hardwareMap, telemetry);
+        Imu robotImu = new Imu(hardwareMap, telemetry);
         robotImu.init();
 
         Drive driveTrain = new Drive(hardwareMap, telemetry);
