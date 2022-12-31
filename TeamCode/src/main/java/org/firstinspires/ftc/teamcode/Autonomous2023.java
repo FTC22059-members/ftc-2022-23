@@ -20,6 +20,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import org.firstinspires.ftc.teamcode.library.AprilTags;
+
 @Autonomous(name = "Autonomous 2023")
 public class Autonomous2023 extends LinearOpMode {
     private DcMotor backLeft;

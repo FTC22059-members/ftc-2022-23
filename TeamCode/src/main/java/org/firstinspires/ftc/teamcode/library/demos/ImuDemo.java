@@ -12,20 +12,19 @@ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.library.demos;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.library.Arm;
+import org.firstinspires.ftc.teamcode.library.Imu;
 
 @TeleOp(name = "Test Imu")
-public class ImuTest extends LinearOpMode {
+public class ImuDemo extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        imu imuTest = new imu(hardwareMap, telemetry);
+        Imu imuTest = new Imu(hardwareMap, telemetry);
         imuTest.init();
 
         // Wait for the start button

@@ -76,13 +76,13 @@ public class Arm {
      **/
 
     public void armLoop() {
-        telemetry.addData("Right stick Y:",gamepad1.right_stick_y);
-        if (gamepad1.right_stick_y < 0) {
+        telemetry.addData("Right stick Y:",gamepad2.right_stick_y);
+        if (gamepad2.right_stick_y < 0) {
             telemetry.addData("moving:","up");
-            moveUp(gamepad1.right_stick_y);
-        } else if (gamepad1.right_stick_y > 0) {
+            moveUp(gamepad2.right_stick_y);
+        } else if (gamepad2.right_stick_y > 0) {
             telemetry.addData("moving:","down");
-            moveDown(gamepad1.right_stick_y);
+            moveDown(gamepad2.right_stick_y);
         } else {
             armMotor.setPower(0);
         }
