@@ -34,6 +34,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.library.Drive;
+import org.firstinspires.ftc.teamcode.library.Imu;
 
 
 @Autonomous(name="RIBS: Robot Informatory Basis Script", group="Robot")
@@ -50,7 +51,7 @@ public class AutonomousRibs extends LinearOpMode {
         //imu = hardwareMap.get(BNO055IMU.class, "imu");
         //imu.initialize(parameters);
 
-        imu robotImu = new imu(hardwareMap, telemetry);
+        Imu robotImu = new Imu(hardwareMap, telemetry);
         robotImu.init();
 
         driveTrain = new Drive(hardwareMap, telemetry);
