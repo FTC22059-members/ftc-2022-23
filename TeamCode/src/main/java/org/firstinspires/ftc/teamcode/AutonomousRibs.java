@@ -29,15 +29,11 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import static java.lang.Math.cos;
-import static java.lang.Math.sin;
-
-import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.library.drive;
 
 
 @Autonomous(name="RIBS: Robot Informatory Basis Script", group="Robot")
