@@ -90,13 +90,13 @@ public class AutonomousRibs extends LinearOpMode {
                                double power) {
         // Ensure that the opmode is still active
         if (opModeIsActive()) {
-            telemetry.addData("CPI", driveTrain.COUNTS_PER_INCH);
+            telemetry.addData("CPI", driveTrain.getCountsPerInch());
             telemetry.addData("FLD", frontLeftDistance);
             telemetry.update();
-            int frontLeftCounts = (int)(frontLeftDistance * driveTrain.COUNTS_PER_INCH);
-            int frontRightCounts = (int)(frontRightDistance * driveTrain.COUNTS_PER_INCH);
-            int backLeftCounts = (int)(backLeftDistance * driveTrain.COUNTS_PER_INCH);
-            int backRightCounts = (int)(backRightDistance * driveTrain.COUNTS_PER_INCH);
+            int frontLeftCounts = (int)(frontLeftDistance * driveTrain.getCountsPerInch());
+            int frontRightCounts = (int)(frontRightDistance * driveTrain.getCountsPerInch());
+            int backLeftCounts = (int)(backLeftDistance * driveTrain.getCountsPerInch());
+            int backRightCounts = (int)(backRightDistance * driveTrain.getCountsPerInch());
 
             int frontLeftTarget = driveTrain.frontLeft.getCurrentPosition()+frontLeftCounts;
             int frontRightTarget = driveTrain.frontRight.getCurrentPosition()+frontRightCounts;
