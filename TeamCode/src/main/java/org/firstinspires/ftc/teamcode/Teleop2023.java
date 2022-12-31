@@ -93,8 +93,8 @@ public class Teleop2023 extends LinearOpMode {
             double leftY = -gamepad1.left_stick_y;
             double rightX = gamepad1.right_stick_x / 1.3;
 
-            telemetry.addData("leftx", leftX);
-            telemetry.addData("lefty", leftY);
+            telemetry.addData("leftX", leftX);
+            telemetry.addData("leftY", leftY);
             telemetry.addData("rightX", rightX);
 
             //robotImu.imuLoop();
