@@ -27,7 +27,10 @@ public class imu {
         this.hardwareMap = hardwareMapCon;
         this.telemetry = telemetryCon;
     }
-    
+
+    /**
+     * Resets the angle for the imu so that it's accurate to whatever position
+     */
     public void resetAngle()
     {
         lastAngles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);

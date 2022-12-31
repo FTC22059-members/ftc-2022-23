@@ -19,10 +19,13 @@ public class gripper {
     private static float CLOSEANGLE = 0f;
 
 
+
+
     public gripper(HardwareMap hardwareMapCon, Telemetry telemetryCon) {
         this.hardwareMap = hardwareMapCon;
         this.telemetry = telemetryCon;
     }
+
 
     public void open() {
         if (gripperServo.getPosition() != OPENANGLE) {

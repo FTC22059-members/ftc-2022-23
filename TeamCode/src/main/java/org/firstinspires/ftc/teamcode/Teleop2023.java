@@ -19,41 +19,14 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 @TeleOp(name = "Tele-op 2023")
 public class Teleop2023 extends LinearOpMode {
 
-    //Initalize motor variables
-    private DcMotorEx backLeft;
-    private DcMotorEx backRight;
-    private DcMotorEx frontLeft;
-    private DcMotorEx frontRight;
-    private ElapsedTime timer = new ElapsedTime();
-    private float timeTotal = 0;
-
     @Override
     public void runOpMode() {
-        //Find motors in hardware map (in the driver station).
-        backLeft = hardwareMap.get(DcMotorEx.class, "backLeft");
-        backRight = hardwareMap.get(DcMotorEx.class, "backRight");
-        frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
-        frontRight = hardwareMap.get(DcMotorEx.class, "frontRight");
-
-        backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        //Hey, it's PID time
-        // Set the pid values to their corresponding wheels
-        PIDFCoefficients PIDF = new PIDFCoefficients(10,3,0,0);
-
-        backLeft.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, PIDF);
-        backRight.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, PIDF);
-        frontLeft.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, PIDF);
-        frontRight.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, PIDF);
 
         imu robotImu = new imu(hardwareMap, telemetry);
         robotImu.init();
+
+        drive driveTrain = new drive(hardwareMap, telemetry);
+        driveTrain.init();
 
         if (!isStopRequested() && !robotImu.isImuCalibrated()) {
             sleep(50);
@@ -101,7 +74,7 @@ public class Teleop2023 extends LinearOpMode {
             its maximum. When the joystick is not pushed, reset speed to 0.
             */
 
-            if (gamepad1.left_stick_x != 0 || gamepad1.left_stick_y != 0) { // if the joystick is moved
+            if (gamepad1.left_stick_x != 0 || gamepad1.left_stick_y != 0 || gamepad1.right_stick_x != 0) { // if the joystick is moved
                 if (accelerationMultiplier < 1) { // accelerate!
                     accelerationMultiplier = accelerationMultiplier + 0.01;
                 }
@@ -122,12 +95,14 @@ public class Teleop2023 extends LinearOpMode {
 
             telemetry.addData("leftx", leftX);
             telemetry.addData("lefty", leftY);
-
+            telemetry.addData("rightX", rightX);
 
             //robotImu.imuLoop();
             if (globalPositioning) { // If global positioning is active, adjust direction of movement
                 gyroAngle = robotImu.getAngleRadians();
             }
+
+
 
             //double newX = leftX * cos(newAngle) - leftY * sin(newAngle);
             //double newY = leftX * sin(newAngle) + leftY * cos(newAngle);
@@ -136,38 +111,7 @@ public class Teleop2023 extends LinearOpMode {
             double newAngle = joystickAngle + gyroAngle;
             double joystickMagnitude = Math.sqrt(Math.pow(leftX, 2) + Math.pow(leftY, 2));
 
-            double newX = joystickMagnitude * sin(newAngle);
-            double newY = joystickMagnitude * cos(newAngle);
-
-            leftX = newX;
-            leftY = newY;
-            telemetry.addData("newx", leftX);
-            telemetry.addData("newy", leftY);
-            telemetry.addData("Angle (Radians)", newAngle);
-
-            // figure out the power for each wheel
-            double denominator = Math.max(Math.abs(leftY) + Math.abs(leftX) + Math.abs(rightX), 1);
-            double frontLeftPower = (leftY + leftX + rightX) / denominator;
-            double backLeftPower = (leftY - leftX + rightX) / denominator;
-            double frontRightPower = (leftY - leftX - rightX) / denominator;
-            double backRightPower = (leftY + leftX - rightX) / denominator;
-
-            //accelerationMultiplier=Math.pow(Math.abs(frontLeftPower), 2.5-gamepad1.left_trigger*1.5);
-
-            // actually tell the wheels to move! (finally)
-            backLeft.setPower(backLeftPower * speedMultiplier * accelerationMultiplier);
-            backRight.setPower(backRightPower * speedMultiplier * accelerationMultiplier);
-            frontLeft.setPower(frontLeftPower * speedMultiplier * accelerationMultiplier);
-            frontRight.setPower(frontRightPower * speedMultiplier * accelerationMultiplier);
-
-            // puts this code to sleep, so other code can run
-             if (backLeft.getPower()+backRight.getPower()+frontLeft.getPower()+frontRight.getPower()!=0) {
-                 timer.reset();
-             }
-             if (backLeft.getPower()+backRight.getPower()+frontLeft.getPower()+frontRight.getPower()==4) {
-                 time = timer.milliseconds();
-             }
-            telemetry.addData("Timer time =", time);
+            driveTrain.moveRobot(joystickMagnitude, joystickAngle, rightX, speedMultiplier, accelerationMultiplier);
 
             armMotor.armLoop();
             telemetry.addData("Arm Power", gamepad1.left_stick_y);
