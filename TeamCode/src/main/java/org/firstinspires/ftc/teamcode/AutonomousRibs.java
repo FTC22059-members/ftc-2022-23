@@ -54,7 +54,7 @@ public class AutonomousRibs extends LinearOpMode {
         Imu robotImu = new Imu(hardwareMap, telemetry);
         robotImu.init();
 
-        driveTrain = new Drive(hardwareMap, telemetry);
+        driveTrain = new Drive(hardwareMap, telemetry, robotImu);
         driveTrain.init();
 
         // Wait for the game to start (Display Gyro value while waiting)

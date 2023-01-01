@@ -10,10 +10,13 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+import org.firstinspires.ftc.teamcode.library.Imu;
+
 public class Drive {
 
     private HardwareMap hardwareMap;
     private Telemetry telemetry;
+    private Imu imu;
 
     private double          robotHeading  = 0;
     private double          headingOffset = 0;
@@ -60,13 +63,13 @@ public class Drive {
     static final double     P_TURN_GAIN            = 0.02;     // Larger is more responsive, but also less stable
     static final double     P_DRIVE_GAIN           = 0.03;     // Larger is more responsive, but also less stable
 
-    public Drive(HardwareMap hardwareMapCon, Telemetry telemetryCon) {
+    public Drive(HardwareMap hardwareMapCon, Telemetry telemetryCon, Imu imu) {
         this.hardwareMap = hardwareMapCon;
         this.telemetry = telemetryCon;
+        this.imu = imu;
     }
 
     public void init() {
-
         //Find motors in hardware map (in the driver station).
         backLeft = hardwareMap.get(DcMotorEx.class, "backLeft");
         backRight = hardwareMap.get(DcMotorEx.class, "backRight");
@@ -163,12 +166,13 @@ public class Drive {
     public void moveRobot(double joystickMagnitude, double joystickAngle) {
         this.moveRobot(joystickMagnitude, joystickAngle,0,1,1);
     }
+
     /**
      *  Display the various control parameters while driving
      *
      * @param straight  Set to true if we are driving straight, and the encoder positions should be included in the telemetry.
-
-    private void sendTelemetry(boolean straight) {
+    */
+    /*private void sendTelemetry(boolean straight) {
 
         if (straight) {
             telemetry.addData("Motion", "Drive Straight");
@@ -185,7 +189,39 @@ public class Drive {
         telemetry.update();
     }*/
 
+    public void stop(){
+        frontLeft.setPower(0);
+        frontRight.setPower(0);
+        backLeft.setPower(0);
+        backRight.setPower(0);
+    }
+
     public double getCountsPerInch(){
         return COUNTS_PER_INCH;
+    }
+
+    public void turn(double inputDegrees){
+        double imuAngle = imu.getAngle();
+        double desiredAngle = imuAngle+inputDegrees;
+        if (inputDegrees>0){
+            while (imu.getAngle()<desiredAngle){
+                moveRobot(0,0,-0.5,1,1);
+                telemetry.addData("currentAngle", imu.getAngle());
+                telemetry.addData("desiredAngle", desiredAngle);
+                telemetry.update();
+            }
+        }else if (inputDegrees<0){
+            while (imu.getAngle()>desiredAngle){
+                moveRobot(0,0,0.5,1,1);
+                telemetry.addData("currentAngle", imu.getAngle());
+                telemetry.addData("desiredAngle", desiredAngle);
+                telemetry.update();
+            }
+        }else{
+            telemetry.addLine("bruh");
+        }
+        stop();
+
+        telemetry.update();
     }
 }

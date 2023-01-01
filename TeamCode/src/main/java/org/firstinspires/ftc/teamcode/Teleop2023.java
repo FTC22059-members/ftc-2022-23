@@ -21,7 +21,7 @@ public class Teleop2023 extends LinearOpMode {
         Imu robotImu = new Imu(hardwareMap, telemetry);
         robotImu.init();
 
-        Drive driveTrain = new Drive(hardwareMap, telemetry);
+        Drive driveTrain = new Drive(hardwareMap, telemetry, robotImu);
         driveTrain.init();
 /*
         if (!isStopRequested() && !robotImu.isImuCalibrated()) {
