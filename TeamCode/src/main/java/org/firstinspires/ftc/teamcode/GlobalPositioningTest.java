@@ -62,10 +62,10 @@ public class GlobalPositioningTest extends LinearOpMode {
         Imu robotImu = new Imu(hardwareMap, telemetry);
         robotImu.init();
 
-        if (!isStopRequested() && !robotImu.isImuCalibrated()) {
+        /**if (!isStopRequested() && !robotImu.isImuCalibrated()) {
             sleep(50);
             idle();
-        }
+        }**/
         telemetry.addData("Imu calibrated!", "\n Let the games begin.");
         telemetry.update();
 
