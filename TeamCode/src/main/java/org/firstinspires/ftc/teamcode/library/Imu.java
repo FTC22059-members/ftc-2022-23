@@ -30,6 +30,8 @@ public class Imu {
         imu.resetYaw();
         lastYaw = 0.0;
         globalAngle = 0.0;
+
+        telemetry.addLine("IMU angle reset");
     }
 
     /**
@@ -93,7 +95,7 @@ public class Imu {
 
         boolean initSuccessful = imu.initialize(new IMU.Parameters(orientationOnRobot));
 
-        telemetry.addData("IMU Calibrating Succesful?", initSuccessful);
+        telemetry.addData("IMU Calibrating Successful?", initSuccessful);
     }
 
     public void preLoop() {

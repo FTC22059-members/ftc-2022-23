@@ -24,9 +24,9 @@ public class ImuDemo extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        Imu imuTest = new Imu(hardwareMap, telemetry);
-        imuTest.init();
-        imuTest.resetAngle();
+        Imu robotImu = new Imu(hardwareMap, telemetry);
+        robotImu.init();
+        robotImu.resetAngle();
 
         // Wait for the start button
         telemetry.addData(">", "Press Start to test IMU.");
@@ -36,7 +36,15 @@ public class ImuDemo extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            imuTest.imuLoop();
+            // Check to see if heading reset is requested
+            if (gamepad1.y) {
+                telemetry.addData("Yaw", "Resetting\n");
+                robotImu.resetAngle();
+            } else {
+                telemetry.addData("Yaw", "Press Y (triangle) on Gamepad to reset\n");
+            }
+            robotImu.getAngle();
+            robotImu.imuLoop();
             telemetry.update();
             idle();
         }
