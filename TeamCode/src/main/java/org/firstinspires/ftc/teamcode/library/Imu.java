@@ -103,8 +103,7 @@ public class Imu {
     }
 
     public void imuLoop() {
-        telemetry.addData("1 imu heading", lastYaw);
-        telemetry.addData("2 global heading", globalAngle);
+        telemetry.addData("IMU heading", globalAngle);
     }
 
 }
