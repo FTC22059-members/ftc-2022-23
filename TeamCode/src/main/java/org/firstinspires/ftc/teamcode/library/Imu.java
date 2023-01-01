@@ -27,9 +27,9 @@ public class Imu {
      * Resets the angle for the imu so that it's accurate to whatever position
      */
     public void resetAngle() {
-        //lastAngles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-        YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
-        globalAngle = 0;
+        imu.resetYaw();
+        lastYaw = 0.0;
+        globalAngle = 0.0;
     }
 
     /**
@@ -43,7 +43,6 @@ public class Imu {
         // returned as 0 to +180 or 0 to -180 rolling back to -179 or +179 when rotation passes
         // 180 degrees. We detect this transition and track the total cumulative angle of rotation.
 
-        //Orientation angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
 
         double deltaAngle = orientation.getYaw(AngleUnit.DEGREES) - lastYaw;
@@ -92,10 +91,9 @@ public class Imu {
 
         RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot(logoDirection, usbDirection);
 
-        imu.initialize(new IMU.Parameters(orientationOnRobot));
+        boolean initSuccessful = imu.initialize(new IMU.Parameters(orientationOnRobot));
 
-        telemetry.addData("Mode", "calibrating...");
-        telemetry.update();
+        telemetry.addData("IMU Calibrating Succesful?", initSuccessful);
     }
 
     public void preLoop() {
@@ -105,7 +103,6 @@ public class Imu {
     public void imuLoop() {
         telemetry.addData("1 imu heading", lastYaw);
         telemetry.addData("2 global heading", globalAngle);
-        //telemetry.update();
     }
 
 }

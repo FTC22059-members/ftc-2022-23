@@ -26,6 +26,7 @@ public class ImuDemo extends LinearOpMode {
     public void runOpMode() {
         Imu imuTest = new Imu(hardwareMap, telemetry);
         imuTest.init();
+        imuTest.resetAngle();
 
         // Wait for the start button
         telemetry.addData(">", "Press Start to test IMU.");
