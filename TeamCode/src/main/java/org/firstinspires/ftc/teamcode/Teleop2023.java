@@ -110,7 +110,7 @@ public class Teleop2023 extends LinearOpMode {
             driveTrain.moveRobot(joystickMagnitude, joystickAngle, rightX, speedMultiplier, accelerationMultiplier);
 
             armMotor.armLoop();
-            telemetry.addData("Arm Power", gamepad1.left_stick_y);
+            telemetry.addData("Arm Power", gamepad2.left_stick_y);
             telemetry.update();
 
             //Pauses so acceleration multiplier doesn't ramp up too quick

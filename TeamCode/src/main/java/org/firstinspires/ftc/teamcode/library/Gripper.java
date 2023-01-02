@@ -49,9 +49,9 @@ public class Gripper {
     }
 
     public void gripperLoop() {
-        if (gamepad1.right_trigger > 0) {
+        if (gamepad2.right_trigger > 0) {
             close();
-        } else if (gamepad1.left_trigger > 0) {
+        } else if (gamepad2.left_trigger > 0) {
             open();
         }
     }

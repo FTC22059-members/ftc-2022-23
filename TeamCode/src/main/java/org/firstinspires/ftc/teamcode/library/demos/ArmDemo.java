@@ -39,7 +39,7 @@ public class ArmDemo extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             armMotorTest.armLoop();
-            telemetry.addData("Arm Power", gamepad1.left_stick_y);
+            telemetry.addData("Arm Power", gamepad2.left_stick_y);
 
             telemetry.update();
 
