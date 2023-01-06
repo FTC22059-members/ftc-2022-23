@@ -46,7 +46,7 @@ public class Teleop2023 extends LinearOpMode {
         double accelerationMultiplier = 0; // Currently, it's not accelerating at all
         boolean globalPositioning = true; // If global positioning is active
         double gyroAngle = 0;
-        long accelerationModifier = (long) (1-gamepad1.left_trigger);
+        long speedRamp = (long) (1-gamepad1.left_trigger);
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
@@ -83,7 +83,6 @@ public class Teleop2023 extends LinearOpMode {
             telemetry.addData("acceleration multiplier: ", accelerationMultiplier);
             telemetry.addData("speed multiplier: ", speedMultiplier);
             telemetry.addData("real speed multiplier: ", accelerationMultiplier * speedMultiplier);
-            telemetry.update();
 
             // get the controls
             double leftX = gamepad1.left_stick_x;
@@ -111,11 +110,11 @@ public class Teleop2023 extends LinearOpMode {
             driveTrain.moveRobot(joystickMagnitude, joystickAngle, rightX, speedMultiplier, accelerationMultiplier);
 
             armMotor.armLoop();
-            telemetry.addData("Arm Power", gamepad1.left_stick_y);
+            telemetry.addData("Arm Power", gamepad2.left_stick_y);
             telemetry.update();
 
             //Pauses so acceleration multiplier doesn't ramp up too quick
-            sleep(accelerationModifier);
+            sleep(speedRamp);
 
             idle();
         }
