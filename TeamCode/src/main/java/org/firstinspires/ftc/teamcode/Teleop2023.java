@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.library.Arm;
 import org.firstinspires.ftc.teamcode.library.Drive;
+import org.firstinspires.ftc.teamcode.library.Gripper;
 import org.firstinspires.ftc.teamcode.library.Imu;
 
 @TeleOp(name = "Tele-op 2023")
@@ -23,13 +24,9 @@ public class Teleop2023 extends LinearOpMode {
 
         Drive driveTrain = new Drive(hardwareMap, telemetry, robotImu);
         driveTrain.init();
-/*
-        if (!isStopRequested() && !robotImu.isImuCalibrated()) {
-            sleep(50);
-            idle();
-        }
-*/
-        telemetry.addLine("Imu calibrated!");
+
+        Gripper gripper = new Gripper(hardwareMap, telemetry);
+        gripper.init(gamepad1, gamepad2);
 
         Arm armMotor = new Arm(hardwareMap, telemetry);
         armMotor.init(gamepad1, gamepad2);
@@ -105,6 +102,9 @@ public class Teleop2023 extends LinearOpMode {
 
             armMotor.armLoop();
             telemetry.addData("Arm Power", gamepad2.left_stick_y);
+
+            gripper.gripperLoop();
+
             telemetry.update();
 
             //Pauses so acceleration multiplier doesn't ramp up too quick
