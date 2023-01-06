@@ -93,21 +93,15 @@ public class Teleop2023 extends LinearOpMode {
             telemetry.addData("leftY", leftY);
             telemetry.addData("rightX", rightX);
 
-            //robotImu.imuLoop();
             if (globalPositioning) { // If global positioning is active, adjust direction of movement
                 gyroAngle = robotImu.getAngleRadians();
             }
-
-
-
-            //double newX = leftX * cos(newAngle) - leftY * sin(newAngle);
-            //double newY = leftX * sin(newAngle) + leftY * cos(newAngle);
 
             double joystickAngle = Math.atan2(leftX, leftY);
             double newAngle = joystickAngle + gyroAngle;
             double joystickMagnitude = Math.sqrt(Math.pow(leftX, 2) + Math.pow(leftY, 2));
 
-            driveTrain.moveRobot(joystickMagnitude, joystickAngle, rightX, speedMultiplier, accelerationMultiplier);
+            driveTrain.moveRobot(joystickMagnitude, newAngle, rightX, speedMultiplier, accelerationMultiplier);
 
             armMotor.armLoop();
             telemetry.addData("Arm Power", gamepad2.left_stick_y);
