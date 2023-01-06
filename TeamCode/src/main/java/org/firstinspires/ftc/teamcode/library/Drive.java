@@ -10,6 +10,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+import com.qualcomm.robotcore.util.ElapsedTime;
+
 import org.firstinspires.ftc.teamcode.library.Imu;
 
 public class Drive {
@@ -224,4 +226,66 @@ public class Drive {
 
         telemetry.update();
     }
-}
+
+    public void snapCw(){
+        double imuAngle = imu.getAngle();
+        if (imuAngle>0&&imuAngle<90) {
+            turn(0-imuAngle);
+        }else if (imuAngle>90&&imuAngle<180) {
+            turn(90-imuAngle);
+        }else if (imuAngle>-180&&imuAngle<-90) {
+            turn(-180-imuAngle);
+        }else{
+            turn(-90-imuAngle);
+        }
+    }
+
+    public void snapAlgo(){
+        int angle = 2;
+        turn((90*Math.floor(angle/90))-angle);
+    }
+
+    public void snapCcw(){
+        double imuAngle = imu.getAngle();
+        if (imuAngle>0&&imuAngle<90) {
+            turn(90-imuAngle);
+        }else if (imuAngle>90&&imuAngle<180) {
+            turn(180-imuAngle);
+        }else if (imuAngle>-180&&imuAngle<-90) {
+            turn(-90-imuAngle);
+        }else{
+            turn(0-imuAngle);
+        }
+    }
+
+    public void forwardsTime(double time, double direction){
+        ElapsedTime timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
+        timer.reset();
+        while (timer.milliseconds()/1000<time) {
+            moveRobot(1, direction);
+        }
+    }
+
+    public void forwardsTime(double time){
+        ElapsedTime timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
+        timer.reset();
+        while (timer.milliseconds()/1000<time) {
+            moveRobot(1, 0);
+        }
+    }
+
+    public void backwardsTime(double time, double direction){
+        ElapsedTime timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
+        timer.reset();
+        while (timer.milliseconds()/1000<time) {
+            moveRobot(1, -direction);
+        }
+    }
+
+    public void backwardsTime(double time){
+        ElapsedTime timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
+        timer.reset();
+        while (timer.milliseconds()/1000<time) {
+            moveRobot(1, 180);
+        }
+    }

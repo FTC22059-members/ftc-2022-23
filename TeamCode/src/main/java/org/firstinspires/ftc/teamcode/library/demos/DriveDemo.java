@@ -47,6 +47,11 @@ public class DriveDemo extends LinearOpMode {
             }else if (gamepad1.b){
                 driveTrain.turn(-90);
             }
+            if (gamepad1.x){
+                driveTrain.snapCw();
+            }else if (gamepad1.y){
+                driveTrain.snapCcw();
+            }
             robotImu.imuLoop();
             telemetry.update();
             idle();
