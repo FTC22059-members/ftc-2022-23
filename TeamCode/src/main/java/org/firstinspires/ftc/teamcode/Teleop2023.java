@@ -21,6 +21,7 @@ public class Teleop2023 extends LinearOpMode {
 
         Imu robotImu = new Imu(hardwareMap, telemetry);
         robotImu.init();
+        robotImu.resetAngle();
 
         Drive driveTrain = new Drive(hardwareMap, telemetry, robotImu);
         driveTrain.init();
@@ -47,14 +48,16 @@ public class Teleop2023 extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            if (gamepad1.right_trigger > 0.05 && gamepad1.right_trigger < 0.75) { // if precision mode is on (the right trigger is pulled down to some degree)
+            // if precision mode is on (the right trigger is pulled down to some degree)
+            if (gamepad1.right_trigger > 0.05 && gamepad1.right_trigger < 0.75) {
                 speedMultiplier = 1 - gamepad1.right_trigger;
                 telemetry.addData("Precise Mode", "On");
-            } else if (gamepad1.right_trigger >= 0.75) { // also if precision mode is on, but it's fully or almost fully pu
+            // also if precision mode is on, but it's fully or almost fully pu
+            } else if (gamepad1.right_trigger >= 0.75) {
                 speedMultiplier = 0.25;
                 telemetry.addData("Precise Mode", "On");
-            } else { // if precise mode is off
-                telemetry.addData("Precise Mode", "Off"); // if precision mode is off, and the robot will slowly accelerate
+            } else { // if precise mode is off, and the robot will slowly accelerate
+                telemetry.addData("Precise Mode", "Off");
                 speedMultiplier = 1; //Return to default
             }
 
@@ -76,7 +79,7 @@ public class Teleop2023 extends LinearOpMode {
                 accelerationMultiplier = 0;
             }
 
-            // log current data
+            // log current multiplier data
             telemetry.addData("acceleration multiplier: ", accelerationMultiplier);
             telemetry.addData("speed multiplier: ", speedMultiplier);
             telemetry.addData("real speed multiplier: ", accelerationMultiplier * speedMultiplier);
@@ -90,8 +93,10 @@ public class Teleop2023 extends LinearOpMode {
             telemetry.addData("leftY", leftY);
             telemetry.addData("rightX", rightX);
 
-            if (globalPositioning) { // If global positioning is active, adjust direction of movement
+            if (globalPositioning) { // Adjust direction of movement
                 gyroAngle = robotImu.getAngleRadians();
+            }else{
+                gyroAngle = 0;
             }
 
             double joystickAngle = Math.atan2(leftX, leftY);
