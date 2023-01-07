@@ -2,12 +2,12 @@ package org.firstinspires.ftc.teamcode.library;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.CRServo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Gripper {
-    private Servo gripperServo;
+    private CRServo gripperServo;
 
     private Gamepad gamepad1;
     private Gamepad gamepad2;
@@ -27,19 +27,19 @@ public class Gripper {
 
 
     public void open() {
-        if (gripperServo.getPosition() != OPENANGLE) {
-            gripperServo.setPosition(OPENANGLE);
-        }
+//        if (gripperServo.getPosition() != OPENANGLE) {
+//            gripperServo.setPosition(OPENANGLE);
+//        }
     }
 
     public void close() {
-        if (gripperServo.getPosition() != CLOSEANGLE) {
-            gripperServo.setPosition(CLOSEANGLE);
-        }
+//        if (gripperServo.getPosition() != CLOSEANGLE) {
+//            gripperServo.setPosition(CLOSEANGLE);
+//        }
     }
 
     public void init(Gamepad gamepad1, Gamepad gamepad2) {
-        gripperServo = hardwareMap.get(Servo.class, "gripperMotor");
+        gripperServo = hardwareMap.get(CRServo.class, "gripperMotor");
         this.gamepad1 = gamepad1;
         this.gamepad2 = gamepad2;
     }

@@ -105,10 +105,10 @@ public class AutonomousRibs extends LinearOpMode {
 
             // Determine new target position, and pass to motor controller
             // Set Target FIRST, then turn on RUN_TO_POSITION
-            driveTrain.frontLeft.setTargetPosition(driveTrain.frontLeft.getCurrentPosition()+frontLeftTarget);
-            driveTrain.frontRight.setTargetPosition(driveTrain.frontRight.getCurrentPosition()+frontRightTarget);
-            driveTrain.backLeft.setTargetPosition(driveTrain.backLeft.getCurrentPosition()+backLeftTarget);
-            driveTrain.backRight.setTargetPosition(driveTrain.backRight.getCurrentPosition()+backRightTarget);
+            driveTrain.frontLeft.setTargetPosition(frontLeftTarget);
+            driveTrain.frontRight.setTargetPosition(frontRightTarget);
+            driveTrain.backLeft.setTargetPosition(backLeftTarget);
+            driveTrain.backRight.setTargetPosition(backRightTarget);
 
             driveTrain.frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             driveTrain.frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -124,8 +124,9 @@ public class AutonomousRibs extends LinearOpMode {
 
             // keep looping while we are still active, and BOTH motors are running.
             while (opModeIsActive() &&
-                    (driveTrain.frontLeft.isBusy() && driveTrain.frontRight.isBusy())&&
-                    driveTrain.backLeft.isBusy()){ //&& driveTrain.backRight.isBusy()) {
+            driveTrain.frontLeft.getCurrentPosition()*-1>=frontLeftTarget){
+                    //(driveTrain.frontLeft.isBusy() && driveTrain.frontRight.isBusy())&&
+                    //driveTrain.backLeft.isBusy()){ //&& driveTrain.backRight.isBusy()) {
                 telemetry.addData("BL Motor Pos", driveTrain.backLeft.getCurrentPosition());
                 telemetry.addData("BL Target Pos", driveTrain.backLeft.getTargetPosition());
                 telemetry.addData("BR Motor Pos", driveTrain.backRight.getCurrentPosition());

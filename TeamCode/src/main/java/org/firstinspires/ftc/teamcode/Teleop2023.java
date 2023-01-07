@@ -46,8 +46,10 @@ public class Teleop2023 extends LinearOpMode {
         double gyroAngle = 0;
         long speedRamp = (long) (1-gamepad1.left_trigger);
 
+
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
+
             // if precision mode is on (the right trigger is pulled down to some degree)
             if (gamepad1.right_trigger > 0.05 && gamepad1.right_trigger < 0.75) {
                 speedMultiplier = 1 - gamepad1.right_trigger;
