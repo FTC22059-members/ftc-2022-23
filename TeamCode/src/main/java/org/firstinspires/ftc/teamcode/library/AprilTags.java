@@ -72,6 +72,7 @@ public class AprilTags {
         this.telemetry.setMsTransmissionInterval(50);
     }
 
+    //TODO: THIS METHOD NEEDS A JAVADOC! IT'S LONELY!
     public String detectTag(){
 
         String zoneString = "Not found";
@@ -133,6 +134,8 @@ public class AprilTags {
                     }else{
                         this.telemetry.addLine(String.format("\nINVALID TAG DETECTED=%d", detection.id));
                     }
+
+                    this.telemetry.addData("Detected zone: ", zoneString);
                 }
             }
             this.telemetry.update();

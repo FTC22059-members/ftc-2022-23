@@ -98,31 +98,6 @@ public class Drive {
     }
 
     /**
-     * This method uses a Proportional Controller to determine how much steering correction is required.
-     *
-     * @param desiredHeading        The desired absolute heading (relative to last heading reset)
-     * @param proportionalGain      Gain factor applied to heading error to obtain turning power.
-     * @return Turning power needed to get to required heading.
-     */
-
-/**    public double getSteeringCorrection(double desiredHeading, double proportionalGain) {
- targetHeading = desiredHeading;  // Save for telemetry
-
- // Get the robot heading by applying an offset to the IMU heading
- robotHeading = getRawHeading() - headingOffset;
-
- // Determine the heading current error
- headingError = targetHeading - robotHeading;
-
- // Normalize the error to be within +/- 180 degrees
- while (headingError > 180)  headingError -= 360;
- while (headingError <= -180) headingError += 360;
-
- // Multiply the error by the gain to determine the required steering correction/  Limit the result to +/- 1.0
- return Range.clip(headingError * proportionalGain, -1, 1);
- }**/
-
-    /**
      * This method takes separate drive (aka magnitude, fwd/rev) and turn (aka turn, right/left) requests
      * as well as turn rate and multipliers, combines them, and applies the appropriate speed commands to the mechanum drive.
      *
@@ -138,10 +113,10 @@ public class Drive {
         double leftX = joystickMagnitude * sin(joystickAngle);
         double leftY = joystickMagnitude * cos(joystickAngle);
 
-        telemetry.addData("newx", leftX);
-        telemetry.addData("newy", leftY);
-        telemetry.addData("turnRate", turnRate);
-        telemetry.addData("Angle (Radians)", joystickAngle);
+        //telemetry.addData("newx", leftX);
+        //telemetry.addData("newy", leftY);
+        //telemetry.addData("turnRate", turnRate);
+        //telemetry.addData("Angle (Radians)", joystickAngle);
 
         // figure out the power for each wheel
         double denominator = Math.max(Math.abs(leftY) + Math.abs(leftX) + Math.abs(turnRate), 1);
@@ -149,8 +124,6 @@ public class Drive {
         double backLeftPower = (leftY - leftX + turnRate) / denominator;
         double frontRightPower = (leftY - leftX - turnRate) / denominator;
         double backRightPower = (leftY + leftX - turnRate) / denominator;
-
-        //accelerationMultiplier=Math.pow(Math.abs(frontLeftPower), 2.5-gamepad1.left_trigger*1.5);
 
         // actually tell the wheels to move! (finally)
         backLeft.setPower(backLeftPower * speedMultiplier * accelerationMultiplier);
@@ -170,27 +143,6 @@ public class Drive {
         this.moveRobot(joystickMagnitude, joystickAngle, 0, 1, 1);
     }
 
-    /**
-     * Display the various control parameters while driving
-     *
-     * @param straight Set to true if we are driving straight, and the encoder positions should be included in the telemetry.
-     */
-    /*private void sendTelemetry(boolean straight) {
-
-        if (straight) {
-            telemetry.addData("Motion", "Drive Straight");
-            telemetry.addData("Target Pos L:R",  "%7d:%7d",      leftTarget,  rightTarget);
-            telemetry.addData("Actual Pos L:R",  "%7d:%7d",      leftDrive.getCurrentPosition(),
-                    rightDrive.getCurrentPosition());
-        } else {
-            telemetry.addData("Motion", "Turning");
-        }
-
-        telemetry.addData("Angle Target:Current", "%5.2f:%5.0f", targetHeading, robotHeading);
-        telemetry.addData("Error:Steer",  "%5.1f:%5.1f", headingError, turnSpeed);
-        telemetry.addData("Wheel Speeds L:R.", "%5.2f : %5.2f", leftX, rightSpeed);
-        telemetry.update();
-    }*/
     public void stop() {
         frontLeft.setPower(0);
         frontRight.setPower(0);
@@ -201,6 +153,9 @@ public class Drive {
     public double getCountsPerInch() {
         return COUNTS_PER_INCH;
     }
+    // TODO: JAVADOC ME!!!!!!
+    // positive inputDegrees turns counterclockwise
+    // negative inputDegrees turns clockwise
 
     public void turn(double inputDegrees) {
         double imuAngle = imu.getAngle();
@@ -208,23 +163,23 @@ public class Drive {
         if (inputDegrees > 0) {
             while (imu.getAngle() < desiredAngle) {
                 moveRobot(0, 0, -0.5, 1, 1);
-                telemetry.addData("currentAngle", imu.getAngle());
-                telemetry.addData("desiredAngle", desiredAngle);
-                telemetry.update();
+                //telemetry.addData("currentAngle", imu.getAngle());
+                //telemetry.addData("desiredAngle", desiredAngle);
+                //telemetry.update();
             }
         } else if (inputDegrees < 0) {
             while (imu.getAngle() > desiredAngle) {
                 moveRobot(0, 0, 0.5, 1, 1);
-                telemetry.addData("currentAngle", imu.getAngle());
-                telemetry.addData("desiredAngle", desiredAngle);
-                telemetry.update();
+                //telemetry.addData("currentAngle", imu.getAngle());
+                //telemetry.addData("desiredAngle", desiredAngle);
+                //telemetry.update();
             }
         } else {
-            telemetry.addLine("bruh");
+            //telemetry.addLine("bruh");
         }
         stop();
 
-        telemetry.update();
+        //telemetry.update();
     }
 
     public void snapCw() {
