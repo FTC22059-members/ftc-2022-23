@@ -6,6 +6,9 @@ import com.qualcomm.robotcore.hardware.CRServo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+// flat gripper (open) = -66
+// closed = -96
+// their 90 is our 0
 public class Gripper {
     private CRServo gripperServo;
 
@@ -14,8 +17,10 @@ public class Gripper {
     private HardwareMap hardwareMap;
     private Telemetry telemetry;
 
-    private static float OPENANGLE = 0.5f;
-    private static float CLOSEANGLE = 0f;
+    private static float OPENANGLE = 1;
+    private static float CLOSEANGLE = 0;
+    
+    private static boolean ISOPEN = true;
 
 
 
@@ -37,6 +42,14 @@ public class Gripper {
 //            gripperServo.setPosition(CLOSEANGLE);
 //        }
     }
+    
+    public boolean getIsOpen() {
+        return ISOPEN;
+    }
+    
+    public boolean getIsOpen() {
+        return ISOPEN;
+    }
 
     public void init(Gamepad gamepad1, Gamepad gamepad2) {
         gripperServo = hardwareMap.get(CRServo.class, "gripperMotor");
@@ -49,10 +62,12 @@ public class Gripper {
     }
 
     public void gripperLoop() {
-        if (gamepad2.right_trigger > 0) {
+        if (gamepad1.right_trigger > 0 && ISOPEN) {
             close();
-        } else if (gamepad2.left_trigger > 0) {
+            ISOPEN = false;
+        } else if (gamepad1.left_trigger > 0 && !ISOPEN) {
             open();
+            ISOPEN = true;
         }
     }
 }
