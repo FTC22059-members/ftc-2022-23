@@ -126,6 +126,15 @@ public class Teleop2023 extends LinearOpMode {
 
             driveTrain.moveRobot(joystickMagnitude, newAngle, rightX, speedMultiplier, accelerationMultiplier);
 
+            if (!driveTrain.frontLeft.isBusy() && !driveTrain.frontRight.isBusy()&&
+                !driveTrain.backLeft.isBusy() && !driveTrain.backRight.isBusy()){
+                if(gamepad1.dpad_left){
+                    driveTrain.snapCw();
+                }else if (gamepad1.dpad_right){
+                    driveTrain.snapCcw();
+                }
+            }
+
             armMotor.armLoop();
             telemetry.addData("Arm Power", gamepad2.left_stick_y);
 

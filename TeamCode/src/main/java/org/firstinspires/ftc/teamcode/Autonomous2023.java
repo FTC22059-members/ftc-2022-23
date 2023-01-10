@@ -135,7 +135,7 @@ public class Autonomous2023 extends LinearOpMode {
             driveTrain.backLeft.setPower(power);
             driveTrain.backRight.setPower(power);
 
-            // keep looping while we are still active, and BOTH motors are running.
+            // keep looping while we are still active, and ALL motors are running.
             while (opModeIsActive() &&
                     (driveTrain.frontLeft.isBusy() && driveTrain.frontRight.isBusy())&&
                     driveTrain.backLeft.isBusy() && driveTrain.backRight.isBusy()) {
