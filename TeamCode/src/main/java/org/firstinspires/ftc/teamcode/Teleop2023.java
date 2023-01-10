@@ -129,9 +129,9 @@ public class Teleop2023 extends LinearOpMode {
             if (!driveTrain.frontLeft.isBusy() && !driveTrain.frontRight.isBusy()&&
                 !driveTrain.backLeft.isBusy() && !driveTrain.backRight.isBusy()){
                 if(gamepad1.dpad_left){
-                    driveTrain.snapCw();
-                }else if (gamepad1.dpad_right){
                     driveTrain.snapCcw();
+                }else if (gamepad1.dpad_right){
+                    driveTrain.snapCw();
                 }
             }
 
