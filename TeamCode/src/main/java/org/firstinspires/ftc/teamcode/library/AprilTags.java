@@ -39,10 +39,18 @@ public class AprilTags {
     private HardwareMap hwMap;
     private Telemetry telemetry;
 
+    /**
+     * TODO: JavaDOC
+     */
+
     public AprilTags(HardwareMap hwMapCon, Telemetry telemetryCon){
         this.hwMap=hwMapCon;
         this.telemetry=telemetryCon;
     }
+
+    /**
+     * TODO: JavaDOC
+     */
 
     public void init(){
         int cameraMonitorViewId = this.hwMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", this.hwMap.appContext.getPackageName());

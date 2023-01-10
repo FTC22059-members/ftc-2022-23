@@ -64,13 +64,17 @@ public class Drive {
     // Decrease these numbers if the heading does not settle on the correct value (eg: very agile robot with omni wheels)
     static final double P_TURN_GAIN = 0.02;     // Larger is more responsive, but also less stable
     static final double P_DRIVE_GAIN = 0.03;     // Larger is more responsive, but also less stable
-
+    /**
+     * TODO: JavaDOC
+     */
     public Drive(HardwareMap hardwareMapCon, Telemetry telemetryCon, Imu imu) {
         this.hardwareMap = hardwareMapCon;
         this.telemetry = telemetryCon;
         this.imu = imu;
     }
-
+    /**
+     * TODO: JavaDOC
+     */
     public void init() {
         //Find motors in hardware map (in the driver station).
         backLeft = hardwareMap.get(DcMotorEx.class, "backLeft");
@@ -142,7 +146,9 @@ public class Drive {
     public void moveRobot(double joystickMagnitude, double joystickAngle) {
         this.moveRobot(joystickMagnitude, joystickAngle, 0, 1, 1);
     }
-
+    /**
+     * TODO: JavaDOC
+     */
     public void stop() {
         frontLeft.setPower(0);
         frontRight.setPower(0);
@@ -182,6 +188,9 @@ public class Drive {
         //telemetry.update();
     }
 
+    /**
+     * TODO: JavaDOC
+     */
     public void snapCw() {
         double imuAngle = imu.getAngle();
         if (imuAngle > 0 && imuAngle < 90) {
@@ -195,11 +204,9 @@ public class Drive {
         }
     }
 
-    public void snapAlgo() {
-        int angle = 2;
-        turn((90 * Math.floor(angle / 90)) - angle);
-    }
-
+    /**
+     * TODO: JavaDOC
+     */
     public void snapCcw() {
         double imuAngle = imu.getAngle();
         if (imuAngle > 0 && imuAngle < 90) {
@@ -212,6 +219,17 @@ public class Drive {
             turn(0 - imuAngle);
         }
     }
+    /**
+     * This is a NOT WORKING concept function for snapping according to an algorithim
+     */
+    public void snapAlgo(   ) {
+        int angle = 2;
+        turn((90 * Math.floor(angle / 90)) - angle);
+    }
+
+    /**
+     * TODO: JavaDOC
+     */
 
     public void forwardsTime(double time, double direction) {
         ElapsedTime timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
@@ -220,7 +238,9 @@ public class Drive {
             moveRobot(1, direction);
         }
     }
-
+    /**
+     * TODO: JavaDOC
+     */
     public void forwardsTime(double time) {
         ElapsedTime timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
         timer.reset();
@@ -228,7 +248,9 @@ public class Drive {
             moveRobot(1, 0);
         }
     }
-
+    /**
+     * TODO: JavaDOC
+     */
     public void backwardsTime(double time, double direction) {
         ElapsedTime timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
         timer.reset();
@@ -236,7 +258,9 @@ public class Drive {
             moveRobot(1, -direction);
         }
     }
-
+    /**
+     * TODO: JavaDOC
+     */
     public void backwardsTime(double time) {
         ElapsedTime timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
         timer.reset();
