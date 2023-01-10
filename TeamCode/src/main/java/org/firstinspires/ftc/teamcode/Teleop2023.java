@@ -33,6 +33,8 @@ public class Teleop2023 extends LinearOpMode {
         armMotor.init(gamepad1, gamepad2);
         telemetry.addData("Arm Initialized", "!");
 
+        boolean accelToggle;
+
         // tell people to press the start button
         telemetry.addLine("Roses are red, violets are blue, if you press start on the robot, then it will move");
         telemetry.update();
@@ -44,7 +46,24 @@ public class Teleop2023 extends LinearOpMode {
         double accelerationMultiplier = 0; // Currently, it's not accelerating at all
         boolean globalPositioning = true; // If global positioning is active
         double gyroAngle = 0;
-        long speedRamp = (long) (1-gamepad1.left_trigger);
+        long speedRamp = 1;
+
+        if (accelToggle = false){
+            speedRamp = 0;
+        } else {
+            speedRamp = 1;
+        }
+
+        telemetry.addData("Accel", speedRamp);
+
+        if (gamepad1.x) {
+           telemetry.addData("X Pressed", gamepad1.x);
+            accelToggle = !accelToggle;
+        } else {
+            telemetry.addData("X not pressed", gamepad1.x);
+        }
+        telemetry.update();
+        //long speedRamp = (long) (1-gamepad1.left_trigger);
 
 
         // run until the end of the match (driver presses STOP)
