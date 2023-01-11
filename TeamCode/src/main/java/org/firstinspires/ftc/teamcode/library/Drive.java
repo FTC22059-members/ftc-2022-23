@@ -189,8 +189,8 @@ public class Drive {
     }
 
     /**
-     * TODO: JavaDOC
-     */
+     * Relic of the past of SnapCw
+
     public void snapCw() {
         double imuAngle = imu.getAngle();
         if (imuAngle > 0 && imuAngle < 90) {
@@ -202,29 +202,35 @@ public class Drive {
         } else {
             turn(-90 - imuAngle);
         }
-    }
+    }*/
 
     /**
      * TODO: JavaDOC
-     */
+     *
     public void snapCcw() {
         double imuAngle = imu.getAngle();
         if (imuAngle > 0 && imuAngle < 90) {
             turn(90 - imuAngle);
         } else if (imuAngle > 90 && imuAngle < 180) {
             turn(180 - imuAngle);
-        } else if (imuAngle > -180 && imuAngle < -90) {
+        } else if (imuAngle > -178 && imuAngle < -88) {
             turn(-90 - imuAngle);
         } else {
             turn(0 - imuAngle);
         }
-    }
+    }*/
+
     /**
-     * This is a NOT WORKING concept function for snapping according to an algorithim
+     * Snaps to nearest 90 degree interval clockwise
      */
-    public void snapAlgo(   ) {
-        int angle = 2;
-        turn((90 * Math.floor(angle / 90)) - angle);
+    public void snapCw(   ) {
+        double imuAngle = imu.getAngle();
+        turn((90 * Math.floor(imuAngle / 90)) - imuAngle);
+    }
+
+    public void snapCcw(   ) {
+        double imuAngle = imu.getAngle();
+        turn((90 * Math.ceil(imuAngle / 90)) - imuAngle);
     }
 
     /**
