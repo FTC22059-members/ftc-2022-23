@@ -84,11 +84,7 @@ public class Teleop2023 extends LinearOpMode {
             }
 
             if (gamepad1.y && !yPrev) { // Toggles global positioning
-                if (globalPositioning) {
-                    globalPositioning = false;
-                } else {
-                    globalPositioning = true;
-                }
+                globalPositioning=!globalPositioning;
             }
 
             if (accelToggle = false){
@@ -106,6 +102,7 @@ public class Teleop2023 extends LinearOpMode {
                 telemetry.addData("X not pressed", gamepad1.x);
             }
             telemetry.update();
+            
             yPrev = gamepad1.y;
 
             /*
