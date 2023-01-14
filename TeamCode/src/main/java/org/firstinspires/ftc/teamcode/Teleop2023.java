@@ -44,9 +44,10 @@ public class Teleop2023 extends LinearOpMode {
 
         double speedMultiplier = 1; //Default speed
         double accelerationMultiplier = 0; // Currently, it's not accelerating at all
-        boolean globalPositioning = true; // If global positioning is active
+        boolean globalPositioning = true; // global positioning is active
         double gyroAngle = 0;
         long speedRamp = 1;
+        boolean yPrev = false;
 
         if (accelToggle = false){
             speedRamp = 0;
@@ -68,7 +69,7 @@ public class Teleop2023 extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-
+    
             // if precision mode is on (the right trigger is pulled down to some degree)
             if (gamepad1.right_trigger > 0.05 && gamepad1.right_trigger < 0.75) {
                 speedMultiplier = 1 - gamepad1.right_trigger;
@@ -82,9 +83,14 @@ public class Teleop2023 extends LinearOpMode {
                 speedMultiplier = 1; //Return to default
             }
 
-            if (gamepad1.y) { // Toggles global positioning
-                globalPositioning = !globalPositioning;
+            if (gamepad1.y && !yPrev) { // Toggles global positioning
+                if (globalPositioning) {
+                    globalPositioning = false;
+                } else {
+                    globalPositioning = true;
+                }
             }
+            yPrev = gamepad1.y;
 
             /*
             While precise mode is on, if the left stick is moved, incrementally
