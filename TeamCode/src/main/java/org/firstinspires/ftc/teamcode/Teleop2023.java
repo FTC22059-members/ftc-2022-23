@@ -48,21 +48,7 @@ public class Teleop2023 extends LinearOpMode {
         double gyroAngle = 0;
         long speedRamp = 1;
         boolean yPrev = false;
-
-        if (accelToggle = false){
-            speedRamp = 0;
-        } else {
-            speedRamp = 1;
-        }
-
-        telemetry.addData("Accel", speedRamp);
-
-        if (gamepad1.x) {
-            telemetry.addData("X Pressed", gamepad1.x);
-            accelToggle = !accelToggle;
-        } else {
-            telemetry.addData("X not pressed", gamepad1.x);
-        }
+        
         //long speedRamp = (long) (1-gamepad1.left_trigger);
 
 
