@@ -58,12 +58,11 @@ public class Teleop2023 extends LinearOpMode {
         telemetry.addData("Accel", speedRamp);
 
         if (gamepad1.x) {
-           telemetry.addData("X Pressed", gamepad1.x);
+            telemetry.addData("X Pressed", gamepad1.x);
             accelToggle = !accelToggle;
         } else {
             telemetry.addData("X not pressed", gamepad1.x);
         }
-        telemetry.update();
         //long speedRamp = (long) (1-gamepad1.left_trigger);
 
 
@@ -93,16 +92,17 @@ public class Teleop2023 extends LinearOpMode {
                 speedRamp = 1;
             }
 
-            telemetry.addData("Accel", speedRamp);
+
 
             if (gamepad1.x) {
-                telemetry.addData("X Pressed", gamepad1.x);
                 accelToggle = !accelToggle;
-            } else {
-                telemetry.addData("X not pressed", gamepad1.x);
             }
+
+            telemetry.addData("Accel", speedRamp);
+            telemetry.addData("X pressed",gamepad1.x);
+            telemetry.addData("Global Positioning", globalPositioning);
             telemetry.update();
-            
+
             yPrev = gamepad1.y;
 
             /*
