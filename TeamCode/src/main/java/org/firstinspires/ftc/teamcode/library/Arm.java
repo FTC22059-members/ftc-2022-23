@@ -64,6 +64,7 @@ public class Arm {
 
     /**
      * This method executes before the main loop in the program.
+     * This currently doesn't have any real use, it's more here for principle's sake
      **/
 
     public void preLoop() {

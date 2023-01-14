@@ -90,6 +90,22 @@ public class Teleop2023 extends LinearOpMode {
                     globalPositioning = true;
                 }
             }
+
+            if (accelToggle = false){
+                speedRamp = 0;
+            } else {
+                speedRamp = 1;
+            }
+
+            telemetry.addData("Accel", speedRamp);
+
+            if (gamepad1.x) {
+                telemetry.addData("X Pressed", gamepad1.x);
+                accelToggle = !accelToggle;
+            } else {
+                telemetry.addData("X not pressed", gamepad1.x);
+            }
+            telemetry.update();
             yPrev = gamepad1.y;
 
             /*
@@ -135,9 +151,9 @@ public class Teleop2023 extends LinearOpMode {
             if (!driveTrain.frontLeft.isBusy() && !driveTrain.frontRight.isBusy()&&
                 !driveTrain.backLeft.isBusy() && !driveTrain.backRight.isBusy()){
                 if(gamepad1.dpad_left){
-                    driveTrain.snapCw();
-                }else if (gamepad1.dpad_right){
                     driveTrain.snapCcw();
+                }else if (gamepad1.dpad_right){
+                    driveTrain.snapCw();
                 }
             }
 

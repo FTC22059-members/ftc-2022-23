@@ -22,14 +22,18 @@ public class Gripper {
     
     private static boolean ISOPEN = true;
 
-
-
+    /**
+     * TODO: JavaDOC
+     */
 
     public Gripper(HardwareMap hardwareMapCon, Telemetry telemetryCon) {
         this.hardwareMap = hardwareMapCon;
         this.telemetry = telemetryCon;
     }
 
+    /**
+     * Opening gripper
+     */
 
     public void open() {
         if (gripperServo.getPosition() != OPENANGLE) {
@@ -37,16 +41,27 @@ public class Gripper {
         }
     }
 
+    /**
+     * Closes gripper
+     */
+
     public void close() {
         if (gripperServo.getPosition() != CLOSEANGLE) {
             gripperServo.setPosition(CLOSEANGLE);
         }
     }
-    
+
+    /**
+     * TODO: JavaDOC
+     */
+
     public boolean getIsOpen() {
         return ISOPEN;
     }
 
+    /**
+     * TODO: JavaDOC
+     */
 
     public void init(Gamepad gamepad1, Gamepad gamepad2) {
         gripperServo = hardwareMap.get(Servo.class, "gripperMotor");
@@ -54,9 +69,17 @@ public class Gripper {
         this.gamepad2 = gamepad2;
     }
 
+    /**
+     * TODO: JavaDOC
+     */
+
     public void preLoop() {
 
     }
+
+    /**
+     * TODO: JavaDOC
+     */
 
     public void gripperLoop() {
         if (gamepad2.right_trigger > 0 && ISOPEN) {
