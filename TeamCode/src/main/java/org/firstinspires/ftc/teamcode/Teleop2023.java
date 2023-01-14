@@ -47,22 +47,6 @@ public class Teleop2023 extends LinearOpMode {
         boolean globalPositioning = true; // If global positioning is active
         double gyroAngle = 0;
         long speedRamp = 1;
-
-        if (accelToggle = false){
-            speedRamp = 0;
-        } else {
-            speedRamp = 1;
-        }
-
-        telemetry.addData("Accel", speedRamp);
-
-        if (gamepad1.x) {
-           telemetry.addData("X Pressed", gamepad1.x);
-            accelToggle = !accelToggle;
-        } else {
-            telemetry.addData("X not pressed", gamepad1.x);
-        }
-        telemetry.update();
         //long speedRamp = (long) (1-gamepad1.left_trigger);
 
 
@@ -85,6 +69,22 @@ public class Teleop2023 extends LinearOpMode {
             if (gamepad1.y) { // Toggles global positioning
                 globalPositioning = !globalPositioning;
             }
+
+            if (accelToggle = false){
+                speedRamp = 0;
+            } else {
+                speedRamp = 1;
+            }
+
+            telemetry.addData("Accel", speedRamp);
+
+            if (gamepad1.x) {
+                telemetry.addData("X Pressed", gamepad1.x);
+                accelToggle = !accelToggle;
+            } else {
+                telemetry.addData("X not pressed", gamepad1.x);
+            }
+            telemetry.update();
 
             /*
             While precise mode is on, if the left stick is moved, incrementally
