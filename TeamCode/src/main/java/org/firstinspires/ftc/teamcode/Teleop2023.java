@@ -33,7 +33,7 @@ public class Teleop2023 extends LinearOpMode {
         armMotor.init(gamepad1, gamepad2);
         telemetry.addData("Arm Initialized", "!");
 
-        boolean accelToggle = false;
+        boolean accelToggle;
 
         // tell people to press the start button
         telemetry.addLine("Roses are red, violets are blue, if you press start on the robot, then it will move");
@@ -44,9 +44,11 @@ public class Teleop2023 extends LinearOpMode {
 
         double speedMultiplier = 1; //Default speed
         double accelerationMultiplier = 0; // Currently, it's not accelerating at all
-        boolean globalPositioning = true; // If global positioning is active
+        boolean globalPositioning = true; // Is global positioning is active?
         double gyroAngle = 0;
         long speedRamp = 1;
+        boolean yPrev = false;
+        
         //long speedRamp = (long) (1-gamepad1.left_trigger);
 
 
@@ -66,26 +68,28 @@ public class Teleop2023 extends LinearOpMode {
                 speedMultiplier = 1; //Return to default
             }
 
-            if (gamepad1.y) { // Toggles global positioning
+            if (gamepad1.y && !yPrev) { // Toggles global positioning
                 globalPositioning = !globalPositioning;
             }
 
-            telemetry.addData("Accel", speedRamp);
-
-            if (gamepad1.x) {
-                telemetry.addData("X Pressed", gamepad1.x);
-                accelToggle = !accelToggle;
-            } else {
-                telemetry.addData("X not pressed", gamepad1.x);
-            }
-
-            if (accelToggle = true){
+            if (accelToggle = false){
                 speedRamp = 0;
             } else {
                 speedRamp = 1;
             }
 
+
+
+            if (gamepad1.x) {
+                accelToggle = !accelToggle;
+            }
+
+            telemetry.addData("Accel", speedRamp);
+            telemetry.addData("X pressed",gamepad1.x);
+            telemetry.addData("Global Positioning", globalPositioning);
             telemetry.update();
+
+            yPrev = gamepad1.y;
 
             /*
             While precise mode is on, if the left stick is moved, incrementally
