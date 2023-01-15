@@ -125,7 +125,7 @@ public class Teleop2023 extends LinearOpMode {
             double newAngle = joystickAngle + gyroAngle;
             double joystickMagnitude = Math.sqrt(Math.pow(leftX, 2) + Math.pow(leftY, 2));
 
-            driveTrain.moveRobot(joystickMagnitude, newAngle, rightX, brakePercent, 0.7);
+            driveTrain.moveRobot(joystickMagnitude, newAngle, rightX, brakePercent, 0.83);
 
             if (!driveTrain.frontLeft.isBusy() && !driveTrain.frontRight.isBusy()&&
                 !driveTrain.backLeft.isBusy() && !driveTrain.backRight.isBusy()){
