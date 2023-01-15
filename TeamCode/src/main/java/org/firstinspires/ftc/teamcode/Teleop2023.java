@@ -110,7 +110,6 @@ public class Teleop2023 extends LinearOpMode {
             double leftX = gamepad1.left_stick_x;
             double leftY = -gamepad1.left_stick_y;
             double rightX = gamepad1.right_stick_x / 1.3;
-
             telemetry.addData("leftX", leftX);
             telemetry.addData("leftY", leftY);
             telemetry.addData("rightX", rightX);
@@ -124,6 +123,8 @@ public class Teleop2023 extends LinearOpMode {
             double joystickAngle = Math.atan2(leftX, leftY);
             double newAngle = joystickAngle + gyroAngle;
             double joystickMagnitude = Math.sqrt(Math.pow(leftX, 2) + Math.pow(leftY, 2));
+            telemetry.addData("Gyro Angle", robotImu.getAngle());
+            telemetry.addData("Joystick Angle", joystickAngle*180/Math.PI);
 
             driveTrain.moveRobot(joystickMagnitude, newAngle, rightX, brakePercent, 0.83);
 
