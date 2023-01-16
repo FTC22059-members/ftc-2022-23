@@ -70,22 +70,6 @@ public class Teleop2023 extends LinearOpMode {
                 globalPositioning = !globalPositioning;
             }
 
-            if (accelToggle = false){
-                speedRamp = 0;
-            } else {
-                speedRamp = 1;
-            }
-
-            telemetry.addData("Accel", speedRamp);
-
-            if (gamepad1.x) {
-                telemetry.addData("X Pressed", gamepad1.x);
-                accelToggle = !accelToggle;
-            } else {
-                telemetry.addData("X not pressed", gamepad1.x);
-            }
-            telemetry.update();
-
             /*
             While precise mode is on, if the left stick is moved, incrementally
             increase the speed for about 2/3 of a second, until the speed is at
