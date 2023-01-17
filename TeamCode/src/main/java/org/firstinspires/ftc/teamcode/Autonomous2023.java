@@ -54,7 +54,7 @@ public class Autonomous2023 extends LinearOpMode {
         String zone = "Not found";
         ElapsedTime timer = new ElapsedTime(0);
         timer.reset();
-        while (zone.equals("Not found")){
+        while (zone.equals("Not found")&&opModeIsActive()){
             // if we're taking too long, get out of loop
             if (timer.seconds()>5){
                 zone = "B";
@@ -69,12 +69,14 @@ public class Autonomous2023 extends LinearOpMode {
             driveForward(28, 0.8);
             driveTrain.turn(80);
             driveForward(26,0.8);
+            driveTrain.turn(-80);
         }else if (zone.equals("B")){
             driveForward(28, 0.8);
         }else {
             driveForward(28, 0.8);
             driveTrain.turn(-80);
             driveForward(26,0.8);
+            driveTrain.turn(80);
         }
         idle();
     }
@@ -137,17 +139,17 @@ public class Autonomous2023 extends LinearOpMode {
 
             // keep looping while we are still active, and ALL motors are running.
             while (opModeIsActive() &&
-                    (driveTrain.frontLeft.isBusy() && driveTrain.frontRight.isBusy())&&
-                    driveTrain.backLeft.isBusy() && driveTrain.backRight.isBusy()) {
-//                telemetry.addData("BL Motor Pos", driveTrain.backLeft.getCurrentPosition());
-//                telemetry.addData("BL Target Pos", driveTrain.backLeft.getTargetPosition());
-//                telemetry.addData("BR Motor Pos", driveTrain.backRight.getCurrentPosition());
-//                telemetry.addData("BR Target Pos", driveTrain.backRight.getTargetPosition());
-//                telemetry.addData("FL Motor Pos", driveTrain.frontLeft.getCurrentPosition());
-//                telemetry.addData("FL Target Pos", driveTrain.frontLeft.getTargetPosition());
-//                telemetry.addData("FR Motor Pos", driveTrain.frontRight.getCurrentPosition());
-//                telemetry.addData("FR Target Pos", driveTrain.frontRight.getTargetPosition());
-//                telemetry.update();
+            (driveTrain.frontLeft.isBusy() && driveTrain.frontRight.isBusy())&&
+            driveTrain.backLeft.isBusy() && driveTrain.backRight.isBusy()) {
+                telemetry.addData("BL Motor Pos", driveTrain.backLeft.getCurrentPosition());
+                telemetry.addData("BL Target Pos", driveTrain.backLeft.getTargetPosition());
+                telemetry.addData("BR Motor Pos", driveTrain.backRight.getCurrentPosition());
+                telemetry.addData("BR Target Pos", driveTrain.backRight.getTargetPosition());
+                telemetry.addData("FL Motor Pos", driveTrain.frontLeft.getCurrentPosition());
+                telemetry.addData("FL Target Pos", driveTrain.frontLeft.getTargetPosition());
+                telemetry.addData("FR Motor Pos", driveTrain.frontRight.getCurrentPosition());
+                telemetry.addData("FR Target Pos", driveTrain.frontRight.getTargetPosition());
+                telemetry.update();
             }
 
             // Stop all motion & Turn off RUN_TO_POSITION
