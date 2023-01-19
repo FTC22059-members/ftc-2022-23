@@ -99,6 +99,7 @@ public class Drive {
         backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    
     }
 
     /**
@@ -108,11 +109,10 @@ public class Drive {
      * @param joystickMagnitude      forward motor speed
      * @param joystickAngle          clockwise turning motor speed.
      * @param turnRate               turning rate (like a joystick)
-     * @param speedMultiplier        multiplier used to slow down the drive speed, used in precision mode
-     * @param accelerationMultiplier multiplier used to change ramping behavior
+     * @param brakeMultiplier        multiplier used to slow down the drive speed, used in precision mode
      */
     public void moveRobot(double joystickMagnitude, double joystickAngle, double turnRate,
-                          double speedMultiplier, double accelerationMultiplier) {
+                          double brakeMultiplier) {
 
         double leftX = joystickMagnitude * sin(joystickAngle);
         double leftY = joystickMagnitude * cos(joystickAngle);
@@ -130,10 +130,11 @@ public class Drive {
         double backRightPower = (leftY + leftX - turnRate) / denominator;
 
         // actually tell the wheels to move! (finally)
-        backLeft.setPower(backLeftPower * speedMultiplier * accelerationMultiplier);
-        backRight.setPower(backRightPower * speedMultiplier * accelerationMultiplier);
-        frontLeft.setPower(frontLeftPower * speedMultiplier * accelerationMultiplier);
-        frontRight.setPower(frontRightPower * speedMultiplier * accelerationMultiplier);
+        // TODO: Replace * 0.83 multiplication with ceiling
+        backLeft.setPower(backLeftPower * brakeMultiplier * 0.83);
+        backRight.setPower(backRightPower * brakeMultiplier * 0.83);
+        frontLeft.setPower(frontLeftPower * brakeMultiplier * 0.83);
+        frontRight.setPower(frontRightPower * brakeMultiplier * 0.83);
     }
 
     /**
@@ -144,7 +145,7 @@ public class Drive {
      * @param joystickAngle     clockwise turning motor speed.
      */
     public void moveRobot(double joystickMagnitude, double joystickAngle) {
-        this.moveRobot(joystickMagnitude, joystickAngle, 0, 1, 1);
+        this.moveRobot(joystickMagnitude, joystickAngle, 0, 1);
     }
     /**
      * TODO: JavaDOC
@@ -168,14 +169,14 @@ public class Drive {
         double desiredAngle = imuAngle + inputDegrees;
         if (inputDegrees > 0) {
             while (imu.getAngle() < desiredAngle) {
-                moveRobot(0, 0, -0.5, 1, 1);
+                moveRobot(0, 0, -0.5, 1);
                 //telemetry.addData("currentAngle", imu.getAngle());
                 //telemetry.addData("desiredAngle", desiredAngle);
                 //telemetry.update();
             }
         } else if (inputDegrees < 0) {
             while (imu.getAngle() > desiredAngle) {
-                moveRobot(0, 0, 0.5, 1, 1);
+                moveRobot(0, 0, 0.5, 1);
                 //telemetry.addData("currentAngle", imu.getAngle());
                 //telemetry.addData("desiredAngle", desiredAngle);
                 //telemetry.update();

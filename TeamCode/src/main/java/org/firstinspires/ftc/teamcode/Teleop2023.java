@@ -40,30 +40,25 @@ public class Teleop2023 extends LinearOpMode {
         // Wait till we press the start button
         waitForStart();
 
-        double brakePercent = 1; //Default speed
-        double accelerationMultiplier = 0; // Currently, it's not accelerating at all
+        double brakeMultiplier = 1; //Default speed
         boolean globalPositioning = true; // Is global positioning is active?
         double gyroAngle = 0;
-        long speedRamp = 1;
         boolean yPrev = false;
-        
-        //long speedRamp = (long) (1-gamepad1.left_trigger);
-
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
 
             // if precision mode is on (the right trigger is pulled down to some degree)
             if (gamepad1.right_trigger > 0.05 && gamepad1.right_trigger < 0.75) {
-                brakePercent = 1 - gamepad1.right_trigger;
+                brakeMultiplier = 1 - gamepad1.right_trigger;
                 telemetry.addData("Precise Mode", "On");
             // also if precision mode is on, but it's fully or almost fully pu
             } else if (gamepad1.right_trigger >= 0.75) {
-                brakePercent = 0.25;
+                brakeMultiplier = 0.25;
                 telemetry.addData("Precise Mode", "On");
             } else { // if precise mode is off, and the robot will slowly accelerate
                 telemetry.addData("Precise Mode", "Off");
-                brakePercent = 1; //Return to default
+                brakeMultiplier = 1; //Return to default
             }
 
             // Toggles global position if requested
@@ -74,24 +69,8 @@ public class Teleop2023 extends LinearOpMode {
 
             telemetry.addData("Global Positioning",globalPositioning);
 
-            /*
-            While precise mode is on, if the left stick is moved, incrementally
-            increase the speed for about 2/3 of a second, until the speed is at
-            its maximum. When the joystick is not pushed, reset speed to 0.
-            */
-
-            if (gamepad1.left_stick_x != 0 || gamepad1.left_stick_y != 0 || gamepad1.right_stick_x != 0) { // if the joystick is moved
-                if (accelerationMultiplier < 1) { // accelerate!
-                    accelerationMultiplier = accelerationMultiplier + 0.01;
-                }
-            } else { // if the joystick isn't moved, reset the multiplier
-                accelerationMultiplier = 0;
-            }
-
             // log current multiplier data
-            telemetry.addData("acceleration multiplier: ", accelerationMultiplier);
-            telemetry.addData("speed multiplier: ", brakePercent);
-            telemetry.addData("real speed multiplier: ", accelerationMultiplier * brakePercent);
+            telemetry.addData("brakeMultiplier: ", brakeMultiplier);
 
             // get the controls
             double leftX = gamepad1.left_stick_x;
@@ -113,9 +92,10 @@ public class Teleop2023 extends LinearOpMode {
             telemetry.addData("Gyro Angle", robotImu.getAngle());
             telemetry.addData("Joystick Angle", joystickAngle*180/Math.PI);
 
-            driveTrain.moveRobot(joystickMagnitude, newAngle, rightX, brakePercent, 0.83);
 
-            if (!driveTrain.frontLeft.isBusy() && !driveTrain.frontRight.isBusy()&&
+            driveTrain.moveRobot(joystickMagnitude, newAngle, rightX, brakeMultiplier);
+
+            if (!driveTrain.frontLeft.isBusy() && !driveTrain.frontRight.isBusy() &&
                 !driveTrain.backLeft.isBusy() && !driveTrain.backRight.isBusy()){
                 if(gamepad1.dpad_left){
                     driveTrain.snapCcw();
@@ -130,9 +110,6 @@ public class Teleop2023 extends LinearOpMode {
             gripper.gripperLoop();
 
             telemetry.update();
-
-            //Pauses so acceleration multiplier doesn't ramp up too quick
-            //sleep(speedRamp);
 
             idle();
         }
