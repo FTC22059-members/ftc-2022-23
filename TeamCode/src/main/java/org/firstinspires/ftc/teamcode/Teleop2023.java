@@ -44,6 +44,7 @@ public class Teleop2023 extends LinearOpMode {
         boolean globalPositioning = true; // Is global positioning is active?
         double gyroAngle = 0;
         boolean yPrev = false;
+        boolean xPrev = false;
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
@@ -60,17 +61,20 @@ public class Teleop2023 extends LinearOpMode {
                 telemetry.addData("Precise Mode", "Off");
                 brakeMultiplier = 1; //Return to default
             }
+            telemetry.addData("brakeMultiplier: ", brakeMultiplier);
 
             // Toggles global position if requested
             if (gamepad1.y && !yPrev) {
                 globalPositioning = !globalPositioning;
             }
             yPrev = gamepad1.y;
-
             telemetry.addData("Global Positioning",globalPositioning);
 
-            // log current multiplier data
-            telemetry.addData("brakeMultiplier: ", brakeMultiplier);
+            // Resets gyro angle if requested
+            if (gamepad1.x && !xPrev) {
+                robotImu.resetAngle();
+            }
+            xPrev = gamepad1.x;
 
             // get the controls
             double leftX = gamepad1.left_stick_x;
