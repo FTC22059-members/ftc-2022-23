@@ -47,7 +47,11 @@ public class Imu {
 
         YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
 
-        double deltaAngle = orientation.getYaw(AngleUnit.DEGREES) - lastYaw;
+        double deltaAngle = orientation.getYaw(AngleUnit.DEGREES) - lastYaw ;
+//        telemetry.addData("Delta Angle", deltaAngle);
+//        telemetry.addData("Global Angle", globalAngle);
+//        telemetry.addData("Current Yaw", orientation.getYaw(AngleUnit.DEGREES));
+//        telemetry.addData("Last Yaw", lastYaw);
 
         if (deltaAngle < -180)
             deltaAngle += 360;
