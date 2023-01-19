@@ -51,19 +51,8 @@ public class Drive {
     static final double WHEEL_DIAMETER_INCHES = 3.858;     // For figuring circumference
     static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
+    static final double SPEED_LIMIT = 0.83;
 
-    // These constants define the desired driving/control characteristics
-    // They can/should be tweaked to suit the specific robot drive train.
-    static final double DRIVE_SPEED = 0.4;     // Max driving speed for better distance accuracy.
-    static final double TURN_SPEED = 0.2;     // Max Turn speed to limit turn rate
-    static final double HEADING_THRESHOLD = 1.0;    // How close must the heading get to the target before moving to next step.
-    // Requiring more accuracy (a smaller number) will often make the turn take longer to get into the final position.
-    // Define the Proportional control coefficient (or GAIN) for "heading control".
-    // We define one value when Turning (larger errors), and the other is used when Driving straight (smaller errors).
-    // Increase these numbers if the heading does not corrects strongly enough (eg: a heavy robot or using tracks)
-    // Decrease these numbers if the heading does not settle on the correct value (eg: very agile robot with omni wheels)
-    static final double P_TURN_GAIN = 0.02;     // Larger is more responsive, but also less stable
-    static final double P_DRIVE_GAIN = 0.03;     // Larger is more responsive, but also less stable
     /**
      * TODO: JavaDOC
      */
@@ -99,7 +88,6 @@ public class Drive {
         backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-    
     }
 
     /**
@@ -130,11 +118,10 @@ public class Drive {
         double backRightPower = (leftY + leftX - turnRate) / denominator;
 
         // actually tell the wheels to move! (finally)
-        // TODO: Replace * 0.83 multiplication with ceiling
-        backLeft.setPower(backLeftPower * brakeMultiplier * 0.83);
-        backRight.setPower(backRightPower * brakeMultiplier * 0.83);
-        frontLeft.setPower(frontLeftPower * brakeMultiplier * 0.83);
-        frontRight.setPower(frontRightPower * brakeMultiplier * 0.83);
+        backLeft.setPower(backLeftPower * brakeMultiplier * SPEED_LIMIT);
+        backRight.setPower(backRightPower * brakeMultiplier * SPEED_LIMIT);
+        frontLeft.setPower(frontLeftPower * brakeMultiplier * SPEED_LIMIT);
+        frontRight.setPower(frontRightPower * brakeMultiplier * SPEED_LIMIT);
     }
 
     /**
