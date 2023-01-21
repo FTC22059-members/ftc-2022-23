@@ -40,18 +40,18 @@ public class AprilTags {
     private Telemetry telemetry;
 
     /**
-     * TODO: JavaDOC
+     * Construction for AprilTags
+     * @param hwMapCon
+     * @param telemetryCon
      */
-
     public AprilTags(HardwareMap hwMapCon, Telemetry telemetryCon){
         this.hwMap=hwMapCon;
         this.telemetry=telemetryCon;
     }
 
     /**
-     * TODO: JavaDOC
+     * Initiates AprilTags, starts camera
      */
-
     public void init(){
         int cameraMonitorViewId = this.hwMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", this.hwMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(this.hwMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
@@ -75,12 +75,17 @@ public class AprilTags {
         this.detectTag();
     }
 
-
+    /**
+     * Sets how often telemetry sends data
+     */
     public void preLoop(){
         this.telemetry.setMsTransmissionInterval(50);
     }
 
-    //TODO: THIS METHOD NEEDS A JAVADOC! IT'S LONELY!
+    /**
+     * Detects a tag, if it does not detect a tag it lowers decimation to try to detect it
+     * @return zoneString
+     */
     public String detectTag(){
 
         String zoneString = "Not found";
