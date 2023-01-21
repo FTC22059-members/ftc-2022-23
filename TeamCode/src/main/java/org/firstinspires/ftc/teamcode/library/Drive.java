@@ -134,8 +134,9 @@ public class Drive {
     public void moveRobot(double joystickMagnitude, double joystickAngle) {
         this.moveRobot(joystickMagnitude, joystickAngle, 0, 1);
     }
+
     /**
-     * TODO: JavaDOC
+     * Stops the robot
      */
     public void stop() {
         frontLeft.setPower(0);
@@ -144,13 +145,18 @@ public class Drive {
         backRight.setPower(0);
     }
 
+    /**
+     *
+     * @return COUNTS_PER_INCH, positive is counterclockwise and negative is clockwise
+     */
     public double getCountsPerInch() {
         return COUNTS_PER_INCH;
     }
-    // TODO: JAVADOC ME!!!!!!
-    // positive inputDegrees turns counterclockwise
-    // negative inputDegrees turns clockwise
 
+    /**
+     * Turns the robot at a set speed
+     * @param inputDegrees
+     */
     public void turn(double inputDegrees) {
         double imuAngle = imu.getAngle();
         double desiredAngle = imuAngle + inputDegrees;
@@ -177,54 +183,26 @@ public class Drive {
     }
 
     /**
-     * Relic of the past of SnapCw
-
-    public void snapCw() {
-        double imuAngle = imu.getAngle();
-        if (imuAngle > 0 && imuAngle < 90) {
-            turn(0 - imuAngle);
-        } else if (imuAngle > 90 && imuAngle < 180) {
-            turn(90 - imuAngle);
-        } else if (imuAngle > -180 && imuAngle < -90) {
-            turn(-180 - imuAngle);
-        } else {
-            turn(-90 - imuAngle);
-        }
-    }*/
-
-    /**
-     * TODO: JavaDOC
-     *
-    public void snapCcw() {
-        double imuAngle = imu.getAngle();
-        if (imuAngle > 0 && imuAngle < 90) {
-            turn(90 - imuAngle);
-        } else if (imuAngle > 90 && imuAngle < 180) {
-            turn(180 - imuAngle);
-        } else if (imuAngle > -178 && imuAngle < -88) {
-            turn(-90 - imuAngle);
-        } else {
-            turn(0 - imuAngle);
-        }
-    }*/
-
-    /**
      * Snaps to nearest 90 degree interval clockwise
      */
-    public void snapCw(   ) {
+    public void snapCw() {
         double imuAngle = imu.getAngle();
         turn((90 * Math.floor(imuAngle / 90)) - imuAngle);
     }
 
-    public void snapCcw(   ) {
+    /**
+     * Snaps to nearest 90 degree interval counterclockwise
+     */
+    public void snapCcw() {
         double imuAngle = imu.getAngle();
         turn((90 * Math.ceil(imuAngle / 90)) - imuAngle);
     }
 
     /**
-     * TODO: JavaDOC
+     * Moves the robot forward for an amount of time and in a direction
+     * @param time
+     * @param direction
      */
-
     public void forwardsTime(double time, double direction) {
         ElapsedTime timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
         timer.reset();
@@ -232,8 +210,10 @@ public class Drive {
             moveRobot(1, direction);
         }
     }
+
     /**
-     * TODO: JavaDOC
+     * Moves the robot forward for an amount of time
+     * @param time
      */
     public void forwardsTime(double time) {
         ElapsedTime timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
@@ -242,8 +222,11 @@ public class Drive {
             moveRobot(1, 0);
         }
     }
+
     /**
-     * TODO: JavaDOC
+     * Moves the robot backward for an amount of time and in a direction
+     * @param time
+     * @param direction
      */
     public void backwardsTime(double time, double direction) {
         ElapsedTime timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
@@ -252,8 +235,10 @@ public class Drive {
             moveRobot(1, -direction);
         }
     }
+
     /**
-     * TODO: JavaDOC
+     * Moves the robot backward for an amount of time
+     * @param time
      */
     public void backwardsTime(double time) {
         ElapsedTime timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
