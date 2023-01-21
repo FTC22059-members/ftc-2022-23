@@ -25,7 +25,7 @@ public class Gripper {
     /**
      * Constructor for the gripper
      * @param hardwareMapImport The hardware map to be used in gripper
-     * @param telemetryImport
+     * @param telemetryImport The telemetry to be used in gripper
      */
 
     public Gripper(HardwareMap hardwareMapImport, Telemetry telemetryImport) {

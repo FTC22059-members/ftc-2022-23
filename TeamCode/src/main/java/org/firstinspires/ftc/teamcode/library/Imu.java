@@ -17,10 +17,14 @@ public class Imu {
     private double lastYaw = 0.0;
     private double globalAngle;
 
-
-    public Imu(HardwareMap hardwareMapCon, Telemetry telemetryCon) {
-        this.hardwareMap = hardwareMapCon;
-        this.telemetry = telemetryCon;
+    /**
+     * Constructor for the imu
+     * @param hardwareMapImport The hardware map to be used in imu
+     * @param telemetryImport The telemetry to be used for printing things
+     */
+    public Imu(HardwareMap hardwareMapImport, Telemetry telemetryImport) {
+        this.hardwareMap = hardwareMapImport;
+        this.telemetry = telemetryImport;
     }
 
     /**
@@ -65,11 +69,19 @@ public class Imu {
         return globalAngle;
     }
 
+    /**
+     * Gets a degree angle value and converts it to radians
+     * @return Final converted angle
+     */
     public double getAngleRadians() {
         // convert degrees to radians
         return (Math.PI * this.getAngle()) / 180;
     }
 
+    /**
+     * Gets the correction based on where the robot is told to go versus where it is.
+     * @return The amount that the robot needs to be corrected by
+     */
     public double checkDirection() {
         // The gain value determines how sensitive the correction is to direction changes.
         // You will have to experiment with your robot to get small smooth direction changes
@@ -102,10 +114,16 @@ public class Imu {
         telemetry.addData("IMU Calibrating Successful?", initSuccessful);
     }
 
+    /**
+     * Pre-loop code for Imu. Currently does nothing.
+     */
     public void preLoop() {
 
     }
 
+    /**
+     * Code to run the IMUS's loop. Currently prints heading.
+     */
     public void imuLoop() {
         telemetry.addData("IMU heading", globalAngle);
     }
