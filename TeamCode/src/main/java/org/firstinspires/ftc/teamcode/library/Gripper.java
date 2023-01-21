@@ -17,8 +17,8 @@ public class Gripper {
     private HardwareMap hardwareMap;
     private Telemetry telemetry;
 
-    private static float OPENANGLE = 1;
-    private static float CLOSEANGLE = 0.85f;
+    private static double OPENANGLE = 0.125;
+    private static double CLOSEANGLE = 0.48;
     
     private static boolean ISOPEN = true;
 
@@ -67,6 +67,7 @@ public class Gripper {
         gripperServo = hardwareMap.get(Servo.class, "gripperMotor");
         this.gamepad1 = gamepad1;
         this.gamepad2 = gamepad2;
+
     }
 
     /**
@@ -74,7 +75,7 @@ public class Gripper {
      */
 
     public void preLoop() {
-
+        open();
     }
 
     /**
@@ -89,5 +90,6 @@ public class Gripper {
             open();
             ISOPEN = true;
         }
+        telemetry.addData("Gripper Open?", ISOPEN);
     }
 }

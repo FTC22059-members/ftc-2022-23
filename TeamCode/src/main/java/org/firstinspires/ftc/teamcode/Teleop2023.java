@@ -46,6 +46,11 @@ public class Teleop2023 extends LinearOpMode {
         boolean yPrev = false;
         boolean xPrev = false;
 
+        //pre-loops go here
+        //TO-DO: More Pre-loops nedded
+        gripper.preLoop();
+
+
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
 
