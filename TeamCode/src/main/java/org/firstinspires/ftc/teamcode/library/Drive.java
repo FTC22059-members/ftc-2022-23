@@ -54,7 +54,10 @@ public class Drive {
     static final double SPEED_LIMIT = 0.83;
 
     /**
-     * TODO: JavaDOC
+     * Constructor for Drive
+     * @param hardwareMapCon
+     * @param telemetryCon
+     * @param imu
      */
     public Drive(HardwareMap hardwareMapCon, Telemetry telemetryCon, Imu imu) {
         this.hardwareMap = hardwareMapCon;
@@ -62,7 +65,7 @@ public class Drive {
         this.imu = imu;
     }
     /**
-     * TODO: JavaDOC
+     * Initiates drive, sets up motors
      */
     public void init() {
         //Find motors in hardware map (in the driver station).
