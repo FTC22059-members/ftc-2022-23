@@ -23,16 +23,18 @@ public class Gripper {
     private static boolean ISOPEN = true;
 
     /**
-     * TODO: JavaDOC
+     * Constructor for the gripper
+     * @param hardwareMapImport The hardware map to be used in gripper
+     * @param telemetryImport
      */
 
-    public Gripper(HardwareMap hardwareMapCon, Telemetry telemetryCon) {
-        this.hardwareMap = hardwareMapCon;
-        this.telemetry = telemetryCon;
+    public Gripper(HardwareMap hardwareMapImport, Telemetry telemetryImport) {
+        this.hardwareMap = hardwareMapImport;
+        this.telemetry = telemetryImport;
     }
 
     /**
-     * Opening gripper
+     * Opens gripper
      */
 
     public void open() {
@@ -52,7 +54,8 @@ public class Gripper {
     }
 
     /**
-     * TODO: JavaDOC
+     * Gets whether the gripper is open
+     * @return Returns whether the gripper is open (TRUE=OPEN)
      */
 
     public boolean getIsOpen() {
@@ -60,7 +63,9 @@ public class Gripper {
     }
 
     /**
-     * TODO: JavaDOC
+     * Initalization method for the gripper, which imports the gamepads.
+     * @param gamepad1 Imports gamepad 1
+     * @param gamepad2 Imports gamepad 2
      */
 
     public void init(Gamepad gamepad1, Gamepad gamepad2) {
@@ -71,7 +76,7 @@ public class Gripper {
     }
 
     /**
-     * TODO: JavaDOC
+     * Pre-loop code for gripper. Currently just opens the gripper.
      */
 
     public void preLoop() {
@@ -79,7 +84,7 @@ public class Gripper {
     }
 
     /**
-     * TODO: JavaDOC
+     * Code to run the gripper's loop. Contains code to open and close the gripper
      */
 
     public void gripperLoop() {
