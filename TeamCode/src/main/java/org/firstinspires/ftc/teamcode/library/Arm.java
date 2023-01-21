@@ -19,10 +19,15 @@ public class Arm {
 
     private static double ARM_SPEED_MULTIPLIER = 0.5;
 
+    /**
+     * Constructor for the arm
+     * @param hardwareMapImport The hardware map to be used in arm
+     * @param telemetryImport The telemetry to be used in arm
+     */
 
-    public Arm(HardwareMap hardwareMapCon, Telemetry telemetryCon) {
-        this.hardwareMap = hardwareMapCon;
-        this.telemetry = telemetryCon;
+    public Arm(HardwareMap hardwareMapImport, Telemetry telemetryImport) {
+        this.hardwareMap = hardwareMapImport;
+        this.telemetry = telemetryImport;
     }
 
     /**
