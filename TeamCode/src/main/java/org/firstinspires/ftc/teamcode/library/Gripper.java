@@ -27,39 +27,9 @@ public class Gripper {
      * @param hardwareMapImport The hardware map to be used in gripper
      * @param telemetryImport The telemetry to be used in gripper
      */
-
     public Gripper(HardwareMap hardwareMapImport, Telemetry telemetryImport) {
         this.hardwareMap = hardwareMapImport;
         this.telemetry = telemetryImport;
-    }
-
-    /**
-     * Opens gripper
-     */
-
-    public void open() {
-        if (gripperServo.getPosition() != OPENANGLE) {
-            gripperServo.setPosition(OPENANGLE);
-        }
-    }
-
-    /**
-     * Closes gripper
-     */
-
-    public void close() {
-        if (gripperServo.getPosition() != CLOSEANGLE) {
-            gripperServo.setPosition(CLOSEANGLE);
-        }
-    }
-
-    /**
-     * Gets whether the gripper is open
-     * @return Returns whether the gripper is open (TRUE=OPEN)
-     */
-
-    public boolean getIsOpen() {
-        return ISOPEN;
     }
 
     /**
@@ -67,7 +37,6 @@ public class Gripper {
      * @param gamepad1 Imports gamepad 1
      * @param gamepad2 Imports gamepad 2
      */
-
     public void init(Gamepad gamepad1, Gamepad gamepad2) {
         gripperServo = hardwareMap.get(Servo.class, "gripperMotor");
         this.gamepad1 = gamepad1;
@@ -78,7 +47,6 @@ public class Gripper {
     /**
      * Pre-loop code for gripper. Currently just opens the gripper.
      */
-
     public void preLoop() {
         open();
     }
@@ -86,7 +54,6 @@ public class Gripper {
     /**
      * Code to run the gripper's loop. Contains code to open and close the gripper
      */
-
     public void gripperLoop() {
         if (gamepad2.right_trigger > 0 && ISOPEN) {
             close();
@@ -96,5 +63,31 @@ public class Gripper {
             ISOPEN = true;
         }
         telemetry.addData("Gripper Open?", ISOPEN);
+    }
+
+    /**
+     * Opens gripper
+     */
+    public void open() {
+        if (gripperServo.getPosition() != OPENANGLE) {
+            gripperServo.setPosition(OPENANGLE);
+        }
+    }
+
+    /**
+     * Closes gripper
+     */
+    public void close() {
+        if (gripperServo.getPosition() != CLOSEANGLE) {
+            gripperServo.setPosition(CLOSEANGLE);
+        }
+    }
+
+    /**
+     * Gets whether the gripper is open
+     * @return Returns whether the gripper is open (TRUE=OPEN)
+     */
+    public boolean getIsOpen() {
+        return ISOPEN;
     }
 }
