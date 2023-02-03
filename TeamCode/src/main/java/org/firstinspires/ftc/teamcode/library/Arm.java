@@ -24,7 +24,6 @@ public class Arm {
      * @param hardwareMapImport The hardware map to be used in arm
      * @param telemetryImport The telemetry to be used in arm
      */
-
     public Arm(HardwareMap hardwareMapImport, Telemetry telemetryImport) {
         this.hardwareMap = hardwareMapImport;
         this.telemetry = telemetryImport;
@@ -35,7 +34,6 @@ public class Arm {
      * @param gamepad1 The driver gamepad
      * @param gamepad2 The arm gamepad
      */
-
     public void init(Gamepad gamepad1, Gamepad gamepad2) {
         armMotor = hardwareMap.get(DcMotor.class, "armMotor");
         armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -43,6 +41,32 @@ public class Arm {
         armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         this.gamepad1 = gamepad1;
         this.gamepad2 = gamepad2;
+    }
+
+    /**
+     * This method executes before the main loop in the program.
+     * This currently doesn't have any real use, it's more here for principle's sake
+     **/
+    public void preLoop() {
+
+    }
+
+    /**
+     * This method executes during the main loop in the program.
+     * Currently adds telemetry to the console.
+     **/
+    public void armLoop() {
+        telemetry.addData("Left stick Y:",gamepad2.left_stick_y);
+        if (gamepad2.left_stick_y < 0) {
+            telemetry.addData("moving:","up");
+            moveUp(gamepad2.left_stick_y);
+        } else if (gamepad2.left_stick_y > 0) {
+            telemetry.addData("moving:","down");
+            moveDown(gamepad2.left_stick_y);
+        } else {
+            armMotor.setPower(0);
+        }
+        telemetry.addData("Arm current position:", armMotor.getCurrentPosition());
     }
 
     /**
@@ -67,33 +91,5 @@ public class Arm {
         } else {
             armMotor.setPower(0);
         }
-    }
-
-    /**
-     * This method executes before the main loop in the program.
-     * This currently doesn't have any real use, it's more here for principle's sake
-     **/
-
-    public void preLoop() {
-
-    }
-
-    /**
-     * This method executes during the main loop in the program.
-     * Currently adds telemetry to the console.
-     **/
-
-    public void armLoop() {
-        telemetry.addData("Left stick Y:",gamepad2.left_stick_y);
-        if (gamepad2.left_stick_y < 0) {
-            telemetry.addData("moving:","up");
-            moveUp(gamepad2.left_stick_y);
-        } else if (gamepad2.left_stick_y > 0) {
-            telemetry.addData("moving:","down");
-            moveDown(gamepad2.left_stick_y);
-        } else {
-            armMotor.setPower(0);
-        }
-        telemetry.addData("Arm current position:", armMotor.getCurrentPosition());
     }
 }

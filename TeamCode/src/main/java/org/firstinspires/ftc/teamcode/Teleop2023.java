@@ -58,13 +58,13 @@ public class Teleop2023 extends LinearOpMode {
             if (gamepad1.right_trigger > 0.05 && gamepad1.right_trigger < 0.75) {
                 brakeMultiplier = 1 - gamepad1.right_trigger;
                 telemetry.addData("Precise Mode", "On");
-            // also if precision mode is on, but it's fully or almost fully pu
+            // also if precision mode is on, but it caps brake at 25% after 75% trigger
             } else if (gamepad1.right_trigger >= 0.75) {
                 brakeMultiplier = 0.25;
                 telemetry.addData("Precise Mode", "On");
-            } else { // if precise mode is off, and the robot will slowly accelerate
+            } else { // if precise mode is off, then don't apply brake
                 telemetry.addData("Precise Mode", "Off");
-                brakeMultiplier = 1; //Return to default
+                brakeMultiplier = 1; 
             }
             telemetry.addData("brakeMultiplier: ", brakeMultiplier);
 

@@ -29,7 +29,7 @@ public class Imu {
 
 
     public void init() {
-        imu = hardwareMap.get(IMU.class, "imu");
+        imu = hardwareMap.get(IMU.class, "imuCH");
 
         RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.FORWARD;
         RevHubOrientationOnRobot.UsbFacingDirection usbDirection = RevHubOrientationOnRobot.UsbFacingDirection.RIGHT;
@@ -59,8 +59,11 @@ public class Imu {
      * Resets the angle for the imu so that it's accurate to whatever position
      */
     public void resetAngle() {
+
         imu.resetYaw();
-        lastYaw = 0.0;
+
+        YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
+        lastYaw = orientation.getYaw(AngleUnit.DEGREES);
         globalAngle = 0.0;
 
         telemetry.addLine("IMU angle reset");

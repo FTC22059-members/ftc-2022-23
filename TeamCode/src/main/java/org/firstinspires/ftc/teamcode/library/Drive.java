@@ -20,20 +20,6 @@ public class Drive {
     private Telemetry telemetry;
     private Imu imu;
 
-    private double robotHeading = 0;
-    private double headingOffset = 0;
-    private double headingError = 0;
-
-    // These variable are declared here (as class members) so they can be updated in various methods,
-    // but still be displayed by sendTelemetry()
-    private double targetHeading = 0;
-    private double driveSpeed = 0;
-    private double turnSpeed = 0;
-    private double leftX = 0;
-    private double rightSpeed = 0;
-    private int leftTarget = 0;
-    private int rightTarget = 0;
-
     //Initialize motor variables
     public DcMotorEx backLeft;
     public DcMotorEx backRight;
