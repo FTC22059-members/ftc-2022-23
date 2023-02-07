@@ -66,17 +66,15 @@ public class Autonomous2023Inverted extends LinearOpMode {
         telemetry.addData("Time to find: ", timer.milliseconds());
 
         if (zone.equals("A")){
-            driveForward(28, 0.8);
+            driveForward(26, 0.8);
             driveTrain.turn(-80);
-            driveForward(26,0.8);
-            driveTrain.turn(80);
+            driveForward(22.5,0.8);
         }else if (zone.equals("B")){
             driveForward(28, 0.8);
         }else {
-            driveForward(28, 0.8);
+            driveForward(26, 0.8);
             driveTrain.turn(80);
-            driveForward(26,0.8);
-            driveTrain.turn(-80);
+            driveForward(22.5,0.8);
         }
         idle();
     }
