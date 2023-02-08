@@ -149,15 +149,19 @@ public class Drive {
     public void turn(double inputDegrees) {
         double imuAngle = imu.getAngle();
         double desiredAngle = imuAngle + inputDegrees;
+
+        // turn's timeout
+        ElapsedTime timer = new ElapsedTime(0);
+        timer.reset();
         if (inputDegrees > 0) {
-            while (imu.getAngle() < desiredAngle) {
+            while (imu.getAngle() < desiredAngle && timer.seconds() < 1.5) {
                 moveRobot(0, 0, -0.5, 1);
                 //telemetry.addData("currentAngle", imu.getAngle());
                 //telemetry.addData("desiredAngle", desiredAngle);
                 //telemetry.update();
             }
         } else if (inputDegrees < 0) {
-            while (imu.getAngle() > desiredAngle) {
+            while (imu.getAngle() > desiredAngle && timer.seconds() < 1.5) {
                 moveRobot(0, 0, 0.5, 1);
                 //telemetry.addData("currentAngle", imu.getAngle());
                 //telemetry.addData("desiredAngle", desiredAngle);
