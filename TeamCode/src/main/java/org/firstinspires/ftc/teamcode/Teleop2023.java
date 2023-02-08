@@ -41,7 +41,7 @@ public class Teleop2023 extends LinearOpMode {
         waitForStart();
 
         double brakeMultiplier = 1; //Default speed
-        boolean globalPositioning = true; // Is global positioning is active?
+        boolean globalPositioning = false; // Is global positioning is active?
         double gyroAngle = 0;
         boolean yPrev = false;
         boolean xPrev = false;
