@@ -24,7 +24,7 @@ public class GraphicsContext {
 
     /**
      * Initializes a <b>Graphics Context</b> that is a child of another <b>Graphics
-     * Context</b>
+     * Context</b>.
      *
      * @param x      The x position of the <b>Graphics Context</b>
      * @param y      The y position of the <b>Graphics Context</b>
@@ -52,7 +52,7 @@ public class GraphicsContext {
 
     /**
      * Initializes the root graphics context. It has no <i>id</i>, <i>x</i>,
-     * <i>y</i>, or <i>parent</i>
+     * <i>y</i>, or <i>parent</i>.
      *
      * @param w The width of the <b>Graphics Context</b>
      * @param h The height of the <b>Graphics Context</b>
@@ -77,7 +77,7 @@ public class GraphicsContext {
     // Buffer Actions
 
     /**
-     * Sets the value of a particular Texel
+     * Sets the value of a particular Texel.
      *
      * @param x             The x coordinate of the Texel to set.
      * @param y             The x coordinate of the Texel to set.
@@ -123,6 +123,7 @@ public class GraphicsContext {
      * <i>overlay()</i>, then returns the result. If it is a root <b>Graphics
      * Context</b>, it renders all of the commands and returns the result to get
      * sent to the <code>Driver Station</code>.
+     *
      * @return A Buffer Array with all of it's children rendered in it.
      */
     public Texel[][] render() {
@@ -187,8 +188,9 @@ public class GraphicsContext {
     // Setters
 
     /**
-     * Sets whether or not to display a frame around the inside of the <b>Graphics
-     * Context</b>
+     * Sets <i>framed</i>, which determines whether or not to display a frame around the inside of the <b>Graphics
+     * Context</b>.
+     *
      * @param framed The value to set
      * @return The <b>Graphics Context</b>
      */
@@ -199,8 +201,9 @@ public class GraphicsContext {
     }
 
     /**
-     * Sets whether or not to display a box shadow around the outside bottom right
-     * of the <b>Graphics Context</b>
+     * Sets <i>boxShadow</i>, which determines whether or not to display a box shadow around the outside bottom right
+     * of the <b>Graphics Context</b>.
+     *
      * @param boxShadow The value to set
      * @return The <b>Graphics Context</b>
      */
@@ -211,8 +214,9 @@ public class GraphicsContext {
     }
 
     /**
-     * Sets whether or not to display the id of the <b>Graphics Context</b> on the
-     * top edge
+     * Sets <i>showId</i>, which determines whether or not to display the id of the <b>Graphics Context</b> on the
+     * top edge.
+     *
      * @param showId The value to set
      * @return The <b>Graphics Context</b>
      */
@@ -225,7 +229,8 @@ public class GraphicsContext {
     // Drawers
 
     /**
-     * Draw a rectangle on the <b>Buffer</b>
+     * Draw a rectangle on the <b>Buffer</b>.
+     *
      * @param x The x coordinate of the top left corner
      * @param y The y coordinate of the top left corner
      * @param w The width of the rectangle
@@ -255,7 +260,8 @@ public class GraphicsContext {
     }
 
     /**
-     * Draw a box shadow on the <b>Buffer</b>
+     * Draw a box shadow on the <b>Buffer</b>.
+     *
      * @param x The x coordinate of the top left corner
      * @param y The y coordinate of the top left corner
      * @param w The width of the box shadow
@@ -279,7 +285,8 @@ public class GraphicsContext {
     }
 
     /**
-     * Draw a horizontal line on the <b>Buffer</b>
+     * Draw a horizontal line on the <b>Buffer</b>.
+     *
      * @param x The x coordinate of the leftmost point on the line
      * @param y The y coordinate of the line
      * @param d The length of the line
@@ -294,7 +301,8 @@ public class GraphicsContext {
     }
 
     /**
-     * Draw a vertical line on the <b>Buffer</b>
+     * Draw a vertical line on the <b>Buffer</b>.
+     *
      * @param x The x coordinate of the line
      * @param y The y coordinate of the top point on the line
      * @param d The length of the line
@@ -395,7 +403,7 @@ public class GraphicsContext {
     // Maybe try ○◉ ▣□ ◇◈
 
     /**
-     * Draw a checkbox on the <b>Buffer</b>
+     * Draw a checkbox on the <b>Buffer</b>.
      *
      * @param x     The x coordinate of the checkbox
      * @param y     They y coordinate of the checkbox
@@ -413,7 +421,7 @@ public class GraphicsContext {
     // Nesting Stuff
 
     /**
-     * Add a child <b>Graphics Context</b>
+     * Add a child <b>Graphics Context</b>.
      *
      * @param x  The x coordinate of the top left corner of the child <b>Graphics Context</b>
      * @param y  The x coordinate of the top left corner of the child <b>Graphics Context</b>
@@ -430,7 +438,7 @@ public class GraphicsContext {
     }
 
     /**
-     * Removes a child <b>Graphics Context</b>
+     * Removes a child <b>Graphics Context</b>.
      *
      * @param context The child <b>Graphics Context</b> to remove
      * @return The <b>Graphics Context</b>
@@ -442,7 +450,7 @@ public class GraphicsContext {
     }
 
     /**
-     * Removes a child <b>Graphics Context</b>
+     * Removes a child <b>Graphics Context</b>.
      *
      * @param id The ID/name of the child <b>Graphics Context</b> to remove
      * @return The <b>Graphics Context</b>
@@ -454,7 +462,7 @@ public class GraphicsContext {
     }
 
     /**
-     * Get the parent <b>Graphics Context</b> if it exists
+     * Get the parent <b>Graphics Context</b> if it exists.
      *
      * @return The <b>Graphics Context</b>
      */

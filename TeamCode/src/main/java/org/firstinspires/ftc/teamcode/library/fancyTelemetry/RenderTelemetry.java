@@ -10,6 +10,7 @@ package org.firstinspires.ftc.teamcode.library.fancyTelemetry;
  * Use <code></code> tags for variable names, values, or keywords.
  * When referencing methods, always end it with parentheses like myMethod()
  * Capitalize Texels.
+ * Don't finish line of a Javadoc with a period unless there is more than one sentence.
  */
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;

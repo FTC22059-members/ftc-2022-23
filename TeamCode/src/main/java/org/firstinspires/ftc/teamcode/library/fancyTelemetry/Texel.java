@@ -22,7 +22,7 @@ public class Texel {
     /**
      * Initializes the Texel with content.
      *
-     * @param content The content to initialize it with. Should be one character.
+     * @param content The content to initialize it with. Should be one character
      */
     public Texel(String content) {
         this.content = content;
@@ -32,7 +32,7 @@ public class Texel {
     /**
      * Initializes the Texel as a command.
      *
-     * @param command The command to initialize it with.
+     * @param command The command to initialize it with
      */
     public Texel(Command command) {
         this.command = command;
@@ -44,7 +44,7 @@ public class Texel {
      * Layers the Texel on top of another Texel
      *
      * @param layered   The Texel that is under it
-     * @param sameLayer Whether the Texels are on the same layer (generally determines if they merge or not).
+     * @param sameLayer Whether the Texels are on the same layer (generally determines if they merge or not)
      * @return The resulting Texel
      */
     public Texel underlay(Texel layered, Boolean sameLayer) {

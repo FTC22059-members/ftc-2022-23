@@ -1,10 +1,13 @@
 package org.firstinspires.ftc.teamcode.library.fancyTelemetry;
 
-class Arrows implements Command {
+/**
+ * The <b>Arrow Command</b> allows you to refrence 8 different angles of arrow. in the 21xx range.
+ */
+class Arrow implements Command {
 
     public Angles angle;
 
-    public Arrows(Angles angle) {
+    public Arrow(Angles angle) {
         this.angle = angle;
     }
 

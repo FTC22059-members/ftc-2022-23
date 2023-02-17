@@ -72,7 +72,7 @@ public class Frame implements Command {
     };
 
     /**
-     * Initializes the <b>Frame Command</b> with <i>merge</i> set to <code>True</code>.
+     * Initializes the <b>Frame Command</b> with <i>merge</i> set to <code>True</code>
      *
      * @param sides The sides that the frame should connect <code>{top, bottom, left, right}</code>. For no connection, use <code>0</code>. <code>1</code> is a thin line, <code>2</code> is a thick line.
      */
@@ -82,10 +82,10 @@ public class Frame implements Command {
     }
 
     /**
-     * Initializes the <b>Frame Command</b>.
+     * Initializes the <b>Frame Command</b>
      *
-     * @param sides The sides that the frame should connect <code>{top, bottom, left, right}</code>. For no connection, use <code>0</code>. <code>1</code> is a thin line, <code>2</code> is a thick line.
-     * @param merge Whether to merge the frame with other frames if they are on the same layer.
+     * @param sides The sides that the frame should connect <code>{top, bottom, left, right}</code>. For no connection, use <code>0</code>. <code>1</code> is a thin line, <code>2</code> is a thick line
+     * @param merge Whether to merge the frame with other frames if they are on the same layer
      */
     public Frame(int[] sides, boolean merge) {
         this.sides = sides;

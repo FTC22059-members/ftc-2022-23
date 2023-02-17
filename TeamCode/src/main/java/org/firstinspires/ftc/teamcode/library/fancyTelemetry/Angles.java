@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.library.fancyTelemetry;
 
+/**
+ * The <b>Angles</b> enum is used when a UI element can be facing in 8 directions.
+ */
 public enum Angles {
     NORTH,
     EAST,
