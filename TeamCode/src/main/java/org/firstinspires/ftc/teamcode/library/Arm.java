@@ -12,15 +12,13 @@ public class Arm {
     private Gamepad gamepad1;
     private Gamepad gamepad2;
     private HardwareMap hardwareMap;
-    private Telemetry telemetry;
 
     private static float UPPERLIMIT = -2500;
     private static float LOWERLIMIT = 0;
 
 
-    public Arm(HardwareMap hardwareMapCon, Telemetry telemetryCon) {
+    public Arm(HardwareMap hardwareMapCon) {
         this.hardwareMap = hardwareMapCon;
-        this.telemetry = telemetryCon;
     }
 
     /**
@@ -77,16 +75,16 @@ public class Arm {
      **/
 
     public void armLoop() {
-        telemetry.addData("Left stick Y:",gamepad2.left_stick_y);
         if (gamepad2.left_stick_y < 0) {
-            telemetry.addData("moving:","up");
             moveUp(gamepad2.left_stick_y);
         } else if (gamepad2.left_stick_y > 0) {
-            telemetry.addData("moving:","down");
             moveDown(gamepad2.left_stick_y);
         } else {
             armMotor.setPower(0);
         }
-        telemetry.addData("Arm current position:", armMotor.getCurrentPosition());
+    }
+
+    public int getArmPosition() {
+        return armMotor.getCurrentPosition();
     }
 }

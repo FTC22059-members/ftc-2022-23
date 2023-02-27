@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.library.fancyTelemetry;
 /**
  * The <b>Fill Command</b> allows you to easily refrence the main block characters from the Block Characters Unicode Block.
  */
-class Fill implements Command {
+public class Fill implements Command {
     public int amount;
     public Orientations orientation;
 

@@ -11,16 +11,14 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 public class Imu {
 
     private HardwareMap hardwareMap;
-    private Telemetry telemetry;
 
     private IMU imu;
     private double lastYaw = 0.0;
     private double globalAngle;
 
 
-    public Imu(HardwareMap hardwareMapCon, Telemetry telemetryCon) {
+    public Imu(HardwareMap hardwareMapCon) {
         this.hardwareMap = hardwareMapCon;
-        this.telemetry = telemetryCon;
     }
 
     /**
@@ -30,8 +28,6 @@ public class Imu {
         imu.resetYaw();
         lastYaw = 0.0;
         globalAngle = 0.0;
-
-        telemetry.addLine("IMU angle reset");
     }
 
     /**
@@ -85,7 +81,7 @@ public class Imu {
     }
 
 
-    public void init() {
+    public boolean init() {
         imu = hardwareMap.get(IMU.class, "imu");
 
         RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.RIGHT;
@@ -95,7 +91,7 @@ public class Imu {
 
         boolean initSuccessful = imu.initialize(new IMU.Parameters(orientationOnRobot));
 
-        telemetry.addData("IMU Calibrating Successful?", initSuccessful);
+        return initSuccessful;
     }
 
     public void preLoop() {
@@ -103,7 +99,7 @@ public class Imu {
     }
 
     public void imuLoop() {
-        telemetry.addData("IMU heading", globalAngle);
+
     }
 
 }

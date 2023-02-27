@@ -26,9 +26,8 @@ public class Gripper {
      * TODO: JavaDOC
      */
 
-    public Gripper(HardwareMap hardwareMapCon, Telemetry telemetryCon) {
+    public Gripper(HardwareMap hardwareMapCon) {
         this.hardwareMap = hardwareMapCon;
-        this.telemetry = telemetryCon;
     }
 
     /**

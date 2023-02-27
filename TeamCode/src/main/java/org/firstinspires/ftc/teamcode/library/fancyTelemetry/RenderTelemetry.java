@@ -21,9 +21,11 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class RenderTelemetry {
     private Telemetry telemetry;
     public GraphicsContext display;
+    private int WIDTH = 30;
+    private int HEIGHT = 10;
 
     public RenderTelemetry(Telemetry telemetry) {
-        this.display = new GraphicsContext(30, 10);
+        this.display = new GraphicsContext(this.WIDTH, this.HEIGHT);
         this.telemetry = telemetry;
         this.telemetry.setCaptionValueSeparator("  ");
         this.telemetry.setItemSeparator(", ");
@@ -31,14 +33,16 @@ public class RenderTelemetry {
     }
 
     public void loop() {
-        Texel[][] buffer = this.display.render();
+        Texel[][] buffer = display.render();
 
         String string = "";
         for (int y = 0; y < buffer.length; y++) {
             String row = "";
             for (int x = 0; x < buffer[y].length; x++) {
                 Texel texel = buffer[y][x];
-                if (texel.isCommand) {
+                if (texel == null) {
+                    row += " ";
+                } else if (texel.isCommand) {
                     row += texel.command.render();
                 } else {
                     row += texel.content;
@@ -50,5 +54,7 @@ public class RenderTelemetry {
         this.telemetry.addData("", string);
 
         this.telemetry.update();
+
+        this.display.clearAll();
     }
 }

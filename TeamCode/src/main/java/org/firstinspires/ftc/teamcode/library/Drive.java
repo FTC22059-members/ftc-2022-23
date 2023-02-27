@@ -67,9 +67,8 @@ public class Drive {
     /**
      * TODO: JavaDOC
      */
-    public Drive(HardwareMap hardwareMapCon, Telemetry telemetryCon, Imu imu) {
+    public Drive(HardwareMap hardwareMapCon, Imu imu) {
         this.hardwareMap = hardwareMapCon;
-        this.telemetry = telemetryCon;
         this.imu = imu;
     }
     /**
