@@ -8,21 +8,38 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.library.Arm;
 import org.firstinspires.ftc.teamcode.library.Drive;
 import org.firstinspires.ftc.teamcode.library.Gripper;
 import org.firstinspires.ftc.teamcode.library.Imu;
 import org.firstinspires.ftc.teamcode.library.fancyTelemetry.*;
 
+//  ▒█████   ██▒   █▓ ▓█████ ██▀███    ▄████▄   ██▓    ▒█████    ▄████▄  ██ ▄█▀ ▓█████▓█████▄
+// ▒██▒  ██▒▓██░   █▒ ▓█   ▀▓██ ▒ ██▒ ▒██▀ ▀█  ▓██▒   ▒██▒  ██▒ ▒██▀ ▀█  ██▄█▒  ▓█   ▀▒██▀ ██▌
+// ▒██░  ██▒ ▓██  █▒░ ▒███  ▓██ ░▄█ ▒ ▒▓█    ▄ ▒██░   ▒██░  ██▒ ▒▓█    ▄▓███▄░  ▒███  ░██   █▌
+// ▒██   ██░  ▒██ █░░ ▒▓█  ▄▒██▀▀█▄  ▒▒▓▓▄ ▄██ ▒██░   ▒██   ██░▒▒▓▓▄ ▄██▓██ █▄  ▒▓█  ▄░▓█▄   ▌
+// ░ ████▓▒░   ▒▀█░  ▒░▒████░██▓ ▒██▒░▒ ▓███▀ ▒░██████░ ████▓▒░░▒ ▓███▀ ▒██▒ █▄▒░▒████░▒████▓
+// ░ ▒░▒░▒░    ░ ▐░  ░░░ ▒░ ░ ▒▓ ░▒▓░░░ ░▒ ▒  ░░ ▒░▓  ░ ▒░▒░▒░ ░░ ░▒ ▒  ▒ ▒▒ ▓▒░░░ ▒░  ▒▒▓  ▒
+//   ░ ▒ ▒░    ░ ░░  ░ ░ ░    ░▒ ░ ▒    ░  ▒  ░░ ░ ▒    ░ ▒ ▒░    ░  ▒  ░ ░▒ ▒░░ ░ ░   ░ ▒  ▒
+// ░ ░ ░ ▒        ░      ░    ░░   ░  ░          ░ ░  ░ ░ ░ ▒   ░       ░ ░░ ░     ░   ░ ░  ░
+//     ░ ░        ░  ░   ░     ░      ░ ░     ░    ░      ░ ░   ░ ░     ░  ░   ░   ░     ░
+
+
 @TeleOp(name = "Tele-op 2023")
 public class TelemetryTeleop2023 extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        RenderTelemetry fancyTelemetry = new RenderTelemetry(telemetry);
-        GraphicsContext display = fancyTelemetry.display;
+        Renderer fancyTelemetry = new Renderer(telemetry);
+        GraphicsContext wordmark = new GraphicsContext(91, 9);
+        wordmark.drawText(0, 0, "" +
+                " ░░░░░░░  ░░    ░░ ░░░░░░░ ░░░░░░   ░░░░░░ ░░       ░░░░░░   ░░░░░░ ░░   ░░ ░░░░░░░ ░░░░░░  \n" +
+                "░░ \\   ░░ ░░    ░░ ░░      ░░   ░░ ░░      ░░      ░░    ░░ ░░      ░░  ░░  ░░      ░░   ░ \n" +
+                "▒▒  •  ▒▒ ▒▒    ▒▒ ▒▒▒▒▒   ▒▒▒▒▒▒  ▒▒      ▒▒      ▒▒    ▒▒ ▒▒      ▒▒▒▒▒   ▒▒▒▒▒   ▒▒   ▒▒ \n" +
+                "▒▒ /   ▒▒  ▒▒  ▒▒  ▒▒      ▒▒   ▒▒ ▒▒      ▒▒      ▒▒    ▒▒ ▒▒      ▒▒  ▒▒  ▒▒      ▒▒   ▒▒ \n" +
+                " ▓▓▓▓▓▓▓    ▓▓▓▓   ▓▓▓▓▓▓▓ ▓▓   ▓▓  ▓▓▓▓▓▓ ▓▓▓▓▓▓▓  ▓▓▓▓▓▓   ▓▓▓▓▓▓ ▓▓   ▓▓ ▓▓▓▓▓▓▓ ▓▓▓▓▓▓  \n", new int[]{91, 9});
 
+        //⢰
         Imu robotImu = new Imu(hardwareMap);
         robotImu.init();
         robotImu.resetAngle();
@@ -35,11 +52,10 @@ public class TelemetryTeleop2023 extends LinearOpMode {
 
         Arm armMotor = new Arm(hardwareMap);
         armMotor.init(gamepad1, gamepad2);
-        telemetry.addData("Arm Initialized", "!");
+        fancyTelemetry.insert(wordmark, 0, 0, false, false, false);
+        fancyTelemetry.insert(new GraphicsContext(18, 3, " ! ").drawText(1, 1, "Arm Initialized!"), 36, 10, false, false, false);
 
-        // tell people to press the start button
-        telemetry.addLine("Roses are red, violets are blue, if you press start on the robot, then it will move");
-        telemetry.update();
+        fancyTelemetry.loop();
 
         // Wait till we press the start button
         waitForStart();
@@ -130,83 +146,92 @@ public class TelemetryTeleop2023 extends LinearOpMode {
         double leftY = -gamepad1.left_stick_y;
         double rightX = gamepad1.right_stick_x / 1.3;
 
-        GraphicsContext robotContext = display.addContext(16, 0, 16, 9, "Robot");
+        //16 0
+        GraphicsContext robotContext = new GraphicsContext(16, 9, "Robot");
 
         int roundedAngle = Math.round(Math.round(robotImu.getAngle() * 45.0) / 45);
         switch (roundedAngle) {
             case 0:
-                robotContext.setChar(2, 0, new Texel(new Arrow(Angles.NORTH)), false, false);
+                robotContext.setChar(2, 0, new Texel(new Arrow(Angles.NORTH)), false);
             case 45:
-                robotContext.setChar(0, 0, new Texel(new Arrow(Angles.NORTHWEST)), false, false);
+                robotContext.setChar(0, 0, new Texel(new Arrow(Angles.NORTHWEST)), false);
             case 90:
-                robotContext.setChar(0, 1, new Texel(new Arrow(Angles.WEST)), false, false);
+                robotContext.setChar(0, 1, new Texel(new Arrow(Angles.WEST)), false);
             case 135:
-                robotContext.setChar(0, 2, new Texel(new Arrow(Angles.SOUTHWEST)), false, false);
+                robotContext.setChar(0, 2, new Texel(new Arrow(Angles.SOUTHWEST)), false);
             case 180:
-                robotContext.setChar(2, 2, new Texel(new Arrow(Angles.SOUTH)), false, false);
+                robotContext.setChar(2, 2, new Texel(new Arrow(Angles.SOUTH)), false);
             case -180:
-                robotContext.setChar(2, 2, new Texel(new Arrow(Angles.SOUTH)), false, false);
+                robotContext.setChar(2, 2, new Texel(new Arrow(Angles.SOUTH)), false);
             case -45:
-                robotContext.setChar(4, 0, new Texel(new Arrow(Angles.NORTHEAST)), false, false);
+                robotContext.setChar(4, 0, new Texel(new Arrow(Angles.NORTHEAST)), false);
             case -90:
-                robotContext.setChar(4, 1, new Texel(new Arrow(Angles.EAST)), false, false);
+                robotContext.setChar(4, 1, new Texel(new Arrow(Angles.EAST)), false);
             case -135:
-                robotContext.setChar(4, 2, new Texel(new Arrow(Angles.SOUTHEAST)), false, false);
+                robotContext.setChar(4, 2, new Texel(new Arrow(Angles.SOUTHEAST)), false);
             default:
-                robotContext.setChar(2, 0, new Texel("?"), false, false);
+                robotContext.setChar(2, 0, new Texel("?"), false);
         }
-        robotContext.setChar(1, 1, new Texel("*"), false, false);
+        robotContext.setChar(1, 1, new Texel("*"), false);
 
-        robotContext.setChar(8, 0, new Texel(new Fill((int) Math.round(driveTrain.frontLeft.getPower() * 8), Orientations.VERTICAL)), false, false)
-                .setChar(8, 2, new Texel(new Fill((int) Math.round(driveTrain.frontRight.getPower() * 8), Orientations.VERTICAL)), false, false)
-                .setChar(12, 0, new Texel(new Fill((int) Math.round(driveTrain.backLeft.getPower() * 8), Orientations.VERTICAL)), false, false)
-                .setChar(12, 2, new Texel(new Fill((int) Math.round(driveTrain.backRight.getPower() * 8), Orientations.VERTICAL)), false, false);
+        robotContext.setChar(8, 0, new Texel(new Fill((int) Math.round(driveTrain.frontLeft.getPower() * 8), Orientations.VERTICAL)), false)
+                .setChar(8, 2, new Texel(new Fill((int) Math.round(driveTrain.frontRight.getPower() * 8), Orientations.VERTICAL)), false)
+                .setChar(12, 0, new Texel(new Fill((int) Math.round(driveTrain.backLeft.getPower() * 8), Orientations.VERTICAL)), false)
+                .setChar(12, 2, new Texel(new Fill((int) Math.round(driveTrain.backRight.getPower() * 8), Orientations.VERTICAL)), false);
 
         if (rightX < 0) {
-            robotContext.setChar(10, 1, new Texel("\u21ba"), false, false); // ↺
+            robotContext.setChar(10, 1, new Texel("\u21ba"), false); // ↺
         } else if (rightX > 0) {
-            robotContext.setChar(10, 1, new Texel("\u21bb"), false, false); // ↻
+            robotContext.setChar(10, 1, new Texel("\u21bb"), false); // ↻
         }
         if (leftY < 0) {
-            robotContext.setChar(10, 2, new Texel(new Arrow(Angles.SOUTH)), false, false);
+            robotContext.setChar(10, 2, new Texel(new Arrow(Angles.SOUTH)), false);
         } else if (leftY > 0) {
-            robotContext.setChar(10, 0, new Texel(new Arrow(Angles.NORTH)), false, false);
+            robotContext.setChar(10, 0, new Texel(new Arrow(Angles.NORTH)), false);
 
         }
         if (leftX < 0) {
-            robotContext.setChar(12, 1, new Texel(new Arrow(Angles.EAST)), false, false);
+            robotContext.setChar(12, 1, new Texel(new Arrow(Angles.EAST)), false);
         } else if (leftX > 0) {
-            robotContext.setChar(8, 1, new Texel(new Arrow(Angles.WEST)), false, false);
+            robotContext.setChar(8, 1, new Texel(new Arrow(Angles.WEST)), false);
         }
 
-        robotContext.drawText(0, 3, Math.round(robotImu.getAngle()) + "º", false)
-                .drawText(5, 3, Math.sqrt(Math.pow(leftX, 2) + Math.pow(leftY, 2)) + "%", false)
+        robotContext.drawText(0, 3, Math.round(robotImu.getAngle()) + "º")
+                .drawText(5, 3, Math.sqrt(Math.pow(leftX, 2) + Math.pow(leftY, 2)) + "%")
                 .drawCheckbox(1, 5, "Global", globalPositioning)
                 .drawCheckbox(1, 6, "Precise", brakePercent < 1);
 
-        display.addContext(0, 0, 16, 16, "Arm")
-                .drawGauge(0, 0, 15, armMotor.getArmPosition(), -2500, 0, Orientations.VERTICAL)
+        //0 0
+        GraphicsContext armContext = new GraphicsContext(16, 16, "Arm");
+        armContext.drawGauge(0, 0, 15, armMotor.getArmPosition(), -2500, 0, Orientations.VERTICAL)
                 .drawGauge(1, 0, 15, armMotor.getArmPosition(), -2500, 0, Orientations.VERTICAL)
-                .drawText(3, 0, armMotor.getArmPosition() + "'", false);
+                .drawText(3, 0, armMotor.getArmPosition() + "'");
 
+        //16 9
+        GraphicsContext handOpen = new GraphicsContext(16, 7, "Hand");
+        handOpen.drawCheckbox(6, 0, "Open", true)
+                .setChar(4, 0, new Texel(new Frame(new int[]{1, 1, 0, 0})), false)
+                .setChar(4, 1, new Texel(new Frame(new int[]{1, 1, 0, 0})), false)
+                .setChar(4, 2, new Texel("\u22a5"), false)
+
+                .setChar(3, 3, new Texel("\u239f"), false)
+                .setChar(5, 3, new Texel("\u239c"), false);
+        GraphicsContext handClosed = new GraphicsContext(16, 7, "Hand");
+        handClosed.drawCheckbox(6, 0, "Open", false)
+                .setChar(4, 0, new Texel(new Frame(new int[]{1, 1, 0, 0})), false)
+                .setChar(4, 1, new Texel(new Frame(new int[]{1, 1, 1, 1})), false)
+                .setChar(4, 2, new Texel(new Frame(new int[]{1, 1, 0, 0})), false)
+
+                .setChar(3, 1, new Texel("_"), false)
+                .setChar(5, 1, new Texel("_"), false);
+//        if (gripper.getIsOpen()) {
+
+        fancyTelemetry.insert(armContext, 0, 0, true, true, true);
+        fancyTelemetry.insert(robotContext, 16, 0, true, true, true);
         if (gripper.getIsOpen()) {
-            display.addContext(16, 9, 16, 7, "Hand")
-                    .drawCheckbox(6, 0, "Open", true)
-                    .setChar(4, 0, new Texel(new Frame(new int[]{1, 1, 0, 0})), false, false)
-                    .setChar(4, 1, new Texel(new Frame(new int[]{1, 1, 0, 0})), false, false)
-                    .setChar(4, 2, new Texel("\u22a5"), false, false)
-
-                    .setChar(3, 3, new Texel("\u239f"), false, false)
-                    .setChar(5, 3, new Texel("\u239c"), false, false);
+            fancyTelemetry.insert(handOpen, 16, 9, true, true, true);
         } else {
-            display.addContext(16, 9, 16, 7, "Hand")
-                    .drawCheckbox(6, 0, "Open", false)
-                    .setChar(4, 0, new Texel(new Frame(new int[]{1, 1, 0, 0})), false, false)
-                    .setChar(4, 1, new Texel(new Frame(new int[]{1, 1, 1, 1})), false, false)
-                    .setChar(4, 2, new Texel(new Frame(new int[]{1, 1, 0, 0})), false, false)
-
-                    .setChar(3, 1, new Texel("_"), false, false)
-                    .setChar(5, 1, new Texel("_"), false, false);
+            fancyTelemetry.insert(handClosed, 16, 9, true, true, true);
         }
 
         fancyTelemetry.loop();

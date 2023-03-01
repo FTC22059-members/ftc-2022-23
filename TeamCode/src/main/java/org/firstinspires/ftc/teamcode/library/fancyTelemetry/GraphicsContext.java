@@ -8,70 +8,40 @@ import java.util.HashMap;
  * represent other windows.
  */
 public class GraphicsContext {
-    private int x = 0;
-    private int y = 0;
-    private int w = 0;
-    private int h = 0;
-    private GraphicsContext parent;
-    public boolean hasParent;
-    public boolean framed;
-    public boolean boxShadow;
+    public int w = 0;
+    public int h = 0;
     private Texel[][] buffer;
-    private int stroke;
-    private String id;
-    private HashMap<String, GraphicsContext> children = new HashMap<String, GraphicsContext>();
-    private Boolean showId;
+    private int stroke = 1;
+    public String name;
 
     /**
-     * Initializes a <b>Graphics Context</b> that is a child of another <b>Graphics
-     * Context</b>
+     * Initializes a <b>Graphics Context</b> with a name.
      *
-     * @param x      The x position of the <b>Graphics Context</b>
-     * @param y      The y position of the <b>Graphics Context</b>
-     * @param w      The width of the <b>Graphics Context</b>
-     * @param h      The height of the <b>Graphics Context</b>
-     * @param parent The parent <b>Graphics Context</b>
-     * @param id     The id (nad also name) of the <b>Graphics Context</b>
+     * @param w    The width of the <b>Graphics Context</b>
+     * @param h    The height of the <b>Graphics Context</b>
+     * @param name The name of the <b>Graphics Context</b>
      */
-    public GraphicsContext(int x, int y, int w, int h, GraphicsContext parent, String id) {
-        this.x = x;
-        this.y = y;
+    public GraphicsContext(int w, int h, String name) {
         this.w = w;
         this.h = h;
-        this.hasParent = parent != null;
-        this.parent = parent;
 
-        this.framed = this.hasParent;
-        this.boxShadow = false;
         this.buffer = new Texel[h][w];
 
-        this.stroke = 1;
-        this.id = id;
-        this.showId = this.hasParent;
+        this.name = name;
     }
 
     /**
-     * Initializes the root graphics context. It has no <i>id</i>, <i>x</i>,
-     * <i>y</i>, or <i>parent</i>
+     * Initializes a <b>Graphics Context</b> without a name.
      *
      * @param w The width of the <b>Graphics Context</b>
      * @param h The height of the <b>Graphics Context</b>
      */
+
     public GraphicsContext(int w, int h) {
-        this.x = 0;
-        this.y = 0;
         this.w = w;
         this.h = h;
-        this.hasParent = false;
-        this.parent = null;
 
-        this.framed = false;
-        this.boxShadow = false;
         this.buffer = new Texel[h][w];
-
-        this.stroke = 1;
-        this.id = "";
-        this.showId = false;
     }
 
     // Buffer Actions
@@ -84,17 +54,8 @@ public class GraphicsContext {
      * @param val           The value to set it to.
      * @param sameLayer     Whether the Texels should be treated as though they were
      *                      on the same layer (allows merging or not).
-     * @param ignorePadding Whether to allow Texels to be set in the areas where a
-     *                      frame would be (if applicable).
      */
-    public GraphicsContext setChar(int x, int y, Texel val, boolean sameLayer, boolean ignorePadding) {
-        int padding = 0;
-        if (!ignorePadding && this.framed) {
-            padding = 1;
-        }
-
-        x += padding;
-        y += padding;
+    public GraphicsContext setChar(int x, int y, Texel val, boolean sameLayer) {
         if (0 <= x && x < this.w && 0 <= y && y < this.h) {
             // this.buffer[y][x] = this.overlay(this.buffer[y][x], val, sameLayer);
             this.buffer[y][x] = val.underlay(this.buffer[y][x], sameLayer);
@@ -104,20 +65,10 @@ public class GraphicsContext {
     }
 
     /**
-     * Clears only this <i>buffer</i>.
+     * Clears the <i>buffer</i>.
      */
-    public void clearSelf() {
+    public void clear() {
         this.buffer = new Texel[h][w];
-    }
-
-    /**
-     * Clears its own <i>buffer</i> and the <i>buffers</i> of all of its children.
-     */
-    public void clearAll() {
-        for (HashMap.Entry<String, GraphicsContext> child : this.children.entrySet()) {
-            child.getValue().clearSelf();
-        }
-        this.clearSelf();
     }
 
     /**
@@ -129,100 +80,7 @@ public class GraphicsContext {
      * @return
      */
     public Texel[][] render() {
-        if (this.children != null) {
-            for (HashMap.Entry<String, GraphicsContext> mapEntry : this.children.entrySet()) {
-                GraphicsContext child = mapEntry.getValue();
-                Texel[][] buff = child.render();
-
-                for (int y = 0; y < child.h; y++) {
-                    for (int x = 0; x < child.w; x++) {
-                        if (buff[y][x] != null) {
-                            this.setChar(x + child.x, y + child.y, buff[y][x], false, false);
-                        }
-                    }
-                }
-                if (child.boxShadow)
-                    this.drawBoxShadow(child.x, child.y, child.w, child.h);
-            }
-        }
-
-        if (this.framed) {
-            int w = this.w;
-            int h = this.h;
-            w -= 1;
-            h -= 1;
-
-            // this.setChar(0, 0, `%f !sides 0${this.#stroke}0${this.#stroke} !merge
-            // false`,{"ignore-padding":true});
-            this.setChar(0, 0, new Texel(new Frame(new int[]{0, this.stroke, 0, this.stroke}, false)), false, true);
-            this.setChar(0 + w, 0, new Texel(new Frame(new int[]{0, this.stroke, this.stroke, 0}, false)), false,
-                    true);
-            this.setChar(0, 0 + h, new Texel(new Frame(new int[]{this.stroke, 0, 0, this.stroke}, false)), false,
-                    true);
-            this.setChar(0 + w, 0 + h, new Texel(new Frame(new int[]{this.stroke, 0, this.stroke, 0}, false)), false,
-                    true);
-
-            for (int i = 1; i < h; i++) {
-                this.setChar(0, 0 + i, new Texel(new Frame(new int[]{this.stroke, this.stroke, 0, 0}, false)), false,
-                        true);
-                this.setChar(0 + w, 0 + i, new Texel(new Frame(new int[]{this.stroke, this.stroke, 0, 0}, false)),
-                        false, true);
-            }
-
-            for (int i = 1; i < w; i++) {
-                this.setChar(0 + i, 0, new Texel(new Frame(new int[]{0, 0, this.stroke, this.stroke}, false)), false,
-                        true);
-                this.setChar(0 + i, 0 + h, new Texel(new Frame(new int[]{0, 0, this.stroke, this.stroke}, false)),
-                        false, true);
-            }
-
-            if (this.showId) {
-
-                if (w - 3 > 0) {
-                    this.drawText(2, 0, this.id, true, new int[]{w - 3, 1});
-                }
-            }
-        }
-
         return this.buffer;
-    }
-
-    // Setters
-
-    /**
-     * Sets whether or not to display a frame around the inside of the <b>Graphics
-     * Context</b>
-     *
-     * @return
-     */
-    public GraphicsContext setFramed(boolean framed) {
-        this.framed = framed;
-
-        return this;
-    }
-
-    /**
-     * Sets whether or not to display a box shadow around the outside bottom right
-     * of the <b>Graphics Context</b>
-     *
-     * @return
-     */
-    public GraphicsContext setBoxShadow(boolean boxShadow) {
-        this.boxShadow = boxShadow;
-
-        return this;
-    }
-
-    /**
-     * Sets whether or not to display the id of the <b>Graphics Context</b> on the
-     * top edge.
-     *
-     * @return
-     */
-    public GraphicsContext setShowId(boolean showId) {
-        this.showId = showId;
-
-        return this;
     }
 
     // Drawers
@@ -232,23 +90,24 @@ public class GraphicsContext {
      *
      * @return
      */
+
     public GraphicsContext drawRect(int x, int y, int w, int h) {
         w -= 1;
         h -= 1;
 
-        this.setChar(x, y, new Texel(new Frame(new int[]{0, this.stroke, 0, this.stroke})), true, false);
-        this.setChar(x + w, y, new Texel(new Frame(new int[]{0, this.stroke, this.stroke, 0})), true, false);
-        this.setChar(x, y + h, new Texel(new Frame(new int[]{this.stroke, 0, 0, this.stroke})), true, false);
-        this.setChar(x + w, y + h, new Texel(new Frame(new int[]{this.stroke, 0, this.stroke, 0})), true, false);
+        this.setChar(x, y, new Texel(new Frame(new int[]{0, this.stroke, 0, this.stroke})), true);
+        this.setChar(x + w, y, new Texel(new Frame(new int[]{0, this.stroke, this.stroke, 0})), true);
+        this.setChar(x, y + h, new Texel(new Frame(new int[]{this.stroke, 0, 0, this.stroke})), true);
+        this.setChar(x + w, y + h, new Texel(new Frame(new int[]{this.stroke, 0, this.stroke, 0})), true);
 
         for (int i = 1; i < h; i++) {
-            this.setChar(x, y + i, new Texel(new Frame(new int[]{this.stroke, this.stroke, 0, 0})), true, false);
-            this.setChar(x + w, y + i, new Texel(new Frame(new int[]{this.stroke, this.stroke, 0, 0})), true, false);
+            this.setChar(x, y + i, new Texel(new Frame(new int[]{this.stroke, this.stroke, 0, 0})), true);
+            this.setChar(x + w, y + i, new Texel(new Frame(new int[]{this.stroke, this.stroke, 0, 0})), true);
         }
 
         for (int i = 1; i < w; i++) {
-            this.setChar(x + i, y, new Texel(new Frame(new int[]{0, 0, this.stroke, this.stroke})), true, false);
-            this.setChar(x + i, y + h, new Texel(new Frame(new int[]{0, 0, this.stroke, this.stroke})), true, false);
+            this.setChar(x + i, y, new Texel(new Frame(new int[]{0, 0, this.stroke, this.stroke})), true);
+            this.setChar(x + i, y + h, new Texel(new Frame(new int[]{0, 0, this.stroke, this.stroke})), true);
         }
 
         return this;
@@ -260,42 +119,31 @@ public class GraphicsContext {
      * @return
      */
     public GraphicsContext drawBoxShadow(int x, int y, int w, int h) {
-        this.setChar(x + w, y, new Texel("\u258C"), false, false);
-        this.setChar(x, y + h, new Texel("\u2580"), false, false);
-        this.setChar(x + w, y + h, new Texel("\u2598"), false, false);
+        this.setChar(x + w, y + h, new Texel("\u259F"), false);
 
         for (int i = 1; i < h; i++) {
-            this.setChar(x + w, y + i, new Texel("\u258C"), false, false);
+            this.setChar(x + w, y + i, new Texel("\u2590"), false);
         }
 
         for (int i = 1; i < w; i++) {
-            this.setChar(x + i, y + h, new Texel("\u2580"), false, false);
+            this.setChar(x + i, y + h, new Texel(new Fill(4, Orientations.VERTICAL)), false);
         }
 
         return this;
     }
 
-    /**
-     * Draw a horizontal line on the <b>Buffer</b>.
-     *
-     * @return
-     */
     public GraphicsContext drawLineH(int x, int y, int d) {
         for (int i = 0; i <= d; i++) {
-            this.setChar(x + i, y, new Texel(new Frame(new int[]{0, 0, this.stroke, this.stroke})), false, false);
+            this.setChar(x + i, y, new Texel(new Frame(new int[]{0, 0, this.stroke, this.stroke})), false);
         }
 
         return this;
     }
 
-    /**
-     * Draw a vertical line on the <b>Buffer</b>.
-     *
-     * @return
-     */
+
     public GraphicsContext drawLineV(int x, int y, int d) {
         for (int i = 0; i <= d; i++) {
-            this.setChar(x, y + i, new Texel(new Frame(new int[]{this.stroke, this.stroke, 0, 0})), false, false);
+            this.setChar(x, y + i, new Texel(new Frame(new int[]{this.stroke, this.stroke, 0, 0})), false);
         }
 
         return this;
@@ -306,13 +154,9 @@ public class GraphicsContext {
      *
      * @return
      */
-    public GraphicsContext drawText(int x, int y, String text, boolean ignorePadding, int[] bounds) {
+    public GraphicsContext drawText(int x, int y, String text, int[] bounds) {
         int row = 0;
         int col = 0;
-        //
-        // if (bounds[0] <= 1) bounds[0] = inf;
-        // if (options["cols"] == undefined || options["cols"] < 1) options["cols"] =
-        // Infinity;
         for (int i = 0; i < text.length(); i++) {
             char chunk = text.charAt(i);
 
@@ -327,7 +171,7 @@ public class GraphicsContext {
                 if (row >= bounds[1] && bounds[1] > 0) {
                     break;
                 }
-                this.setChar(x + col, y + row, new Texel(Character.toString(chunk)), false, ignorePadding);
+                this.setChar(x + col, y + row, new Texel(Character.toString(chunk)), false);
                 col++;
             }
         }
@@ -335,55 +179,11 @@ public class GraphicsContext {
         return this;
     }
 
-    public GraphicsContext drawText(int x, int y, String text, boolean ignorePadding) {
-        return this.drawText(x, y, text, ignorePadding, new int[]{0, 0});
+    public GraphicsContext drawText(int x, int y, String text) {
+        return this.drawText(x, y, text, new int[]{0, 0});
     }
 
-    /**
-     * Draw a gauge on the <b>Buffer</b>.
-     *
-     * @return
-     */
-    // public GraphicsContext drawGauge(int x, int y, int width, String label,
-    // double value, double min, double max,
-    // boolean showPercent, Orientation orientation) {
-    // if (showPercent) {
-    // String percent = String.valueOf(Math.round((value / max) * 10000) / 100);
-    // this.drawText(x + width - percent.length() - 1, y, percent + "%", false,
-    // new int[] { width - (percent.length() + 2), 1 });
-    // this.drawText(x, y, label, false, new int[] { width - (percent.length() + 2),
-    // 1 });
-    // } else {
-    // this.drawText(x, y, label, false, new int[] { width, 1 });
-    // }
-    // this.setChar(x, y + 1, new Texel("\u258c"), true, false);
-    // this.setChar(x + width - 1, y + 1, new Texel("\u2590"), true, false);
-
-    // double innerWidth = width - 2;
-    // double ratio = (max - min) / innerWidth;
-    // double amount = (value - min) / ratio;
-
-    // int fulls = (int) Math.floor(amount);
-
-    // for (int i = 0; i < fulls; i++) {
-    // this.setChar(x + i + 1, y + 1, new Texel(new Fill(8,
-    // Orientation.HORIZONTAL)), true, false);
-    // }
-
-    // int overflow = (int) Math.floor((amount - fulls) * 8);
-
-    // this.setChar(x + fulls + 1, y + 1, new Texel(new Fill(overflow,
-    // Orientation.HORIZONTAL)), true, false);
-
-    // return this;
-    // }
-    public GraphicsContext drawGauge(int x, int y, int length, double value, double min, double max,
-                                     Orientations orientation) {
-        // if (showPercent) {
-        // String percent = String.valueOf(Math.round((value / max) * 10000) / 100);
-        // this.drawText(x, y, percent + "%", false,
-        // new int[] { width, 1 });
-        // }
+    public GraphicsContext drawGauge(int x, int y, int length, double value, double min, double max, Orientations orientation) {
         double innerLength = length - 2;
         double ratio = (max - min) / innerLength;
         double amount = (value - min) / ratio;
@@ -392,30 +192,28 @@ public class GraphicsContext {
         int overflow = (int) Math.floor((amount - fulls) * 8);
 
         if (orientation == Orientations.HORIZONTAL) {
-            this.setChar(x, y, new Texel("\u258c"), true, false);
-            this.setChar(x + length - 1, y, new Texel("\u2590"), true, false);
+            this.setChar(x, y, new Texel("\u258c"), true);
+            this.setChar(x + length - 1, y, new Texel("\u2590"), true);
 
             for (int i = 0; i < fulls; i++) {
-                this.setChar(x + i + 1, y, new Texel(new Fill(8, Orientations.HORIZONTAL)), true, false);
+                this.setChar(x + i + 1, y, new Texel(new Fill(8, Orientations.HORIZONTAL)), true);
             }
 
-            this.setChar(x + fulls + 1, y, new Texel(new Fill(overflow, Orientations.HORIZONTAL)), true, false);
+            this.setChar(x + fulls + 1, y, new Texel(new Fill(overflow, Orientations.HORIZONTAL)), true);
         } else {
-            this.setChar(x, y, new Texel("\u2580"), true, false);
-            this.setChar(x, y + length - 1, new Texel("\u2584"), true, false);
+            this.setChar(x, y, new Texel("\u2580"), true);
+            this.setChar(x, y + length - 1, new Texel("\u2584"), true);
 
             for (int i = 0; i < fulls; i++) {
-                this.setChar(x, y + length - (i + 2), new Texel(new Fill(8, Orientations.VERTICAL)), true, false);
+                this.setChar(x, y + length - (i + 2), new Texel(new Fill(8, Orientations.VERTICAL)), true);
             }
 
-            this.setChar(x, y + length - (fulls + 2), new Texel(new Fill(overflow, Orientations.VERTICAL)), true,
-                    false);
+            this.setChar(x, y + length - (fulls + 2), new Texel(new Fill(overflow, Orientations.VERTICAL)), true);
         }
 
         return this;
     }
-
-    // \u2612 checked \u2610 unchecked
+// \u2612 checked \u2610 unchecked
     // Maybe try ○◉ ▣□ ◇◈
 
     /**
@@ -425,55 +223,42 @@ public class GraphicsContext {
      */
     public GraphicsContext drawCheckbox(int x, int y, String label, boolean value) {
         // this.setChar(x, y, new Texel(value ? "\u2612" : "\u2610"), true, false);
-        this.setChar(x, y, new Texel(value ? "▣" : "□"), true, false);
-        this.drawText(x + 2, y, label, false);
+        this.setChar(x, y, new Texel(value ? "▣" : "□"), true);
+        this.drawText(x + 2, y, label);
 
         return this;
     }
+
+    /**
+     * Draw a gauge on the <b>Buffer</b>.
+     *
+     * @return
+     */
 
     // Nesting Stuff
+    public GraphicsContext insert(GraphicsContext context, int x, int y, boolean showBoxShadow, boolean showBorder, boolean showName) {
+        Texel[][] buff = context.render();
 
-    /**
-     * Add a child <b>Graphics Context</b>
-     *
-     * @return
-     */
-    public GraphicsContext addContext(int x, int y, int w, int h, String id) {
-        GraphicsContext ngc = new GraphicsContext(x, y, w, h, this, id);
-        this.children.put(id, ngc);
+        for (int cy = 0; cy < context.h; cy++) {
+            for (int cx = 0; cx < context.w; cx++) {
+                if (buff[cy][cx] != null) {
+                    this.setChar(x, y, buff[cy][cx], false);
+                }
+            }
+        }
 
-        return ngc;
-    }
+        if (showBoxShadow) {
+            this.drawBoxShadow(x, y, context.w, context.h);
+        }
 
-    /**
-     * Removes a child <b>Graphics Context</b>
-     *
-     * @return
-     */
-    public GraphicsContext removeContext(GraphicsContext context) {
-        this.children.remove(context.id);
+        if (showBorder) {
+            this.drawRect(x, y, context.w, context.h);
+            if (showName && context.name != null && context.w - 3 > 0) {
+                this.drawText(x + 2, y, context.name, new int[]{context.w - 3, 1});
+            }
 
-        return this;
-    }
-
-    /**
-     * Removes a child <b>Graphics Context</b>
-     *
-     * @param id
-     * @return
-     */
-    public GraphicsContext removeContext(String id) {
-        this.children.remove(id);
+        }
 
         return this;
-    }
-
-    /**
-     * Get the parent <b>Graphics Context</b> if it exists.
-     *
-     * @return
-     */
-    public GraphicsContext getParent() {
-        return this.parent;
     }
 }
