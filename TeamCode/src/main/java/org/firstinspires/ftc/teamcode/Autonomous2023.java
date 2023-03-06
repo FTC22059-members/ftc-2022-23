@@ -32,10 +32,10 @@ public class Autonomous2023 extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        Imu robotImu = new Imu(hardwareMap, telemetry);
+        Imu robotImu = new Imu(hardwareMap);
         robotImu.init();
 
-        driveTrain = new Drive(hardwareMap, telemetry, robotImu);
+        driveTrain = new Drive(hardwareMap, robotImu);
         driveTrain.init();
 
         AprilTags aprilTags = new AprilTags(hardwareMap, telemetry);

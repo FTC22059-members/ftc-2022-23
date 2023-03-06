@@ -17,7 +17,7 @@ package org.firstinspires.ftc.teamcode.library.fancyTelemetry;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 /**
- * Renders the root Graphics Context and displays it to telemetry.
+ * Renders the root Surface and displays it to telemetry.
  */
 public class Renderer {
     private Telemetry telemetry;
@@ -51,14 +51,14 @@ public class Renderer {
             string += row + "\n";
             // workspace.innerHTML = string;
         }
-        this.telemetry.addData("", string);
+        this.telemetry.addLine(string);
 
         this.telemetry.update();
 
         this.buffer = new Texel[this.height][this.width];
     }
 
-    public void insert(GraphicsContext context, int x, int y, boolean showBoxShadow, boolean showBorder,
+    public void insert(Surface context, int x, int y, boolean showBoxShadow, boolean showBorder,
                        boolean showName) {
         Texel[][] buff = context.render();
         int paddingTop = 0;

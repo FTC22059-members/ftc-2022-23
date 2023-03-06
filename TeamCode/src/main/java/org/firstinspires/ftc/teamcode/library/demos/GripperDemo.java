@@ -26,9 +26,9 @@ public class GripperDemo extends LinearOpMode {
     
     @Override
     public void runOpMode() {
-        Gripper gripperTest = new Gripper(hardwareMap, telemetry);
+        Gripper gripperTest = new Gripper(hardwareMap);
         gripperTest.init(gamepad1, gamepad2);
-        
+
         // Wait for the start button
         telemetry.addData(">", "Press Start to energize the robot with electrons that make it MOVE!");
         telemetry.update();

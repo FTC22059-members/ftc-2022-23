@@ -24,7 +24,7 @@ public class ImuDemo extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        Imu robotImu = new Imu(hardwareMap, telemetry);
+        Imu robotImu = new Imu(hardwareMap);
         robotImu.init();
         robotImu.resetAngle();
 

@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.library.demos;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.library.fancyTelemetry.GraphicsContext;
+import org.firstinspires.ftc.teamcode.library.fancyTelemetry.Surface;
 import org.firstinspires.ftc.teamcode.library.fancyTelemetry.Orientations;
 import org.firstinspires.ftc.teamcode.library.fancyTelemetry.Renderer;
 
@@ -18,7 +18,7 @@ public class TelemetryDemo extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-             GraphicsContext ctx = new GraphicsContext(30, 10)
+             Surface ctx = new Surface(30, 10)
                      .drawText(0, 0, "Testing 1 2 3")
                     .drawGauge(0, 1, 30, 10, -2, 40, Orientations.VERTICAL)
                     .drawLineH(0, 2, 30)

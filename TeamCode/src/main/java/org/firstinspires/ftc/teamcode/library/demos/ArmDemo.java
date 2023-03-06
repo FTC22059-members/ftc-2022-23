@@ -26,7 +26,7 @@ public class ArmDemo extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        Arm armMotorTest = new Arm(hardwareMap, telemetry);
+        Arm armMotorTest = new Arm(hardwareMap);
         armMotorTest.init(gamepad1, gamepad2);
 
         // Wait for the start button

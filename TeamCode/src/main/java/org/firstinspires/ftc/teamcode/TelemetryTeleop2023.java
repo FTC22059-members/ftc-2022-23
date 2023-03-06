@@ -25,21 +25,13 @@ import org.firstinspires.ftc.teamcode.library.fancyTelemetry.*;
 //     ░ ░        ░  ░   ░     ░      ░ ░     ░    ░      ░ ░   ░ ░     ░  ░   ░   ░     ░
 
 
-@TeleOp(name = "Tele-op 2023")
+@TeleOp(name = "Tele-op 2023 Telemetry")
 public class TelemetryTeleop2023 extends LinearOpMode {
 
     @Override
     public void runOpMode() {
         Renderer fancyTelemetry = new Renderer(telemetry);
-        GraphicsContext wordmark = new GraphicsContext(91, 9);
-        wordmark.drawText(0, 0, "" +
-                " ░░░░░░░  ░░    ░░ ░░░░░░░ ░░░░░░   ░░░░░░ ░░       ░░░░░░   ░░░░░░ ░░   ░░ ░░░░░░░ ░░░░░░  \n" +
-                "░░ \\   ░░ ░░    ░░ ░░      ░░   ░░ ░░      ░░      ░░    ░░ ░░      ░░  ░░  ░░      ░░   ░ \n" +
-                "▒▒  •  ▒▒ ▒▒    ▒▒ ▒▒▒▒▒   ▒▒▒▒▒▒  ▒▒      ▒▒      ▒▒    ▒▒ ▒▒      ▒▒▒▒▒   ▒▒▒▒▒   ▒▒   ▒▒ \n" +
-                "▒▒ /   ▒▒  ▒▒  ▒▒  ▒▒      ▒▒   ▒▒ ▒▒      ▒▒      ▒▒    ▒▒ ▒▒      ▒▒  ▒▒  ▒▒      ▒▒   ▒▒ \n" +
-                " ▓▓▓▓▓▓▓    ▓▓▓▓   ▓▓▓▓▓▓▓ ▓▓   ▓▓  ▓▓▓▓▓▓ ▓▓▓▓▓▓▓  ▓▓▓▓▓▓   ▓▓▓▓▓▓ ▓▓   ▓▓ ▓▓▓▓▓▓▓ ▓▓▓▓▓▓  \n", new int[]{91, 9});
-
-        //⢰
+        logoAnimation wordmark = new logoAnimation();
         Imu robotImu = new Imu(hardwareMap);
         robotImu.init();
         robotImu.resetAngle();
@@ -52,10 +44,13 @@ public class TelemetryTeleop2023 extends LinearOpMode {
 
         Arm armMotor = new Arm(hardwareMap);
         armMotor.init(gamepad1, gamepad2);
-        fancyTelemetry.insert(wordmark, 0, 0, false, false, false);
-        fancyTelemetry.insert(new GraphicsContext(18, 3, " ! ").drawText(1, 1, "Arm Initialized!"), 36, 10, false, false, false);
 
-        fancyTelemetry.loop();
+        while (opModeIsActive()){
+            fancyTelemetry.insert(wordmark.getFrame(), 0, 0, false, false, false);
+            fancyTelemetry.insert(new Surface(18, 3, " ! ").drawText(1, 1, "Arm Initialized!"), 36, 10, false, false, false);
+
+            fancyTelemetry.loop();
+        }
 
         // Wait till we press the start button
         waitForStart();
@@ -147,7 +142,7 @@ public class TelemetryTeleop2023 extends LinearOpMode {
         double rightX = gamepad1.right_stick_x / 1.3;
 
         //16 0
-        GraphicsContext robotContext = new GraphicsContext(16, 9, "Robot");
+        Surface robotContext = new Surface(16, 9, "Robot");
 
         int roundedAngle = Math.round(Math.round(robotImu.getAngle() * 45.0) / 45);
         switch (roundedAngle) {
@@ -202,13 +197,13 @@ public class TelemetryTeleop2023 extends LinearOpMode {
                 .drawCheckbox(1, 6, "Precise", brakePercent < 1);
 
         //0 0
-        GraphicsContext armContext = new GraphicsContext(16, 16, "Arm");
+        Surface armContext = new Surface(16, 16, "Arm");
         armContext.drawGauge(0, 0, 15, armMotor.getArmPosition(), -2500, 0, Orientations.VERTICAL)
                 .drawGauge(1, 0, 15, armMotor.getArmPosition(), -2500, 0, Orientations.VERTICAL)
                 .drawText(3, 0, armMotor.getArmPosition() + "'");
 
         //16 9
-        GraphicsContext handOpen = new GraphicsContext(16, 7, "Hand");
+        Surface handOpen = new Surface(16, 7, "Hand");
         handOpen.drawCheckbox(6, 0, "Open", true)
                 .setChar(4, 0, new Texel(new Frame(new int[]{1, 1, 0, 0})), false)
                 .setChar(4, 1, new Texel(new Frame(new int[]{1, 1, 0, 0})), false)
@@ -216,7 +211,7 @@ public class TelemetryTeleop2023 extends LinearOpMode {
 
                 .setChar(3, 3, new Texel("\u239f"), false)
                 .setChar(5, 3, new Texel("\u239c"), false);
-        GraphicsContext handClosed = new GraphicsContext(16, 7, "Hand");
+        Surface handClosed = new Surface(16, 7, "Hand");
         handClosed.drawCheckbox(6, 0, "Open", false)
                 .setChar(4, 0, new Texel(new Frame(new int[]{1, 1, 0, 0})), false)
                 .setChar(4, 1, new Texel(new Frame(new int[]{1, 1, 1, 1})), false)

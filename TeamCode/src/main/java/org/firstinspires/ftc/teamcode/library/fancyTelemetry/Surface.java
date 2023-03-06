@@ -1,13 +1,11 @@
 package org.firstinspires.ftc.teamcode.library.fancyTelemetry;
 
-import java.util.HashMap;
-
 /**
- * A <b>Graphics Context</b> represents a display. There is one root <b>Graphics
- * Context</b>, and it can have several sub <b>Graphics Contexts</b> to
+ * A <b>Surface</b> represents a display. There is one root <b>Graphics
+ * Context</b>, and it can have several sub <b>Surfaces</b> to
  * represent other windows.
  */
-public class GraphicsContext {
+public class Surface {
     public int w = 0;
     public int h = 0;
     private Texel[][] buffer;
@@ -15,13 +13,13 @@ public class GraphicsContext {
     public String name;
 
     /**
-     * Initializes a <b>Graphics Context</b> with a name.
+     * Initializes a <b>Surface</b> with a name.
      *
-     * @param w    The width of the <b>Graphics Context</b>
-     * @param h    The height of the <b>Graphics Context</b>
-     * @param name The name of the <b>Graphics Context</b>
+     * @param w    The width of the <b>Surface</b>
+     * @param h    The height of the <b>Surface</b>
+     * @param name The name of the <b>Surface</b>
      */
-    public GraphicsContext(int w, int h, String name) {
+    public Surface(int w, int h, String name) {
         this.w = w;
         this.h = h;
 
@@ -31,13 +29,13 @@ public class GraphicsContext {
     }
 
     /**
-     * Initializes a <b>Graphics Context</b> without a name.
+     * Initializes a <b>Surface</b> without a name.
      *
-     * @param w The width of the <b>Graphics Context</b>
-     * @param h The height of the <b>Graphics Context</b>
+     * @param w The width of the <b>Surface</b>
+     * @param h The height of the <b>Surface</b>
      */
 
-    public GraphicsContext(int w, int h) {
+    public Surface(int w, int h) {
         this.w = w;
         this.h = h;
 
@@ -55,7 +53,7 @@ public class GraphicsContext {
      * @param sameLayer     Whether the Texels should be treated as though they were
      *                      on the same layer (allows merging or not).
      */
-    public GraphicsContext setChar(int x, int y, Texel val, boolean sameLayer) {
+    public Surface setChar(int x, int y, Texel val, boolean sameLayer) {
         if (0 <= x && x < this.w && 0 <= y && y < this.h) {
             // this.buffer[y][x] = this.overlay(this.buffer[y][x], val, sameLayer);
             this.buffer[y][x] = val.underlay(this.buffer[y][x], sameLayer);
@@ -91,7 +89,7 @@ public class GraphicsContext {
      * @return
      */
 
-    public GraphicsContext drawRect(int x, int y, int w, int h) {
+    public Surface drawRect(int x, int y, int w, int h) {
         w -= 1;
         h -= 1;
 
@@ -118,7 +116,7 @@ public class GraphicsContext {
      *
      * @return
      */
-    public GraphicsContext drawBoxShadow(int x, int y, int w, int h) {
+    public Surface drawBoxShadow(int x, int y, int w, int h) {
         this.setChar(x + w, y + h, new Texel("\u259F"), false);
 
         for (int i = 1; i < h; i++) {
@@ -132,7 +130,7 @@ public class GraphicsContext {
         return this;
     }
 
-    public GraphicsContext drawLineH(int x, int y, int d) {
+    public Surface drawLineH(int x, int y, int d) {
         for (int i = 0; i <= d; i++) {
             this.setChar(x + i, y, new Texel(new Frame(new int[]{0, 0, this.stroke, this.stroke})), false);
         }
@@ -141,7 +139,7 @@ public class GraphicsContext {
     }
 
 
-    public GraphicsContext drawLineV(int x, int y, int d) {
+    public Surface drawLineV(int x, int y, int d) {
         for (int i = 0; i <= d; i++) {
             this.setChar(x, y + i, new Texel(new Frame(new int[]{this.stroke, this.stroke, 0, 0})), false);
         }
@@ -154,7 +152,7 @@ public class GraphicsContext {
      *
      * @return
      */
-    public GraphicsContext drawText(int x, int y, String text, int[] bounds) {
+    public Surface drawText(int x, int y, String text, int[] bounds) {
         int row = 0;
         int col = 0;
         for (int i = 0; i < text.length(); i++) {
@@ -179,11 +177,11 @@ public class GraphicsContext {
         return this;
     }
 
-    public GraphicsContext drawText(int x, int y, String text) {
+    public Surface drawText(int x, int y, String text) {
         return this.drawText(x, y, text, new int[]{0, 0});
     }
 
-    public GraphicsContext drawGauge(int x, int y, int length, double value, double min, double max, Orientations orientation) {
+    public Surface drawGauge(int x, int y, int length, double value, double min, double max, Orientations orientation) {
         double innerLength = length - 2;
         double ratio = (max - min) / innerLength;
         double amount = (value - min) / ratio;
@@ -221,7 +219,7 @@ public class GraphicsContext {
      *
      * @return
      */
-    public GraphicsContext drawCheckbox(int x, int y, String label, boolean value) {
+    public Surface drawCheckbox(int x, int y, String label, boolean value) {
         // this.setChar(x, y, new Texel(value ? "\u2612" : "\u2610"), true, false);
         this.setChar(x, y, new Texel(value ? "▣" : "□"), true);
         this.drawText(x + 2, y, label);
@@ -236,27 +234,52 @@ public class GraphicsContext {
      */
 
     // Nesting Stuff
-    public GraphicsContext insert(GraphicsContext context, int x, int y, boolean showBoxShadow, boolean showBorder, boolean showName) {
+    public Surface insert(Surface context, int x, int y, boolean showBoxShadow, boolean showBorder,
+                                  boolean showName) {
         Texel[][] buff = context.render();
+        int paddingTop = 0;
+        int paddingBottom = 0;
+        int paddingLeft = 0;
+        int paddingRight = 0;
+
+        if (showBorder) {
+            paddingTop = 1;
+
+            paddingBottom = 1;
+            paddingLeft = 1;
+            paddingRight = 1;
+        }
+
+        if (showBoxShadow) {
+            paddingBottom = 1;
+            paddingRight = 1;
+        }
+
+        if (showName) {
+            paddingTop = 1;
+        }
 
         for (int cy = 0; cy < context.h; cy++) {
             for (int cx = 0; cx < context.w; cx++) {
                 if (buff[cy][cx] != null) {
-                    this.setChar(x, y, buff[cy][cx], false);
+                    this.setChar(x + cx + paddingLeft, y + cy + paddingTop, buff[cy][cx], false);
                 }
+            }
+        }
+        if (showBorder) {
+            this.drawRect(x, y, context.w + paddingTop + paddingBottom, context.h + paddingLeft + paddingRight);
+        }
+
+        if (showName && context.name != null && context.w - 3 > 0) {
+            if (showBorder) {
+                this.drawText(x + 2, y, context.name, new int[]{context.w - 3, 1});
+            } else {
+                this.drawText(x, y, context.name, new int[]{context.w - 1, 1});
             }
         }
 
         if (showBoxShadow) {
-            this.drawBoxShadow(x, y, context.w, context.h);
-        }
-
-        if (showBorder) {
-            this.drawRect(x, y, context.w, context.h);
-            if (showName && context.name != null && context.w - 3 > 0) {
-                this.drawText(x + 2, y, context.name, new int[]{context.w - 3, 1});
-            }
-
+            this.drawBoxShadow(x, y, context.w + paddingTop + paddingBottom, context.h + paddingLeft + paddingRight);
         }
 
         return this;

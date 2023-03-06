@@ -26,11 +26,11 @@ public class DriveDemo extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        Imu robotImu = new Imu(hardwareMap, telemetry);
+        Imu robotImu = new Imu(hardwareMap);
         robotImu.init();
         robotImu.resetAngle();
 
-        Drive driveTrain = new Drive(hardwareMap, telemetry, robotImu);
+        Drive driveTrain = new Drive(hardwareMap, robotImu);
         driveTrain.init();
 
         // Wait for the start button

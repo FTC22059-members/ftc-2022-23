@@ -19,17 +19,17 @@ public class Teleop2023 extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        Imu robotImu = new Imu(hardwareMap, telemetry);
+        Imu robotImu = new Imu(hardwareMap);
         robotImu.init();
         robotImu.resetAngle();
 
-        Drive driveTrain = new Drive(hardwareMap, telemetry, robotImu);
+        Drive driveTrain = new Drive(hardwareMap, robotImu);
         driveTrain.init();
 
-        Gripper gripper = new Gripper(hardwareMap, telemetry);
+        Gripper gripper = new Gripper(hardwareMap);
         gripper.init(gamepad1, gamepad2);
 
-        Arm armMotor = new Arm(hardwareMap, telemetry);
+        Arm armMotor = new Arm(hardwareMap);
         armMotor.init(gamepad1, gamepad2);
         telemetry.addData("Arm Initialized", "!");
 
