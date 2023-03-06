@@ -45,7 +45,7 @@ public class TelemetryTeleop2023 extends LinearOpMode {
         Arm armMotor = new Arm(hardwareMap);
         armMotor.init(gamepad1, gamepad2);
 
-        while (opModeIsActive()){
+        while (opModeIsActive()) {
             fancyTelemetry.insert(wordmark.getFrame(), 0, 0, false, false, false);
             fancyTelemetry.insert(new Surface(18, 3, " ! ").drawText(1, 1, "Arm Initialized!"), 36, 10, false, false, false);
 
@@ -134,101 +134,102 @@ public class TelemetryTeleop2023 extends LinearOpMode {
             //Pauses so acceleration multiplier doesn't ramp up too quick
             //sleep(speedRamp);
 
-            idle();
-        }
 
-        double leftX = gamepad1.left_stick_x;
-        double leftY = -gamepad1.left_stick_y;
-        double rightX = gamepad1.right_stick_x / 1.3;
+//            double leftX = gamepad1.left_stick_x;
+//            double leftY = -gamepad1.left_stick_y;
+//            double rightX = gamepad1.right_stick_x / 1.3;
 
-        //16 0
-        Surface robotContext = new Surface(16, 9, "Robot");
+            //16 0
+            Surface robotContext = new Surface(16, 9, "Robot");
 
-        int roundedAngle = Math.round(Math.round(robotImu.getAngle() * 45.0) / 45);
-        switch (roundedAngle) {
-            case 0:
-                robotContext.setChar(2, 0, new Texel(new Arrow(Angles.NORTH)), false);
-            case 45:
-                robotContext.setChar(0, 0, new Texel(new Arrow(Angles.NORTHWEST)), false);
-            case 90:
-                robotContext.setChar(0, 1, new Texel(new Arrow(Angles.WEST)), false);
-            case 135:
-                robotContext.setChar(0, 2, new Texel(new Arrow(Angles.SOUTHWEST)), false);
-            case 180:
-                robotContext.setChar(2, 2, new Texel(new Arrow(Angles.SOUTH)), false);
-            case -180:
-                robotContext.setChar(2, 2, new Texel(new Arrow(Angles.SOUTH)), false);
-            case -45:
-                robotContext.setChar(4, 0, new Texel(new Arrow(Angles.NORTHEAST)), false);
-            case -90:
-                robotContext.setChar(4, 1, new Texel(new Arrow(Angles.EAST)), false);
-            case -135:
-                robotContext.setChar(4, 2, new Texel(new Arrow(Angles.SOUTHEAST)), false);
-            default:
-                robotContext.setChar(2, 0, new Texel("?"), false);
-        }
-        robotContext.setChar(1, 1, new Texel("*"), false);
+            int roundedAngle = Math.round(Math.round(robotImu.getAngle() * 45.0) / 45);
+            switch (roundedAngle) {
+                case 0:
+                    robotContext.setChar(2, 0, new Texel(new Arrow(Angles.NORTH)), false);
+                case 45:
+                    robotContext.setChar(0, 0, new Texel(new Arrow(Angles.NORTHWEST)), false);
+                case 90:
+                    robotContext.setChar(0, 1, new Texel(new Arrow(Angles.WEST)), false);
+                case 135:
+                    robotContext.setChar(0, 2, new Texel(new Arrow(Angles.SOUTHWEST)), false);
+                case 180:
+                    robotContext.setChar(2, 2, new Texel(new Arrow(Angles.SOUTH)), false);
+                case -180:
+                    robotContext.setChar(2, 2, new Texel(new Arrow(Angles.SOUTH)), false);
+                case -45:
+                    robotContext.setChar(4, 0, new Texel(new Arrow(Angles.NORTHEAST)), false);
+                case -90:
+                    robotContext.setChar(4, 1, new Texel(new Arrow(Angles.EAST)), false);
+                case -135:
+                    robotContext.setChar(4, 2, new Texel(new Arrow(Angles.SOUTHEAST)), false);
+                default:
+                    robotContext.setChar(2, 0, new Texel("?"), false);
+            }
+            robotContext.setChar(1, 1, new Texel("*"), false);
 
-        robotContext.setChar(8, 0, new Texel(new Fill((int) Math.round(driveTrain.frontLeft.getPower() * 8), Orientations.VERTICAL)), false)
-                .setChar(8, 2, new Texel(new Fill((int) Math.round(driveTrain.frontRight.getPower() * 8), Orientations.VERTICAL)), false)
-                .setChar(12, 0, new Texel(new Fill((int) Math.round(driveTrain.backLeft.getPower() * 8), Orientations.VERTICAL)), false)
-                .setChar(12, 2, new Texel(new Fill((int) Math.round(driveTrain.backRight.getPower() * 8), Orientations.VERTICAL)), false);
+            robotContext.setChar(8, 0, new Texel(new Fill((int) Math.round(driveTrain.frontLeft.getPower() * 8), Orientations.VERTICAL)), false)
+                    .setChar(8, 2, new Texel(new Fill((int) Math.round(driveTrain.frontRight.getPower() * 8), Orientations.VERTICAL)), false)
+                    .setChar(12, 0, new Texel(new Fill((int) Math.round(driveTrain.backLeft.getPower() * 8), Orientations.VERTICAL)), false)
+                    .setChar(12, 2, new Texel(new Fill((int) Math.round(driveTrain.backRight.getPower() * 8), Orientations.VERTICAL)), false);
 
-        if (rightX < 0) {
-            robotContext.setChar(10, 1, new Texel("\u21ba"), false); // ↺
-        } else if (rightX > 0) {
-            robotContext.setChar(10, 1, new Texel("\u21bb"), false); // ↻
-        }
-        if (leftY < 0) {
-            robotContext.setChar(10, 2, new Texel(new Arrow(Angles.SOUTH)), false);
-        } else if (leftY > 0) {
-            robotContext.setChar(10, 0, new Texel(new Arrow(Angles.NORTH)), false);
+            if (rightX < 0) {
+                robotContext.setChar(10, 1, new Texel("\u21ba"), false); // ↺
+            } else if (rightX > 0) {
+                robotContext.setChar(10, 1, new Texel("\u21bb"), false); // ↻
+            }
+            if (leftY < 0) {
+                robotContext.setChar(10, 2, new Texel(new Arrow(Angles.SOUTH)), false);
+            } else if (leftY > 0) {
+                robotContext.setChar(10, 0, new Texel(new Arrow(Angles.NORTH)), false);
 
-        }
-        if (leftX < 0) {
-            robotContext.setChar(12, 1, new Texel(new Arrow(Angles.EAST)), false);
-        } else if (leftX > 0) {
-            robotContext.setChar(8, 1, new Texel(new Arrow(Angles.WEST)), false);
-        }
+            }
+            if (leftX < 0) {
+                robotContext.setChar(12, 1, new Texel(new Arrow(Angles.EAST)), false);
+            } else if (leftX > 0) {
+                robotContext.setChar(8, 1, new Texel(new Arrow(Angles.WEST)), false);
+            }
 
-        robotContext.drawText(0, 3, Math.round(robotImu.getAngle()) + "º")
-                .drawText(5, 3, Math.sqrt(Math.pow(leftX, 2) + Math.pow(leftY, 2)) + "%")
-                .drawCheckbox(1, 5, "Global", globalPositioning)
-                .drawCheckbox(1, 6, "Precise", brakePercent < 1);
+            robotContext.drawText(0, 3, Math.round(robotImu.getAngle()) + "º")
+                    .drawText(5, 3, Math.sqrt(Math.pow(leftX, 2) + Math.pow(leftY, 2)) + "%")
+                    .drawCheckbox(1, 5, "Global", globalPositioning)
+                    .drawCheckbox(1, 6, "Precise", brakePercent < 1);
 
-        //0 0
-        Surface armContext = new Surface(16, 16, "Arm");
-        armContext.drawGauge(0, 0, 15, armMotor.getArmPosition(), -2500, 0, Orientations.VERTICAL)
-                .drawGauge(1, 0, 15, armMotor.getArmPosition(), -2500, 0, Orientations.VERTICAL)
-                .drawText(3, 0, armMotor.getArmPosition() + "'");
+            //0 0
+            Surface armContext = new Surface(16, 16, "Arm");
+            armContext.drawGauge(0, 0, 15, armMotor.getArmPosition(), -2500, 0, Orientations.VERTICAL)
+                    .drawGauge(1, 0, 15, armMotor.getArmPosition(), -2500, 0, Orientations.VERTICAL)
+                    .drawText(3, 0, armMotor.getArmPosition() + "'");
 
-        //16 9
-        Surface handOpen = new Surface(16, 7, "Hand");
-        handOpen.drawCheckbox(6, 0, "Open", true)
-                .setChar(4, 0, new Texel(new Frame(new int[]{1, 1, 0, 0})), false)
-                .setChar(4, 1, new Texel(new Frame(new int[]{1, 1, 0, 0})), false)
-                .setChar(4, 2, new Texel("\u22a5"), false)
+            //16 9
+            Surface handOpen = new Surface(16, 7, "Hand");
+            handOpen.drawCheckbox(6, 0, "Open", true)
+                    .setChar(4, 0, new Texel(new Frame(new int[]{1, 1, 0, 0})), false)
+                    .setChar(4, 1, new Texel(new Frame(new int[]{1, 1, 0, 0})), false)
+                    .setChar(4, 2, new Texel("\u22a5"), false)
 
-                .setChar(3, 3, new Texel("\u239f"), false)
-                .setChar(5, 3, new Texel("\u239c"), false);
-        Surface handClosed = new Surface(16, 7, "Hand");
-        handClosed.drawCheckbox(6, 0, "Open", false)
-                .setChar(4, 0, new Texel(new Frame(new int[]{1, 1, 0, 0})), false)
-                .setChar(4, 1, new Texel(new Frame(new int[]{1, 1, 1, 1})), false)
-                .setChar(4, 2, new Texel(new Frame(new int[]{1, 1, 0, 0})), false)
+                    .setChar(3, 3, new Texel("\u239f"), false)
+                    .setChar(5, 3, new Texel("\u239c"), false);
+            Surface handClosed = new Surface(16, 7, "Hand");
+            handClosed.drawCheckbox(6, 0, "Open", false)
+                    .setChar(4, 0, new Texel(new Frame(new int[]{1, 1, 0, 0})), false)
+                    .setChar(4, 1, new Texel(new Frame(new int[]{1, 1, 1, 1})), false)
+                    .setChar(4, 2, new Texel(new Frame(new int[]{1, 1, 0, 0})), false)
 
-                .setChar(3, 1, new Texel("_"), false)
-                .setChar(5, 1, new Texel("_"), false);
+                    .setChar(3, 1, new Texel("_"), false)
+                    .setChar(5, 1, new Texel("_"), false);
 //        if (gripper.getIsOpen()) {
 
-        fancyTelemetry.insert(armContext, 0, 0, true, true, true);
-        fancyTelemetry.insert(robotContext, 16, 0, true, true, true);
-        if (gripper.getIsOpen()) {
-            fancyTelemetry.insert(handOpen, 16, 9, true, true, true);
-        } else {
-            fancyTelemetry.insert(handClosed, 16, 9, true, true, true);
-        }
+            fancyTelemetry.insert(armContext, 0, 0, true, true, true);
+            fancyTelemetry.insert(robotContext, 16, 0, true, true, true);
+            if (gripper.getIsOpen()) {
+                fancyTelemetry.insert(handOpen, 16, 9, true, true, true);
+            } else {
+                fancyTelemetry.insert(handClosed, 16, 9, true, true, true);
+            }
 
-        fancyTelemetry.loop();
+            fancyTelemetry.loop();
+
+            idle();
+        }
     }
 }

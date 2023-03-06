@@ -14,6 +14,8 @@ package org.firstinspires.ftc.teamcode.library.fancyTelemetry;
  * Don't finish line of a Javadoc with a period unless there is more than one sentence.
  */
 
+import android.util.Log;
+
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 /**
@@ -51,6 +53,8 @@ public class Renderer {
             string += row + "\n";
             // workspace.innerHTML = string;
         }
+        Log.d("TYPOGRAPHER", "|" + string + "|");
+        Log.d("TYPOGRAPHER",  "|" + Integer.toString(this.buffer.length) + "|");
         this.telemetry.addLine(string);
 
         this.telemetry.update();
