@@ -1,6 +1,6 @@
-package org.firstinspires.ftc.teamcode.library.fancyTelemetry;
+package com.overclockedftc.typographer;
 
-public class logoAnimation {
+public class LogoAnimation {
     String[] frames = {
             " ░░░░░░░  ░░    ░░ ░░░░░░░ ░░░░░░   ░░░░░░ ░░       ░░░░░░   ░░░░░░ ░░   ░░ ░░░░░░░ ░░░░░░  \n" +
                     "░░ \\   ░░ ░░    ░░ ░░      ░░   ░░ ░░      ░░      ░░    ░░ ░░      ░░  ░░  ░░      ░░   ░ \n" +
@@ -126,11 +126,16 @@ public class logoAnimation {
     };
 
     private static int frameCount = 0;
+    private static long lastMillis = 0;
 
     public Surface getFrame() {
-        frameCount++;
-        if (frameCount >= this.frames.length) {
-            frameCount = 0;
+        long currentMillis = java.lang.System.currentTimeMillis();
+        if (currentMillis - lastMillis >= 250) {
+            lastMillis = currentMillis;
+            frameCount++;
+        }
+        if (frameCount >= this.frames.length - 1) {
+            frameCount = 1;
         }
         return new Surface(92, 5).drawText(0, 0, this.frames[frameCount - 1], new int[]{92, 5});
     }

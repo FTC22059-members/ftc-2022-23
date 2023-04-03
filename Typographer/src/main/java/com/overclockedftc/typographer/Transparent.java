@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.library.fancyTelemetry;
+package com.overclockedftc.typographer;
 
 /**
  * The <b>Transparent Command</b> represents a hole in a layer. It always shows the character that is layered below it.

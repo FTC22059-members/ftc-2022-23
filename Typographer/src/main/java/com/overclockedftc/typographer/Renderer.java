@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.library.fancyTelemetry;
+package com.overclockedftc.typographer;
 
 /*
  * # Conventions
@@ -14,8 +14,6 @@ package org.firstinspires.ftc.teamcode.library.fancyTelemetry;
  * Don't finish line of a Javadoc with a period unless there is more than one sentence.
  */
 
-import android.util.Log;
-
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 /**
@@ -23,8 +21,9 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  */
 public class Renderer {
     private Telemetry telemetry;
-    private int width = 30;
-    private int height = 10;
+    private int width = 34;
+    private int height = 16;
+
 
     private Texel[][] buffer;
 
@@ -43,18 +42,16 @@ public class Renderer {
             for (int x = 0; x < this.buffer[y].length; x++) {
                 Texel texel = this.buffer[y][x];
                 if (texel == null) {
-                    row += " ";
+                    row += new SpacedChar(new Texel().render()).render();
                 } else if (texel.isCommand) {
-                    row += texel.command.render();
+                    row += new SpacedChar(texel.command.render()).render();
                 } else {
-                    row += texel.content;
+                    row += new SpacedChar(texel.content).render();
                 }
             }
             string += row + "\n";
             // workspace.innerHTML = string;
         }
-        Log.d("TYPOGRAPHER", "|" + string + "|");
-        Log.d("TYPOGRAPHER",  "|" + Integer.toString(this.buffer.length) + "|");
         this.telemetry.addLine(string);
 
         this.telemetry.update();
@@ -140,10 +137,10 @@ public class Renderer {
         w -= 1;
         h -= 1;
 
-        this.setChar(x + w, y + h, new Texel("\u259F"));
+        this.setChar(x + w, y + h, new Texel('\u259F'));
 
         for (int i = 1; i < h; i++) {
-            this.setChar(x + w, y + i, new Texel("\u2590"));
+            this.setChar(x + w, y + i, new Texel('\u2590'));
         }
 
         for (int i = 1; i < w; i++) {
@@ -162,7 +159,7 @@ public class Renderer {
                 if (col >= width) {
                     break;
                 }
-                this.setChar(x + col, y, new Texel(Character.toString(chunk)));
+                this.setChar(x + col, y, new Texel(chunk));
                 col++;
             }
         }

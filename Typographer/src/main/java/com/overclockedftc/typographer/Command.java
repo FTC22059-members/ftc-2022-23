@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.library.fancyTelemetry;
+package com.overclockedftc.typographer;
 
 public interface Command {
     /**

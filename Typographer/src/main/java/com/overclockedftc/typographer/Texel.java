@@ -1,13 +1,10 @@
-package org.firstinspires.ftc.teamcode.library.fancyTelemetry;
-
-import java.util.Arrays;
-import java.util.List;
+package com.overclockedftc.typographer;
 
 /**
  * A <b>Texel</b> ("text" + "pixel") represents a character or a command. It is type stored in the buffers.
  */
 public class Texel {
-    public String content;
+    public char content;
     public Command command;
     public Boolean isCommand;
 
@@ -15,7 +12,7 @@ public class Texel {
      * Initializes the Texel as an empty space.
      */
     public Texel() {
-        this.content = "";
+        this.content = '\u2007';
         this.isCommand = false;
     }
 
@@ -24,7 +21,7 @@ public class Texel {
      *
      * @param content The content to initialize it with. Should be one character
      */
-    public Texel(String content) {
+    public Texel(char content) {
         this.content = content;
         this.isCommand = false;
     }
@@ -52,6 +49,14 @@ public class Texel {
             return this.command.underlay(layered, sameLayer);
         } else {
             return this;
+        }
+    }
+
+    public char render() {
+        if (this.isCommand) {
+            return this.command.render();
+        } else {
+            return this.content;
         }
     }
 }

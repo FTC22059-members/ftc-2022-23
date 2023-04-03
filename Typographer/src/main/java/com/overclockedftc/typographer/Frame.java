@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.library.fancyTelemetry;
+package com.overclockedftc.typographer;
 
 /**
  * The <b>Frame Command</b> allows you to easily reference the 25xx unicode block for box-drawing characters.

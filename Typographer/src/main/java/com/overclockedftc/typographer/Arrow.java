@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.library.fancyTelemetry;
+package com.overclockedftc.typographer;
 
 /**
  * The <b>Arrow Command</b> allows you to reference 8 different angles of arrow. in the 21xx range.

@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.library.Arm;
 import org.firstinspires.ftc.teamcode.library.Drive;
 import org.firstinspires.ftc.teamcode.library.Gripper;
 import org.firstinspires.ftc.teamcode.library.Imu;
-import org.firstinspires.ftc.teamcode.library.fancyTelemetry.*;
+import com.overclockedftc.typographer.*;
 
 //  ▒█████   ██▒   █▓ ▓█████ ██▀███    ▄████▄   ██▓    ▒█████    ▄████▄  ██ ▄█▀ ▓█████▓█████▄
 // ▒██▒  ██▒▓██░   █▒ ▓█   ▀▓██ ▒ ██▒ ▒██▀ ▀█  ▓██▒   ▒██▒  ██▒ ▒██▀ ▀█  ██▄█▒  ▓█   ▀▒██▀ ██▌
@@ -34,18 +34,16 @@ public class TelemetryTest extends LinearOpMode {
         // Wait till we press the start button
         waitForStart();
 
-        telemetry.setDisplayFormat(Telemetry.DisplayFormat.MONOSPACE);
-        telemetry.addLine("\u001b[0;35m I should be purple");
-        telemetry.addLine("\u001b[1;34m I should be bold");
+        while (opModeIsActive()) {
 
-//        telemetry.setDisplayFormat(Telemetry.DisplayFormat.HTML);
-//        telemetry.addLine("<b>b</b>");
-//        telemetry.addLine("<code>code</code>");
-//        telemetry.addLine("<span>span</span>");
-//        telemetry.addLine("<p>p</p>");
-//        telemetry.addLine("<p style=\"color:#ff0000\">p color:red</p>");
-//        telemetry.addLine("<div style=\"background:#00ff00;border: 5px solid white\"><p style=\"color:#ff0000\">div background:green, border:5px solid white p color:red</p></div>");
+            telemetry.setDisplayFormat(Telemetry.DisplayFormat.HTML);
+            telemetry.addLine("<b>b</b>");
+            telemetry.addLine("<code>code</code>");
+            telemetry.addLine("<pre>pre <span style=\"color:#ff0000\">#ff0000</span> <span style=\"color:red\">red</span></pre>");
+            telemetry.addLine("<span style=\"backround: #ff0000;\">span background:#ff0000</span>");
+            telemetry.addLine("<span style=\"backround: red;\">span background:red</span>");
 
-        telemetry.update();
+            telemetry.update();
+        }
     }
 }
