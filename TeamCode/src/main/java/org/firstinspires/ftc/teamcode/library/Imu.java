@@ -38,7 +38,7 @@ public class Imu {
 
         boolean initSuccessful = imu.initialize(new IMU.Parameters(orientationOnRobot));
 
-        telemetry.addData("IMU Calibrating Successful? (we're very confident)", initSuccessful);
+        telemetry.addData("IMU Calibrating Successful?", initSuccessful);
     }
 
     /**

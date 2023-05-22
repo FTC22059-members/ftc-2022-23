@@ -13,28 +13,25 @@ import org.firstinspires.ftc.teamcode.library.Drive;
 import org.firstinspires.ftc.teamcode.library.Gripper;
 import org.firstinspires.ftc.teamcode.library.Imu;
 
-@TeleOp(name = "Tele-op 2024")
+@TeleOp(name = "Tele-op 2023")
 public class Teleop2023 extends LinearOpMode {
 
     @Override
     public void runOpMode() {
 
-        // imu init
         Imu robotImu = new Imu(hardwareMap, telemetry);
         robotImu.init();
         robotImu.resetAngle();
 
-        // init motor parts
         Drive driveTrain = new Drive(hardwareMap, telemetry, robotImu);
         driveTrain.init();
 
+        Gripper gripper = new Gripper(hardwareMap, telemetry);
+        gripper.init(gamepad1, gamepad2);
 
-//        Gripper gripper = new Gripper(hardwareMap, telemetry);
-//        gripper.init(gamepad1, gamepad2);
-//
-//        Arm armMotor = new Arm(hardwareMap, telemetry);
-//        armMotor.init(gamepad1, gamepad2);
-//        telemetry.addData("Arm Initialized", "!");
+        Arm armMotor = new Arm(hardwareMap, telemetry);
+        armMotor.init(gamepad1, gamepad2);
+        telemetry.addData("Arm Initialized", "!");
 
         // tell people to press the start button
         telemetry.addLine("Roses are red, violets are blue, if you press start on the robot, then it will move");
@@ -51,7 +48,7 @@ public class Teleop2023 extends LinearOpMode {
 
         //pre-loops go here
         //TO-DO: More Pre-loops nedded
-//        gripper.preLoop();
+        gripper.preLoop();
 
 
         // run until the end of the match (driver presses STOP)
@@ -67,7 +64,7 @@ public class Teleop2023 extends LinearOpMode {
                 telemetry.addData("Precise Mode", "On");
             } else { // if precise mode is off, then don't apply brake
                 telemetry.addData("Precise Mode", "Off");
-                brakeMultiplier = 1;
+                brakeMultiplier = 1; 
             }
             telemetry.addData("brakeMultiplier: ", brakeMultiplier);
 
@@ -85,9 +82,9 @@ public class Teleop2023 extends LinearOpMode {
             xPrev = gamepad1.x;
 
             // get the controls
-            double leftX = gamepad1.left_stick_x; // moving
-            double leftY = -gamepad1.left_stick_y; // moving
-            double rightX = gamepad1.right_stick_x / 1.3; // turning (1.3 is so it's more sensitive)
+            double leftX = gamepad1.left_stick_x;
+            double leftY = -gamepad1.left_stick_y;
+            double rightX = gamepad1.right_stick_x / 1.3;
             telemetry.addData("leftX", leftX);
             telemetry.addData("leftY", leftY);
             telemetry.addData("rightX", rightX);
@@ -116,10 +113,10 @@ public class Teleop2023 extends LinearOpMode {
                 }
             }
 
-//            armMotor.armLoop();
-//            telemetry.addData("Arm Power", gamepad2.left_stick_y);
+            armMotor.armLoop();
+            telemetry.addData("Arm Power", gamepad2.left_stick_y);
 
-//            gripper.gripperLoop();
+            gripper.gripperLoop();
 
             telemetry.update();
 
