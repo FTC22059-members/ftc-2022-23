@@ -2,7 +2,9 @@
 // build.gradle in Typographer
 //
 
-apply plugin: 'com.android.library'
+// Include common definitions from above.
+apply from: '../build.common.gradle'
+apply from: '../build.dependencies.gradle'
 
 android {
     namespace 'com.overclockedftc.typographer'
@@ -10,12 +12,9 @@ android {
     packagingOptions {
         jniLibs.useLegacyPackaging true
     }
-
-    compileSdkVersion 33
 }
 
 dependencies {
 //    implementation project(':FtcRobotController')
 }
 
-apply from: '../build.dependencies.gradle'

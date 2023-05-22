@@ -20,16 +20,14 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * Renders the root Surface and displays it to telemetry.
  */
 public class Renderer {
-    private final Telemetry telemetry;
-    private final int width;
-    private final int height;
+    private Telemetry telemetry;
+    private int width = 34;
+    private int height = 16;
 
 
     private Texel[][] buffer;
-    public Renderer(Telemetry telemetry, int w, int h) {
-        this.width = w;
-        this.height = h;
 
+    public Renderer(Telemetry telemetry) {
         this.buffer = new Texel[this.height][this.width];
         this.telemetry = telemetry;
         this.telemetry.setCaptionValueSeparator("  ");
@@ -38,23 +36,23 @@ public class Renderer {
     }
 
     public void loop() {
-        StringBuilder string = new StringBuilder();
-        for (Texel[] texels : this.buffer) {
-            StringBuilder row = new StringBuilder();
-            for (Texel texel : texels) {
+        String string = "";
+        for (int y = 0; y < this.buffer.length; y++) {
+            String row = "";
+            for (int x = 0; x < this.buffer[y].length; x++) {
+                Texel texel = this.buffer[y][x];
                 if (texel == null) {
-                    row.append(new SpacedChar(new Texel().render()).render());
+                    row += new SpacedChar(new Texel().render()).render();
                 } else if (texel.isCommand) {
-                    row.append(new SpacedChar(texel.command.render()).render());
+                    row += new SpacedChar(texel.command.render()).render();
                 } else {
-                    row.append(new SpacedChar(texel.content).render());
+                    row += new SpacedChar(texel.content).render();
                 }
             }
-            string.append(row).append("\n");
+            string += row + "\n";
             // workspace.innerHTML = string;
         }
-        this.telemetry.addLine(string.toString());
-
+        this.telemetry.addLine(string);
 
         this.telemetry.update();
 

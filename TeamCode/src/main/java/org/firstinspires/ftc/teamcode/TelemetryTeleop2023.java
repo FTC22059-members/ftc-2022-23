@@ -14,7 +14,15 @@ import org.firstinspires.ftc.teamcode.library.Arm;
 import org.firstinspires.ftc.teamcode.library.Drive;
 import org.firstinspires.ftc.teamcode.library.Gripper;
 import org.firstinspires.ftc.teamcode.library.Imu;
-import com.overclockedftc.typographer.*;
+import com.overclockedftc.typographer.Angles;
+import com.overclockedftc.typographer.Arrow;
+import com.overclockedftc.typographer.Fill;
+import com.overclockedftc.typographer.Frame;
+import com.overclockedftc.typographer.LogoAnimation;
+import com.overclockedftc.typographer.Orientations;
+import com.overclockedftc.typographer.Renderer;
+import com.overclockedftc.typographer.Surface;
+import com.overclockedftc.typographer.Texel;
 
 //  ▒█████   ██▒   █▓ ▓█████ ██▀███    ▄████▄   ██▓    ▒█████    ▄████▄  ██ ▄█▀ ▓█████▓█████▄
 // ▒██▒  ██▒▓██░   █▒ ▓█   ▀▓██ ▒ ██▒ ▒██▀ ▀█  ▓██▒   ▒██▒  ██▒ ▒██▀ ▀█  ██▄█▒  ▓█   ▀▒██▀ ██▌
@@ -32,7 +40,7 @@ public class TelemetryTeleop2023 extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        Renderer fancyTelemetry = new Renderer(telemetry);
+        Renderer fancyTelemetry = new Renderer(telemetry, 34, 15);
         LogoAnimation wordmark = new LogoAnimation();
         Imu robotImu = new Imu(hardwareMap);
         robotImu.init();

@@ -54,7 +54,6 @@ public class Surface {
      * @param val           The value to set it to.
      * @param sameLayer     Whether the Texels should be treated as though they were
      *                      on the same layer (allows merging or not).
-     * @return The original <b>Surface</b> for chaining.
      */
     public Surface setChar(int x, int y, Texel val, boolean sameLayer) {
         if (0 <= x && x < this.w && 0 <= y && y < this.h) {
@@ -73,27 +72,8 @@ public class Surface {
      * @param val       The command to set it to.
      * @param sameLayer Whether the Texels should be treated as though they were
      *                  on the same layer (allows merging or not).
-     * @return The original <b>Surface</b> for chaining.
      */
     public Surface setChar(int x, int y, Command val, boolean sameLayer) {
-        if (0 <= x && x < this.w && 0 <= y && y < this.h) {
-            // this.buffer[y][x] = this.overlay(this.buffer[y][x], val, sameLayer);
-            this.buffer[y][x] = new Texel(val).underlay(this.buffer[y][x], sameLayer);
-        }
-
-        return this;
-    }
-
-    /**
-     * Set the value of a particular Texel to a char. (It's a shorthand)
-     * @param x         The x coordinate of the Texel to set.
-     * @param y         The x coordinate of the Texel to set.
-     * @param val       The command to set it to.
-     * @param sameLayer Whether the Texels should be treated as though they were
-     *                  on the same layer (allows merging or not).
-     * @return The original <b>Surface</b> for chaining.
-     */
-    public Surface setChar(int x, int y, char val, boolean sameLayer) {
         if (0 <= x && x < this.w && 0 <= y && y < this.h) {
             // this.buffer[y][x] = this.overlay(this.buffer[y][x], val, sameLayer);
             this.buffer[y][x] = new Texel(val).underlay(this.buffer[y][x], sameLayer);
@@ -114,7 +94,8 @@ public class Surface {
      * <i>overlay()</i>, then returns the result. If it is a root <b>Graphics
      * Context</b>, it renders all of the commands and returns the result to get
      * sent to the <code>Driver Station</code>.
-     * @return The original <b>Surface</b> for chaining.
+     *
+     * @return
      */
     public Texel[][] render() {
         return this.buffer;

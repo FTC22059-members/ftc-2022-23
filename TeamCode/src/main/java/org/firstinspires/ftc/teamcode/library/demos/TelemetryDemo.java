@@ -3,16 +3,14 @@ package org.firstinspires.ftc.teamcode.library.demos;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.library.fancyTelemetry.Surface;
-import org.firstinspires.ftc.teamcode.library.fancyTelemetry.Orientations;
-import org.firstinspires.ftc.teamcode.library.fancyTelemetry.Renderer;
+import com.overclockedftc.typographer.*;
 
 @TeleOp(name = "Test Telemetry")
 public class TelemetryDemo extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        Renderer fancyTelemetry = new Renderer(telemetry);
+        Renderer fancyTelemetry = new Renderer(telemetry, 34, 15);
 
         waitForStart();
 
