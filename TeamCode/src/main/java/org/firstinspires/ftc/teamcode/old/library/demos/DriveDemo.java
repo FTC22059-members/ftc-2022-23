@@ -12,14 +12,13 @@ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package org.firstinspires.ftc.teamcode.library.demos;
+package org.firstinspires.ftc.teamcode.old.library.demos;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.library.Drive;
-import org.firstinspires.ftc.teamcode.library.Imu;
+import org.firstinspires.ftc.teamcode.old.library.Drive;
+import org.firstinspires.ftc.teamcode.old.library.Imu;
 
 @TeleOp(name = "Test Drive")
 public class DriveDemo extends LinearOpMode {

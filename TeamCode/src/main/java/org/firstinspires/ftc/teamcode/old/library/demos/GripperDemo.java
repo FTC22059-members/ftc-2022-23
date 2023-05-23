@@ -12,37 +12,37 @@ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package org.firstinspires.ftc.teamcode.library.demos;
+package org.firstinspires.ftc.teamcode.old.library.demos;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.library.Arm;
+import org.firstinspires.ftc.teamcode.old.library.Gripper;
 
-@TeleOp(name = "Test Arm")
-public class ArmDemo extends LinearOpMode {
-    private DcMotor armMotor;
-
+@TeleOp(name = "Test Gripper")
+public class GripperDemo extends LinearOpMode {
+    private DcMotor gripperMotor;
+    
     @Override
     public void runOpMode() {
-        Arm armMotorTest = new Arm(hardwareMap, telemetry);
-        armMotorTest.init(gamepad1, gamepad2);
-
+        Gripper gripperTest = new Gripper(hardwareMap, telemetry);
+        gripperTest.init(gamepad1, gamepad2);
+        
         // Wait for the start button
         telemetry.addData(">", "Press Start to energize the robot with electrons that make it MOVE!");
         telemetry.update();
-
-
+        
+        
         waitForStart();
-
+        
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            armMotorTest.armLoop();
-            telemetry.addData("Arm Power", gamepad2.left_stick_y);
-
+            gripperTest.gripperLoop();
+            telemetry.addData("Gripper open", gripperTest.getIsOpen());
+            
             telemetry.update();
-
+            
             idle();
         }
     }

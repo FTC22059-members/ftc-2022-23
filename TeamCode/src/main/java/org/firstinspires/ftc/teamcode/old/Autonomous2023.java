@@ -13,15 +13,15 @@ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.old;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.library.AprilTags;
-import org.firstinspires.ftc.teamcode.library.Drive;
-import org.firstinspires.ftc.teamcode.library.Imu;
+import org.firstinspires.ftc.teamcode.old.library.AprilTags;
+import org.firstinspires.ftc.teamcode.old.library.Drive;
+import org.firstinspires.ftc.teamcode.old.library.Imu;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous(name = "Autonomous 2023")
