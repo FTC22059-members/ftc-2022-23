@@ -3,15 +3,15 @@
 2022-23, Overclocked 22059
 */
 
-package org.firstinspires.ftc.teamcode.old;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.old.library.Arm;
-import org.firstinspires.ftc.teamcode.old.library.Drive;
-import org.firstinspires.ftc.teamcode.old.library.Gripper;
-import org.firstinspires.ftc.teamcode.old.library.Imu;
+import org.firstinspires.ftc.teamcode.library.Arm;
+import org.firstinspires.ftc.teamcode.library.Drive;
+import org.firstinspires.ftc.teamcode.library.Gripper;
+import org.firstinspires.ftc.teamcode.library.Imu;
 
 @TeleOp(name = "Tele-op 2023")
 public class Teleop2023 extends LinearOpMode {

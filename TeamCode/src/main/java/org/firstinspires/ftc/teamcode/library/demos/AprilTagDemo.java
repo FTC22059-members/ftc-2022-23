@@ -19,12 +19,20 @@
  * SOFTWARE.
  */
 
-package org.firstinspires.ftc.teamcode.old.library.demos;
+package org.firstinspires.ftc.teamcode.library.demos;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.old.library.AprilTags;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.library.AprilTagDetectionPipeline;
+import org.firstinspires.ftc.teamcode.library.AprilTags;
+import org.openftc.apriltag.AprilTagDetection;
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
+
+import java.util.ArrayList;
 
 @TeleOp(name="Test April Tags")
 public class AprilTagDemo extends LinearOpMode

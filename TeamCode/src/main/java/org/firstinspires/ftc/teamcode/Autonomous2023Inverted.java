@@ -13,16 +13,16 @@ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package org.firstinspires.ftc.teamcode.old;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.old.library.AprilTags;
-import org.firstinspires.ftc.teamcode.old.library.Drive;
-import org.firstinspires.ftc.teamcode.old.library.Imu;
+import org.firstinspires.ftc.teamcode.library.AprilTags;
+import org.firstinspires.ftc.teamcode.library.Drive;
+import org.firstinspires.ftc.teamcode.library.Imu;
 
 @Autonomous(name = "Autonomous 2023 (Inverted Zones)")
 public class Autonomous2023Inverted extends LinearOpMode {

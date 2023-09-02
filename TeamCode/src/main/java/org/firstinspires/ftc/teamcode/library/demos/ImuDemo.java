@@ -12,37 +12,40 @@ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package org.firstinspires.ftc.teamcode.old.library.demos;
+package org.firstinspires.ftc.teamcode.library.demos;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.old.library.Arm;
+import org.firstinspires.ftc.teamcode.library.Imu;
 
-@TeleOp(name = "Test Arm")
-public class ArmDemo extends LinearOpMode {
-    private DcMotor armMotor;
+@TeleOp(name = "Test Imu")
+public class ImuDemo extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        Arm armMotorTest = new Arm(hardwareMap, telemetry);
-        armMotorTest.init(gamepad1, gamepad2);
+        Imu robotImu = new Imu(hardwareMap, telemetry);
+        robotImu.init();
+        robotImu.resetAngle();
 
         // Wait for the start button
-        telemetry.addData(">", "Press Start to energize the robot with electrons that make it MOVE!");
+        telemetry.addData(">", "Press Start to test IMU.");
         telemetry.update();
-
 
         waitForStart();
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            armMotorTest.armLoop();
-            telemetry.addData("Arm Power", gamepad2.left_stick_y);
-
+            // Check to see if heading reset is requested
+            if (gamepad1.y) {
+                telemetry.addData("Yaw", "Resetting\n");
+                robotImu.resetAngle();
+            } else {
+                telemetry.addData("Yaw", "Press Y (triangle) on Gamepad to reset\n");
+            }
+            robotImu.getAngle();
+            robotImu.imuLoop();
             telemetry.update();
-
             idle();
         }
     }
