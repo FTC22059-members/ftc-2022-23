@@ -26,14 +26,12 @@ public class Teleop2024 extends LinearOpMode{
         telemetry.update();
 
         waitForStart();
-        boolean accelerationMode = true;
 
+        double speedMultiplier = 1; // speed multiplier for acceleration
         boolean globalPositioning = false; // is global positioning on?
         double gyroAngle = 0; // the angle that the robot has turned since gp was turned on
         boolean yPrev = false; // whether the y button was pressed in the last frame (useful for detecting button presses)
         boolean xPrev = false; // look literally one line up
-        double speedMultiplier = 1; // speed multiplier for acceleration
-
 
         while (opModeIsActive()) { // runs until the program is stopped
             // SECTION 1: SETUP
@@ -73,7 +71,6 @@ public class Teleop2024 extends LinearOpMode{
                 speedMultiplier = 1;
             }
             telemetry.addData("speedMultiplier: ", speedMultiplier);
-
             // SECTION 3: GLOBAL POSITIONING
             if (globalPositioning) { // Adjust direction of movement
                 gyroAngle = robotImu.getAngleRadians();
@@ -85,22 +82,8 @@ public class Teleop2024 extends LinearOpMode{
             double joystickMagnitude = Math.sqrt(Math.pow(leftX, 2) + Math.pow(leftY, 2));
             telemetry.addData("Gyro Angle", robotImu.getAngle());
             telemetry.addData("Joystick Angle", joystickAngle*180/Math.PI);
-
             // SECTION 4: MOVEMENT/TURNING
-            driveTrain.moveRobot(joystickMagnitude, newAngle, rightX, speedMultiplier);
 
-            if (!driveTrain.frontLeft.isBusy() && !driveTrain.frontRight.isBusy() &&
-                    !driveTrain.backLeft.isBusy() && !driveTrain.backRight.isBusy()){
-                if(gamepad1.dpad_left){
-                    driveTrain.snapCcw();
-                }else if (gamepad1.dpad_right){
-                    driveTrain.snapCw();
-                }
-            }
-            // SECTION 5: DE-SETUPICATOR
-            telemetry.update();
-
-            idle();
 
 
 
